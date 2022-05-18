@@ -52,17 +52,19 @@ class Server {
         val match = mutableListOf<Pair<Prisoner.Reward, Prisoner.Reward>>()
         var v1 = 0;  var v2 = 0
         p1.restart();  p2.restart()
-        repeat(tournamentSize) {
+        for (turn in 0 until tournamentSize) {
             val c1 = p1.choose();  val c2 = p2.choose()
             val rewards = when {
-                c1==TRICK && c2==TRICK -> Pair(Prisoner.Reward.LOSE, Prisoner.Reward.LOSE)
-                c1==COOPERATE && c2==COOPERATE -> Pair(Prisoner.Reward.JOIN, Prisoner.Reward.JOIN)
-                c1==TRICK -> Pair(Prisoner.Reward.WIN, Prisoner.Reward.LOSE)
-                else -> Pair(Prisoner.Reward.LOSE, Prisoner.Reward.WIN)
+                c1==QUIT || c2==QUIT -> Pair(Prisoner.Quit(tournamentSize-turn), Prisoner.Quit(tournamentSize-turn))
+                c1==TRICK && c2==TRICK -> Pair(Prisoner.KnownReward.LOSE, Prisoner.KnownReward.LOSE)
+                c1==COOPERATE && c2==COOPERATE -> Pair(Prisoner.KnownReward.JOIN, Prisoner.KnownReward.JOIN)
+                c1==TRICK -> Pair(Prisoner.KnownReward.WIN, Prisoner.KnownReward.LOSE)
+                else -> Pair(Prisoner.KnownReward.LOSE, Prisoner.KnownReward.WIN)
             }
             match.add(rewards)
             p1.reward(rewards.first); p2.reward(rewards.second)
             v1 += rewards.first.value;  v2 += rewards.second.value
+            if (c1==QUIT || c2==QUIT)  break
         }
         p1.finish(v1, tournamentSize);  p2.finish(v2, tournamentSize)
         return Pair(Pair(v1, v2), match)

@@ -5,10 +5,14 @@ interface Prisoner {
     fun finish(winnings :Int, numRounds :Int)
 
     enum class Choice {
-        TRICK, COOPERATE;
+        TRICK, COOPERATE, QUIT;
     }
 
-    enum class Reward(val value :Byte) {
+    interface Reward {
+        val value :Int
+    }
+    enum class KnownReward(override val value :Int) :Reward {
         LOSE(0), JOIN(3), WIN(5)
     }
+    class Quit(override val value :Int) :Reward {}
 }

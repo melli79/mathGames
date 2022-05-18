@@ -1,3 +1,3 @@
 
-rootProject.name = "prisonerDilemma"
+rootProject.name = "mathGames"
 
