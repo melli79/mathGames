@@ -1,4 +1,6 @@
-import Prisoner.Choice.*
+package prisonerdilemma
+
+import prisonerdilemma.Prisoner.Choice.*
 import kotlin.math.min
 
 class Server {

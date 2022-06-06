@@ -1,4 +1,4 @@
-
+package prisonerdilemma
 fun main() {
     val tournament = Server()
     tournament.addPrisoner(Good)

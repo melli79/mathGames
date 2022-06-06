@@ -1,3 +1,5 @@
+package prisonerdilemma
+
 interface Prisoner {
     fun restart()
     fun choose() :Choice

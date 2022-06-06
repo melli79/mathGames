@@ -1,3 +1,5 @@
+package prisonerdilemma
+
 import kotlin.random.Random
 
 object Good :Prisoner {
