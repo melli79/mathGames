@@ -24,7 +24,7 @@ object pessimist :Player {
     override fun reset(numPlayers: UInt) {}
 }
 
-class RandomPlayer(val bias :Double =0.5) :Player {
+open class RandomPlayer(var bias :Double =0.5) :Player {
     override fun toString() = this::class.java.simpleName
     override fun describe() = "RandomPlayer($bias)"
 
@@ -35,6 +35,22 @@ class RandomPlayer(val bias :Double =0.5) :Player {
 
     override fun reset(numPlayers :UInt) {}
     override fun reward(r :Player.Reward, numPlayers :UInt) {}
+}
+
+class AdjustingRandomPlayer :RandomPlayer() {
+    override fun describe() = toString()
+
+    private var n = 0
+
+    override fun reset(numPlayers :UInt) {
+        bias = 0.5
+        n = 0
+    }
+
+    override fun reward(r :Player.Reward, numPlayers :UInt) {
+        n++
+        bias = bias +if(r is Player.Win) (1.0-bias)/n  else (-1.0-bias)/n
+    }
 }
 
 class MoodyPlayer :Player {
