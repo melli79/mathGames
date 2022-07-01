@@ -4,7 +4,7 @@ fun ransomNote(magazine :String, message :String) :List<Int>? {
     val result = mutableListOf<Int>()
     val input = magazine.iterator(); var i=0
     val filter = message.iterator()
-    while (input.hasNext()&&filter.hasNext()) {
+    while (filter.hasNext()) {
         var c = filter.next()
         while (input.hasNext()) {
             val t = input.next()
@@ -19,7 +19,5 @@ fun ransomNote(magazine :String, message :String) :List<Int>? {
         if (c!=0.toChar())
             return null
     }
-    if (filter.hasNext())
-        return null
     return result
 }
