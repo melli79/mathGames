@@ -1,6 +1,5 @@
-package partition
+package partitions
 
-import partitions.trititions
 import kotlin.test.*
 
 class TrititionTester {
