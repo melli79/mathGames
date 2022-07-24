@@ -29,4 +29,30 @@ class SumOfCubesTester {
                 println("$s: ${result[s]?.take(3)}")
         }
     }
+
+    @Test fun fourUpto0() {
+        assertEquals(setOf(Quadruple(0,0,0,0)), findSumOf4Cubes(0u)[0u])
+    }
+
+    @Test fun fourUpto1() {
+        val result = findSumOf4Cubes(1u)
+        assertEquals(setOf(Quadruple(0,0,0,0), Quadruple(1,-1,-1,1),
+                Quadruple(1,-1,0,0), Quadruple(1,-1,1,-1), Quadruple(1,1,-1,-1),
+                Quadruple(2, -2, -1, 1), Quadruple(2, -2, 0, 0),
+                Quadruple(2, -2, 1, -1), Quadruple(2, -2, 2, -2), Quadruple(2, 2, -2, -2)),
+            result[0u])
+        assertEquals(setOf(Quadruple(1,-1,1,0), Quadruple(1,0,0,0), Quadruple(1,1,-1,0),
+                Quadruple(2,-2,1,0)),
+            result[1u])
+    }
+
+    @Test fun fourUpto20() {
+        val result = findSumOf4Cubes(42u)
+        for (s in 0u..42u) {
+            if (s !in result.keys)
+                println("Did not find anything for $s")
+            else
+                println("$s: ${result[s]?.take(3)}")
+        }
+    }
 }
