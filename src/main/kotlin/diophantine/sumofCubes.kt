@@ -32,16 +32,13 @@ fun findSumOf4Cubes(limit :UInt) :Map<UInt, Set<Quadruple<Int, Int, Int, Int>>> 
         val c = cb(x)
         for (y in -x..x) {
             val s2 = c + cb(y)
-            val z0 = icbrt(-s2)
-            for (z in z0-tol..z0+3*tol) if (abs(z)<=abs(y)) {
+            for (z in -abs(y)..abs(y)) {
                 val s3 = s2 + cb(z)
                 val w0 = -icbrt(s3)
-                for (w in w0-tol..w0+2*tol) {
-                    if (abs(w) <= abs(z)) {
-                        val sum = s3 + cb(w)
-                        if (0 <= sum && sum <= limit.toLong()) {
-                            result.computeIfAbsent(sum.toUInt()) { mutableSetOf() }.add(Quadruple(x, y, z, w))
-                        }
+                for (w in w0-tol..w0+2*tol) if (abs(w) <= abs(z)) {
+                    val sum = s3 + cb(w)
+                    if (0 <= sum && sum <= limit.toLong()) {
+                        result.computeIfAbsent(sum.toUInt()) { mutableSetOf() }.add(Quadruple(x, y, z, w))
                     }
                 }
             }
@@ -53,7 +50,9 @@ fun findSumOf4Cubes(limit :UInt) :Map<UInt, Set<Quadruple<Int, Int, Int, Int>>> 
 fun cb(x :Int) = x.toLong()*x*x
 fun icbrt(x :Long) = cbrt(x.toDouble()).roundToInt()
 
-data class Quadruple<R,S,T,U>(val first :R, val second :S, val third :T, val fourth :U)
+data class Quadruple<R,S,T,U>(val first :R, val second :S, val third :T, val fourth :U) {
+    override fun toString() = "Quadruple($first, $second, $third, $fourth)"
+}
 
 fun <R :Comparable<R>,S :Comparable<S>,T :Comparable<T>,U :Comparable<U>> Quadruple<R,S,T,U>.compareTo(q :Quadruple<R,S,T,U>) :Int {
     val cmp1 = first.compareTo(q.first)
