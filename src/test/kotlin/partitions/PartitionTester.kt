@@ -23,4 +23,8 @@ class PartitionTester {
         assertEquals(setOf(listOf(1u,1u,1u,1u), listOf(1u,1u,2u), listOf(1u,3u), listOf(2u,2u), listOf(4u)),
             partitions(4u))
     }
+
+    @Test fun upTo20() {
+        println((0u..20u).map { s -> partitions(s).size})
+    }
 }
