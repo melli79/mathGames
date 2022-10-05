@@ -1,7 +1,6 @@
 package diophantine
 
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
+import common.math.isqrt
 
 fun findPythagoreanTriples(limit :UInt) :Set<Triple<UInt, UInt, UInt>> {
     val result = mutableSetOf(Triple(0u, 0u, 0u))
@@ -18,4 +17,3 @@ fun findPythagoreanTriples(limit :UInt) :Set<Triple<UInt, UInt, UInt>> {
 }
 
 fun sqr(x :Int) = x.toULong()*x.toULong()
-fun isqrt(x :ULong) = sqrt(x.toDouble()).roundToInt().toUInt()
