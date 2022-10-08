@@ -12,7 +12,7 @@ data class Plane(val n :UInt) {
     }
 
     operator fun contains(p :Point2D) = p.p==this
-    operator fun contains(l :Line) = l.p==this
+    operator fun contains(l :Line2D) = l.p==this
 
     val origin = Point2D.origin(this)
 }
@@ -45,24 +45,24 @@ data class Vector2D(val x :Int, val y :Int) {
     }
 }
 
-data class Line(val p :Plane, val d :UInt, val v :Vector2D) {
+data class Line2D(val p :Plane, val d :UInt, val v :Vector2D) {
     companion object {
-        fun of(p :Plane, d :UInt, v :Vector2D) :Line? {
+        fun of(p :Plane, d :UInt, v :Vector2D) :Line2D? {
             if (v.x!=0) {
                 val f = gcd(gcd(
                     p.n.toULong(), abs(v.x).toULong()), abs(v.y).toULong()).toInt()
-                return Line(p, d%p.n, Vector2D((v.x/f)%p.n.toInt(), (v.y/f)%p.n.toInt()))
+                return Line2D(p, d%p.n, Vector2D((v.x/f)%p.n.toInt(), (v.y/f)%p.n.toInt()))
 
             } else if (v.y%p.n.toInt()!=0)
-                return Line(p, d%p.n, Vector2D(0, 1))
+                return Line2D(p, d%p.n, Vector2D(0, 1))
 
             return null
         }
 
-        fun of(p :Point2D, q :Point2D) :Line? {
+        fun of(p :Point2D, q :Point2D) :Line2D? {
             val v = (q-p).perp()
             val v0 = v.normed() ?: return null
-            return Line(p.p, d(p, v0, p.p.n), v0)
+            return Line2D(p.p, d(p, v0, p.p.n), v0)
         }
 
         private fun d(p :Point2D, v0 :Vector2D, n :UInt) :UInt {
