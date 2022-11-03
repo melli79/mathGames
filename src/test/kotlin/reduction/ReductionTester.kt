@@ -6,8 +6,8 @@ import kotlin.test.*
 class ReductionTester {
     @Test fun combining() {
         val n = 24uL
-        val pfactors = factor(n)
-        val result = ReductionGame.combine(pfactors.entries.toList().reversedIterator(), 12u)
+        val pFactors = factor(n)
+        val result = ReductionGame.combine(pFactors.entries.toList().reversedIterator(), 12u)
         println("Smallest factors of $n are $result, ...")
         result.forEach { f ->
             assertEquals(0uL, n%f)
