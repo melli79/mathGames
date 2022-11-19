@@ -1,5 +1,6 @@
 package diophantine
 
+import common.Quadruple
 import kotlin.test.*
 
 class SumOfCubesTester {
@@ -36,13 +37,17 @@ class SumOfCubesTester {
 
     @Test fun fourUpto1() {
         val result = findSumOf4Cubes(1u)
-        assertEquals(setOf(Quadruple(0,0,0,0), Quadruple(1,-1,-1,1),
+        assertEquals(setOf(
+            Quadruple(0,0,0,0), Quadruple(1,-1,-1,1),
                 Quadruple(1,-1,0,0), Quadruple(1,-1,1,-1), Quadruple(1,1,-1,-1),
                 Quadruple(2, -2, -1, 1), Quadruple(2, -2, 0, 0),
-                Quadruple(2, -2, 1, -1), Quadruple(2, -2, 2, -2), Quadruple(2, 2, -2, -2)),
+                Quadruple(2, -2, 1, -1), Quadruple(2, -2, 2, -2), Quadruple(2, 2, -2, -2)
+        ),
             result[0u])
-        assertEquals(setOf(Quadruple(1,-1,1,0), Quadruple(1,0,0,0), Quadruple(1,1,-1,0),
-                Quadruple(2,-2,1,0)),
+        assertEquals(setOf(
+            Quadruple(1,-1,1,0), Quadruple(1,0,0,0), Quadruple(1,1,-1,0),
+                Quadruple(2,-2,1,0)
+        ),
             result[1u])
     }
 

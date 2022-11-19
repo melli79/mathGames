@@ -1,5 +1,6 @@
 package diophantine
 
+import common.Quadruple
 import java.lang.StrictMath.cbrt
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -50,11 +51,7 @@ fun findSumOf4Cubes(limit :UInt) :Map<UInt, Set<Quadruple<Int, Int, Int, Int>>> 
 fun cb(x :Int) = x.toLong()*x*x
 fun icbrt(x :Long) = cbrt(x.toDouble()).roundToInt()
 
-data class Quadruple<R,S,T,U>(val first :R, val second :S, val third :T, val fourth :U) {
-    override fun toString() = "Quadruple($first, $second, $third, $fourth)"
-}
-
-fun <R :Comparable<R>,S :Comparable<S>,T :Comparable<T>,U :Comparable<U>> Quadruple<R,S,T,U>.compareTo(q :Quadruple<R,S,T,U>) :Int {
+fun <R :Comparable<R>,S :Comparable<S>,T :Comparable<T>,U :Comparable<U>> Quadruple<R, S, T, U>.compareTo(q :Quadruple<R, S, T, U>) :Int {
     val cmp1 = first.compareTo(q.first)
     if (cmp1!=0)  return cmp1
     val cmp2 = second.compareTo(q.second)
