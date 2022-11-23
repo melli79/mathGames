@@ -2,7 +2,7 @@ package chemistry
 
 import java.util.*
 
-data class Bond3(
+open class Bond3(
         override val element1 :Atom, override val element2 :Atom, val element3 :Atom,
         override val amount1 :UByte, override val amount2 :UByte, val amount3 :UByte) :Bond {
     override fun toString() = when {

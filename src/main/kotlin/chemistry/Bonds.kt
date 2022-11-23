@@ -15,7 +15,7 @@ sealed interface Bond {
     }
 }
 
-data class Bond2(override val element1 :Atom, override val element2 :Atom, override val amount1 :UByte, override val amount2 :UByte,
+open class Bond2(override val element1 :Atom, override val element2 :Atom, override val amount1 :UByte, override val amount2 :UByte,
         override val type :Bond.Type) :Bond {
 
     override fun toString() :String {
