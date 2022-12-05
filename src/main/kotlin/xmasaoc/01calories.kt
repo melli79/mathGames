@@ -1,14 +1,9 @@
 package xmasaoc
 
-import java.io.BufferedReader
-import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
-import java.io.InputStreamReader
 
-class Handle {}
 private const val RESOURCE_NAME = "01elfFood.txt"
-const val RESOURCE_DIR = "src/main/resources"
 
 fun main(args :Array<String>) {
     val input = getInput(args.firstOrNull(), RESOURCE_NAME)
@@ -41,14 +36,3 @@ private fun parseFoods(inputStream :InputStream) :MutableList<List<Int>> {
         result.add(food)
     return result
 }
-
-fun InputStream.toReader() = BufferedReader(InputStreamReader(this))
-fun getInput(fileName :String?, fallbackResource :String) = if (fileName!=null)
-    FileInputStream(fileName)
-  else
-    Handle::class.java.getResourceAsStream(fallbackResource) ?: FileInputStream(
-        File(
-            File(RESOURCE_DIR),
-            fallbackResource
-        )
-    )
