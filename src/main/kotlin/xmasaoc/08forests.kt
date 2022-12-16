@@ -90,29 +90,3 @@ fun parseWoods(input: InputStream): Matrix<UByte> {
     }
     return Matrix(rows, 0u)
 }
-
-class Matrix<F>(values0 :List<List<F>> =emptyList(), val zero :F) {
-
-    private val values = values0.map { row -> row.toMutableList() }.toMutableList()
-
-    val numRows :UInt
-        get() = values.size.toUInt()
-
-    val numCols :UInt
-        get() = values[0].size.toUInt()
-
-    init {
-        for (row in getRows()) {
-            assert(numCols == row.size.toUInt())
-        }
-    }
-
-    override fun toString() = values.joinToString("]\n [", prefix= " [", postfix= "]") { row -> row.joinToString(" ") { v -> "$v" } }
-
-    fun getRows() :List<List<F>> = values
-
-    fun getRow(i :UInt) :List<F> = values[i.toInt()]
-    fun getColumn(j :UInt) = values.map { row -> row[j.toInt()] }
-
-    operator fun get(i :UInt, j :UInt) = values[i.toInt()][j.toInt()]
-}
