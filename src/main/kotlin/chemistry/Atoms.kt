@@ -16,7 +16,7 @@ sealed interface Atom {
         Nickel(arrayOf(1,3,4)), Palladium(arrayOf(1,3,4)), Platinum(arrayOf(1,4)),
         Copper(arrayOf(1, 2)), Argentum(arrayOf(1)), Aurum(arrayOf(1, 2)),
         Zinc(arrayOf(2)), Cadmium(arrayOf(2)), Mercury(arrayOf(1, 2)),
-        Bor(arrayOf(3)), Aluminium(arrayOf(3)), Gallium(arrayOf(3)), Indium(arrayOf(3)), Thallium(arrayOf(3)),
+        Aluminium(arrayOf(3)), Gallium(arrayOf(3)), Indium(arrayOf(3)), Thallium(arrayOf(3)),
         Stannium(arrayOf(2, 4)), Plumbum(arrayOf(2, 4)),
         Bismuth(arrayOf(3, 5)),
         Polonium(arrayOf(6, 2, 4)),
@@ -24,17 +24,18 @@ sealed interface Atom {
     }
 
     enum class Semimetal(override val valences :Array<Byte>) :Atom {
+        Boron(arrayOf(3)),
         Silicon(arrayOf(4, -4)), Germanium(arrayOf(4, -4)),
-        Arsen(arrayOf(-3, 5)), Antimon(arrayOf(-3, 5)),
-        Tellur(arrayOf(-2, 6))
+        Arsen(arrayOf(-3, 5)), Antimony(arrayOf(-3, 5)),
+        Tellurium(arrayOf(-2, 6)), Polonium(arrayOf(-2, 6))
     }
 
     enum class Nonmetal(override val valences :Array<Byte>) :Atom {
         Hydrogen(arrayOf(1)),
         Fluorine(arrayOf(-1)), Chlorine(arrayOf(-1, 1, 3, 5, 7)), Bromine(arrayOf(-1, 1, 3, 5, 7)), Iodine(arrayOf(-1, 1, 3, 5, 7)),
         Oxygen(arrayOf(-2)), Sulfur(arrayOf(-2, 4, 6)), Selenium(arrayOf(-2, 4, 6)),
-        Nitrogen(arrayOf(-3, 5)), Phosphor(arrayOf(-3, 5)),
-        Carbon(arrayOf(4, 2, -4))
+        Nitrogen(arrayOf(-3, 5)), Phosphorus(arrayOf(-3, 5)), Arsen(arrayOf(-3, 5)),
+        Carbon(arrayOf(4, 2, -4)),
     }
 
     enum class Noblegas(override val valences :Array<Byte> =emptyArray()) :Atom {

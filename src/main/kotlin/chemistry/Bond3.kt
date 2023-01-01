@@ -19,10 +19,10 @@ open class Bond3(
 
     override val type :Bond.Type
         get() = when {
-        element1== Atom.Nonmetal.Hydrogen -> Bond.Type.Acid
-        element1 is Atom.Metal && element2== Atom.Nonmetal.Oxygen && element3== Atom.Nonmetal.Hydrogen
+        element1==Atom.Nonmetal.Hydrogen -> Bond.Type.Acid
+        element1 is Atom.Metal && element2==Atom.Nonmetal.Oxygen && element3==Atom.Nonmetal.Hydrogen
                 -> Bond.Type.Base
-        element1== Atom.Semimetal.Silicon && element2== Atom.Nonmetal.Oxygen && element3== Atom.Nonmetal.Hydrogen
+        element1 is Atom.Semimetal && element2==Atom.Nonmetal.Oxygen && element3==Atom.Nonmetal.Hydrogen
                 -> Bond.Type.Acid
         element1 is Atom.Metal || element2 is Atom.Metal -> Bond.Type.Polar
         else -> Bond.Type.Nonpolar
@@ -45,14 +45,14 @@ internal fun oxideName(element :Atom, oxygenAmount :UByte) = when (element) {
         else -> "permanganate"
     }
     Atom.Nonmetal.Sulfur -> if (oxygenAmount<=3u) "sulfite" else "sulfate"
-    Atom.Nonmetal.Selenium -> if (oxygenAmount<=3u) "sulfite" else "sulfate"
+    Atom.Nonmetal.Selenium -> if (oxygenAmount<=3u) "selenite" else "selenate"
     Atom.Nonmetal.Nitrogen -> if (oxygenAmount<=2u) "nitrite" else "nitrate"
-    Atom.Nonmetal.Phosphor -> if (oxygenAmount<=3u) "phosphite" else "phosphate"
+    Atom.Nonmetal.Phosphorus -> if (oxygenAmount<=3u) "phosphite" else "phosphate"
     Atom.Nonmetal.Carbon -> "carbonate"
     Atom.Semimetal.Silicon -> "silicate"
     Atom.Semimetal.Germanium -> "germanate"
     Atom.Metal.Plumbum -> if (oxygenAmount<=1u) "plumbite" else "plumbate"
-    Atom.Metal.Bor -> "borate"
+    Atom.Semimetal.Boron -> "borate"
     Atom.Metal.Aluminium -> "aluminate"
     Atom.Metal.Ferrum -> if (oxygenAmount<=2u) "ferrite"  else "ferrate"
     Atom.Metal.Copper -> "cuprate"
