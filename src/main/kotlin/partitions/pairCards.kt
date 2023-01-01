@@ -12,7 +12,7 @@ fun abs(x :Int) = when {
     else -> (-x).toUInt()
 }
 
-fun estimateNumberOfPairs(k :UByte) = designCards(k).size
+fun estimateNumberOfPairs(k :UByte) = (k+sqr(k.toInt() -1)).toInt()
 
 fun designCards(k :UByte) :Set<Set<UInt>> {
     val result = mutableSetOf<Set<UInt>>()
