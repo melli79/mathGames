@@ -25,7 +25,7 @@ fun main() {
             val (n, f) = genPrivateKey(p1, p2, e)
             println("Der öffentliche Schlüssel ist n= $n, e= $e.  Der private Schlüssel ist f= $f")
             return
-        } catch (_ :AssertionError) {
+        } catch (_ :IllegalArgumentException) {
             e += 2uL
         }
     }
@@ -35,8 +35,9 @@ fun main() {
 fun genPrivateKey(p1 :ULong, p2 :ULong, e :ULong) :Pair<ULong,ULong> {
     val n = p1*p2
     val x = (p1-1uL)*(p2-1uL)
-    val fs = euclid(n.toLong(), e.toLong())
-    assert(fs.third==1L)
+    val fs = euclid(x.toLong(), e.toLong())
+    if (fs.third!=1L)
+        throw IllegalArgumentException("%e is not relatively prime to phi(p1*p2).")
     val f = fs.second.toULong()
     return Pair(n, f)
 }

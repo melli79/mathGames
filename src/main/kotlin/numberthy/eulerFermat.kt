@@ -11,11 +11,11 @@ private const val debug = true
  */
 fun main() {
     val n = 1073uL
-    val e = 7uL
+    val e = 11uL
     assert(gcd(e,n-1uL)==1uL)
     val x = phi(n)
-    val f = 460uL
-    assert(e*f%x==1uL)
+    val f = 275uL
+    assert((e*f)%x==1uL)
     print("Decryption or Encryption (d/e)? ")
     val choice = readlnOrNull()?.trim()
     if (choice.isNullOrEmpty())
