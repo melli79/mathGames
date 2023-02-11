@@ -23,7 +23,7 @@ data class FpMartrix internal constructor(val p :ULong, val n :UInt, val entries
             1u -> Fp(p, entries[0])
             2u -> Fp.of(p, (entries[0]*entries[3]).toLong() -(entries[1]*entries[2]).toLong())
             3u -> {
-                val a0 = entries[0];  val a1=entries[1];  val a2 = entries[3]
+                val a0 = entries[0];  val a1=entries[1];  val a2 = entries[2]
                 val b0 = entries[3];  val b1=entries[4];  val b2 = entries[5]
                 val c0 = entries[6];  val c1=entries[7];  val c2 = entries[8]
                 Fp.of(p, ((a0*b1*c2)%p +(a1*b2*c0)%p +(a2*b0*c1)%p).toLong() -
