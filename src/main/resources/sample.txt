@@ -1,0 +1,30 @@
+Nachdem wir letztes Mal den RSA Algorithmus kennen gelernt haben, wollen wir diesmal etwas allgemeiner über
+Kryptographie sprechen.
+
+Wer lieber ein (kurzes) Buch liest, dem sei [1] empfohlen.
+
+[1] A. Beutelspacher: *Kryptologie, Eine Einführung in die Wissenschaft vom Verschlüsseln, Verbergen und Verheimlichen*, Taschenbuch, November **2014**.
+
+# 1. Wenn Alice Bob eine geheime Nachricht schicken will...
+
+Zunächst einmal, worum geht es eigentlich bei Kryptographie (als Teilgebiet der Mathematik/Informatik).  Wir haben 2 Subjekte, die geheime Informationen über einen öffentlichen Kanal austauschen wollen.  Traditionell heißen diese beiden Alice und Bob, also A und B.
+
+Am sichersten wäre es, wenn Alice und Bob sich immer wieder in einem privaten Raum treffen könnten, in dem sie niemand belauschen kann und sie beliebig oft Nachrichten hin- und herreichen könnten.  Aber vielleicht wollen sie auch nicht, dass irgendjemand erfährt, dass sie miteinander kommunizieren, d.h. wir gehen davon aus, dass sie nur über Distanz und über öffentlich einsehbare Kanäle kommunizieren können.
+
+Können sie das erreichen und wenn ja, wie?
+
+Dazu wollen wir zunächst 3 Dinge unterteilen:
+
+1. eine verschlüsselte Nachricht: ein Text, eine Zeichenfolge, Zahlen, ... an denen man die geheime Nachricht nicht unmittelbar ablesen kann.
+
+2. Ein Algorithmus/Protokoll: ein Prinzip nach dem Alice eine geheime Nachricht verschlüsselt, dann öffentlich überträgt und anschließend (nur) Bob die geheime Nachricht wieder entschlüsseln kann.
+
+3. Ein (öffentlicher/geheimer) Schlüssel:  ein zusätzliches Stück Information, das Alice und Bob einmalig ausgetauscht haben, das niemand anderes kennt, aber auf das sie zurückgreifen können, um den Algorithmus zu betreiben.
+
+
+# 2. Cäsar-Chiffre
+## 2.1 Erklärung
+
+Die ersten Versuche, geheime Nachrichten zu übermitteln begannen damit, dass man einen geheimen Text durch geheime oder vertauschte Zeichen hinterlassen hat.  Der Herrscher Julius Caesar war bekannt dafür, dass er geheime Nachrichten hinterließ, von denen nur eingeweite sie lesen konnten.  Was hat er dazu getan?
+
+Er hatte 2 verschiebbare Reihen des (lateinischen) Alphabets, die er gegeneinander verschieben konnte, also etwa so:
