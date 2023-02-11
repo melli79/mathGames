@@ -40,7 +40,7 @@ data class Fp internal constructor(val p :ULong, val a :ULong) :Comparable<Fp> {
 
     fun inv() :Fp {
         assert(a!=0uL)
-        return Fp(p, euclid(a.toLong(), p.toLong()).first.toULong())
+        return of(p, euclid(a.toLong(), p.toLong()).first)
     }
 
     operator fun div(d :Fp) = times(d.inv())
@@ -185,6 +185,8 @@ data class FpPolynomial internal constructor(val p :ULong, val cs :ULongArray) :
         return FpPolynomial(p, result)
     }
 
+    operator fun div(c :Fp) = times(c.inv())
+
     fun div(d :FpPolynomial) :Pair<FpPolynomial, FpPolynomial> {
         assert (p==d.p)
         var r = this
@@ -192,7 +194,7 @@ data class FpPolynomial internal constructor(val p :ULong, val cs :ULongArray) :
         if (d.deg<0)
             return Pair(q, r)
         if (d.deg==0)
-            return Pair(q*d.lc().inv(), zero(p))
+            return Pair(div(d.lc()), zero(p))
         while (r.deg>=d.deg) {
             val q1 = r.lc()/d.lc();  val d1 = r.deg-d.deg
             val f = xPow(p, d1.toUInt()) * q1
@@ -277,4 +279,29 @@ fun factor(p :FpPolynomial) :List<FpPolynomial> {
     if (r.deg>=1)
         result.add(r)
     return result
+}
+
+fun gcd(a :FpPolynomial, b :FpPolynomial) :FpPolynomial {
+    assert (a.p==b.p)
+    var a0 = a;  var a1 = b
+    while (a1.deg>=0) {
+        val a2 = a0.div(a1).second
+        a0 = a1;  a1 = a2
+    }
+    return a0
+}
+
+fun euclid(a :FpPolynomial, b :FpPolynomial) :Triple<FpPolynomial, FpPolynomial, FpPolynomial> {
+    assert (a.p==b.p)
+    var a0 = a;  var fa = FpPolynomial.one(a.p); var fb = FpPolynomial.zero(a.p)
+    var a1 = b;  var ga = fb;  var gb = fa
+    while (a1.deg>=0) {
+        val q = a0.div(a1).first
+        val a2 = a0 -q*a1
+        val ha = fa -q*ga;  val hb = fb -q*gb
+        a0 = a1;  a1 = a2
+        fa = ga;  ga = ha
+        fb = gb;  gb = hb
+    }
+    return Triple(fa, fb, a0)
 }

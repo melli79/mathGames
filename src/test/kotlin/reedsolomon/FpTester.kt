@@ -31,6 +31,15 @@ class FpTester {
         })
     }
 
+    @Test fun inverses() {
+        val mults = ONE.rangeMult().toList()
+        println("a   : $mults")
+        println("a^-1: "+ mults.map { a ->
+            val inv = a.inv()
+            assertEquals(ONE, a*inv)
+            inv
+        })
+    }
     @Test fun ex() {
         println("X: $x, deg=${x.deg}")
     }
@@ -148,11 +157,29 @@ class FpTester {
         assertEquals((tests+irr4+irr5).sortedWith(lexicographicSorter), irreducibles.sortedWith(lexicographicSorter))
     }
 
-    @Test fun tryFactor() {
+    @Test fun factor() {
         val p = FpPolynomial.xPow(p, 9u) - one
         val result = factor(p)
         println("$p = $result")
         result.forEach { f -> assertTrue(isIrr(f)) }
         assertEquals(p.deg, result.sumOf { f -> f.deg })
+    }
+
+    @Test fun gcd() {
+        val p1 = x-one
+        val p2 = FpPolynomial.xPow(p, 3u) - one
+        val result = gcd(p1, p2)
+        println("gcd( $p1, $p2) = $result")
+        assertEquals(p1, result)
+    }
+
+    @Test fun euclid() {
+        val p1 = x-one
+        val p2 = FpPolynomial.xPow(p, 3u) - one
+        val (f1, f2, g) = euclid(p1, p2)
+        println("gcd($p1, $p2) = $f1*$p1 +$f2*$p2 = $g")
+        val expected = gcd(p1, p2)
+        assertEquals(expected, g)
+        assertEquals(expected, f1*p1 +f2*p2)
     }
 }
