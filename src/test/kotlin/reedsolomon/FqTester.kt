@@ -70,4 +70,14 @@ class FqTester {
             .joinToString("\n") { (_, row) -> row.joinToString { (_, a) -> "|$a|= ${a.norm().a}" } }
         )
     }
+
+    @Test fun inverses() {
+        val len = (p0-1u).toInt()
+        val ONE = Fq.one(p)
+        println(ONE.rangeMult().toList().mapIndexed { i, a -> Pair(a, i) }.joinToString("") { (a, i) ->
+            val inv = a.inv()
+            assertEquals(ONE, a*inv, "$a has wrong inverse: $inv")
+            "($a)^{-1} = $inv" +if (i%len==len-1) ",\n"  else ", "
+        })
+    }
 }

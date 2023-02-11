@@ -104,6 +104,14 @@ data class Fq private constructor(val p :FpPolynomial, val xs :ULongArray) :Comp
 
     fun norm() = multiplier().det()
 
+    fun inv() :Fq {
+        if (isInFp())
+            return Fq(p, (listOf(Fp(p.p, xs[0]).inv().a) +(1 until p.deg).map { 0uL }).toULongArray())
+        val result = euclid(p, FpPolynomial.ofU(p.p, xs.toList()))
+        assert(result.third.deg==0)
+        return Fq(p, (result.second/result.third.lc()).cs)
+    }
+
     fun range() = FqRange(p, 0u, ipow(p.p, p.deg.toUByte())-1uL)
 
     fun rangeMult() = FqRange(p, 1u, ipow(p.p, p.deg.toUByte())-1uL)
