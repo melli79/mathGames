@@ -34,8 +34,8 @@ sealed interface Atom {
         Alkali(1), Earths(2),
         RareEarths(-3), IV(-4), V(-5), VI(-6), VII(-7),
         VIIIa(-8), VIIIb(-8), VIIIc(-8), I(-1), II(-2),
-        Lathanides(-1), Actinides(-1),
-        Borons(3), Carbons(4), Nitrogenes(5), Oxygenes(6), Halogenes(7),
+        Lathanides(-3), Actinides(-3),
+        Borons(3), Carbons(4), Nitrogenes(5), Oxygenes(6), Halogen(7),
         Nobles(8)
     }
 }
@@ -77,7 +77,7 @@ enum class Metal(override val valences :Array<Byte>, override val order :UByte, 
         Indium(arrayOf(3), 49u, Atom.Group.Borons), Thallium(arrayOf(3), 81u, Atom.Group.Borons, "Tl"),
     Stannium(arrayOf(2, 4), 50u, Atom.Group.Carbons, "Sn"), Plumbum(arrayOf(2, 4), 82u, Atom.Group.Carbons, "Pb"),
     Bismuth(arrayOf(3, 5), 83u, Atom.Group.Nitrogenes),
-    Astatine(arrayOf(7, -1), 85u, Atom.Group.Halogenes, "At");
+    Astatine(arrayOf(7, -1), 85u, Atom.Group.Halogen, "At");
 
     override val symbol = symb ?: name.substring(0..1)
 }
@@ -95,8 +95,8 @@ enum class Semimetal(override val valences :Array<Byte>, override val order :UBy
 }
 
 enum class Nonmetal(override val valences :Array<Byte>, override val order :UByte,
-    override val group :Atom.Group =Atom.Group.Halogenes, private val symb :String? =null,
-    override val masses :Map<Double, Double> =emptyMap()
+                    override val group :Atom.Group =Atom.Group.Halogen, private val symb :String? =null,
+                    override val masses :Map<Double, Double> =emptyMap()
 ) :Atom {
     Hydrogen(arrayOf(1), 1u, Atom.Group.Alkali),
     Fluorine(arrayOf(-1), 9u), Chlorine(arrayOf(-1, 1, 3, 5, 7), 17u, symb= "Cl"), Bromine(arrayOf(-1, 1, 3, 5, 7), 35u, symb= "Br"),
