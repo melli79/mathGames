@@ -4,15 +4,22 @@ import kotlin.test.*
 
 class BondTester {
     @Test fun noBondsWithNobleGases() {
-        val result = bind(Atom.Metal.Sodium, Atom.Noblegas.Helium)
+        val result = bind(Metal.Sodium, Noblegas.Helium)
+        println("${Noblegas.Helium}: $result")
         assertEquals(emptySet(), result)
 
-        val result2 = bind(Atom.Nonmetal.Fluorine, Atom.Noblegas.Neon)
+        val result2 = bind(Nonmetal.Fluorine, Noblegas.Neon)
+        println("${Noblegas.Neon}: $result2")
         assertEquals(emptySet(), result2)
+        println("${Noblegas.Argon}: ${bind(Nonmetal.Fluorine, Noblegas.Argon)}")
+        println("${Noblegas.Crypton}: ${bind(Nonmetal.Fluorine, Noblegas.Crypton)}")
+        println("${Noblegas.Xenon}: ${bind(Nonmetal.Fluorine, Noblegas.Xenon)}")
+        println("${Noblegas.Radon}: ${bind(Nonmetal.Fluorine, Noblegas.Radon)}")
     }
 
     @Test fun hydrogenOxides() {
-        val result = bind(Atom.Nonmetal.Hydrogen, Atom.Nonmetal.Oxygen)
+        val result = bind(Nonmetal.Hydrogen, Nonmetal.Oxygen)
+        println(result)
         assertEquals(2, result.size)
         val water = result.find { b -> b.amount1>1.toUByte() }
         assertNotNull(water)
@@ -24,7 +31,7 @@ class BondTester {
     }
 
     @Test fun copperOxides() {
-        val result = bind(Atom.Metal.Copper, Atom.Nonmetal.Oxygen)
+        val result = bind(Metal.Copper, Nonmetal.Oxygen)
         println(result)
         assertEquals(2, result.size)
         val copper1 = result.find { b -> b.amount1==2.toUByte() }
@@ -37,7 +44,7 @@ class BondTester {
     }
 
     @Test fun nitrogenOxides() {
-        val result = bind(Atom.Nonmetal.Nitrogen, Atom.Nonmetal.Oxygen)
+        val result = bind(Nonmetal.Nitrogen, Nonmetal.Oxygen)
         println(result)
         val monoNitro = result.find { b -> b.amount1==1.toUByte() }
         assertNotNull(monoNitro)
@@ -49,9 +56,9 @@ class BondTester {
     }
 
     @Test fun bondsOfMetals() {
-        for (metal in Atom.Metal.values()) {
+        for (metal in Metal.values()) {
             print("$metal:  ")
-            for (nonmetal in Atom.Nonmetal.values()) {
+            for (nonmetal in Nonmetal.values()) {
                 print("${bind(metal, nonmetal)}, ")
             }
             println()
@@ -59,7 +66,7 @@ class BondTester {
     }
 
     @Test fun bondsOfNonmetals() {
-        for (nonmetal in Atom.Nonmetal.values()) if (nonmetal!=Atom.Nonmetal.Oxygen) {
+        for (nonmetal in Nonmetal.values()) if (nonmetal!=Nonmetal.Oxygen) {
             print("$nonmetal: ")
             for (oxidizer in oxidizers) if (nonmetal!=oxidizer) {
                 print("${bind(nonmetal, oxidizer)}, ")

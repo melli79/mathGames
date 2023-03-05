@@ -19,14 +19,14 @@ open class Bond2(override val element1 :Atom, override val element2 :Atom, overr
         override val type :Bond.Type) :Bond {
 
     override fun toString() :String {
-        val part1 = if (element1 is Atom.Metal) {
+        val part1 = if (element1 is Metal) {
             if (element1.valences.size<2)
                 "$element1"
             else {
                 val valence1 = abs(element2.valences[0].toInt()) *amount2.toInt() /amount1.toInt()
                 "$element1-$valence1-"
             }
-        } else if (element2==Atom.Nonmetal.Hydrogen || element1==Atom.Nonmetal.Hydrogen)
+        } else if (element2==Nonmetal.Hydrogen || element1==Nonmetal.Hydrogen)
             "$element1"
         else
             "${count(amount1)}$element1${count(amount2)}"
@@ -34,16 +34,16 @@ open class Bond2(override val element1 :Atom, override val element2 :Atom, overr
     }
 
     private fun nameAnion(element :Atom) = when (element) {
-        Atom.Nonmetal.Fluorine -> "fluoride"
-        Atom.Nonmetal.Oxygen -> "oxide"
-        Atom.Nonmetal.Chlorine -> "chloride"
-        Atom.Nonmetal.Sulfur -> "sulfide"
-        Atom.Nonmetal.Selenium -> "selenide"
-        Atom.Nonmetal.Nitrogen -> "nitride"
-        Atom.Nonmetal.Phosphorus -> "phosphoride"
-        Atom.Nonmetal.Bromine -> "bromide"
-        Atom.Nonmetal.Carbon -> "carbide"
-        Atom.Nonmetal.Iodine -> "iodide"
+        Nonmetal.Fluorine -> "fluoride"
+        Nonmetal.Oxygen -> "oxide"
+        Nonmetal.Chlorine -> "chloride"
+        Nonmetal.Sulfur -> "sulfide"
+        Nonmetal.Selenium -> "selenide"
+        Nonmetal.Nitrogen -> "nitride"
+        Nonmetal.Phosphorus -> "phosphoride"
+        Nonmetal.Bromine -> "bromide"
+        Nonmetal.Carbon -> "carbide"
+        Nonmetal.Iodine -> "iodide"
         else -> element.toString()
     }
 }
@@ -60,13 +60,13 @@ internal fun count(amount :UByte) = when (amount.toUInt()) {
     else -> "poly"
 }
 
-val oxidizers = setOf(Atom.Nonmetal.Oxygen, Atom.Nonmetal.Fluorine, Atom.Nonmetal.Chlorine, Atom.Nonmetal.Bromine)
+val oxidizers = setOf(Nonmetal.Oxygen, Nonmetal.Fluorine, Nonmetal.Chlorine, Nonmetal.Bromine)
 
 fun bind(element1 :Atom, element2 :Atom) :Set<Bond2> {
     val result = mutableSetOf<Bond2>()
-    if (element2==Atom.Nonmetal.Oxygen) when (element1) {
-        Atom.Nonmetal.Hydrogen -> result.add(Bond2(element1, element2, 1u, 1u, Bond.Type.Polar))
-        Atom.Nonmetal.Nitrogen -> {
+    if (element2==Nonmetal.Oxygen) when (element1) {
+        Nonmetal.Hydrogen -> result.add(Bond2(element1, element2, 1u, 1u, Bond.Type.Polar))
+        Nonmetal.Nitrogen -> {
             result.add(Bond2(element1, element2, 2u, 1u, Bond.Type.Polar))
             result.add(Bond2(element1, element2, 1u, 1u, Bond.Type.Polar))
             result.add(Bond2(element1, element2, 1u, 2u, Bond.Type.Polar))
@@ -77,11 +77,11 @@ fun bind(element1 :Atom, element2 :Atom) :Set<Bond2> {
         for (valence2 in element2.valences) {
             if (valence1*valence2<0) {
                 val type = when {
-                    element1 is Atom.Metal || element2 is Atom.Metal -> Bond.Type.Ionic
+                    element1 is Metal || element2 is Metal -> Bond.Type.Ionic
                     element1==element2 || element1 in oxidizers && element2 in oxidizers -> Bond.Type.Nonpolar
-                    element1==Atom.Nonmetal.Nitrogen && element2==Atom.Nonmetal.Hydrogen -> Bond.Type.Base
-                    (element1 is Atom.Nonmetal && element2==Atom.Nonmetal.Hydrogen) ||
-                            (element2 is Atom.Nonmetal && element1==Atom.Nonmetal.Hydrogen) -> Bond.Type.Acid
+                    element1==Nonmetal.Nitrogen && element2==Nonmetal.Hydrogen -> Bond.Type.Base
+                    (element1 is Nonmetal && element2==Nonmetal.Hydrogen) ||
+                            (element2 is Nonmetal && element1==Nonmetal.Hydrogen) -> Bond.Type.Acid
                     else -> Bond.Type.Polar
                 }
                 val m = lcm(abs(valence1.toLong()).toULong(), abs(valence2.toLong()).toULong()).toInt()

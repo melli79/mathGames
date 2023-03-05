@@ -38,8 +38,8 @@ class OrganicsTester {
 
     @Test fun halogeneAlkan() {
         val fckw = OrganicMolecule(1u, moieties= listOf(
-            PositionedMoiety(Moiety.Inorganic1(Atom.Nonmetal.Chlorine), arrayOf(2u,3u,4u)),
-            PositionedMoiety(Moiety.Inorganic1(Atom.Nonmetal.Fluorine), 1u)
+            PositionedMoiety(Moiety.Inorganic1(Nonmetal.Chlorine), arrayOf(2u,3u,4u)),
+            PositionedMoiety(Moiety.Inorganic1(Nonmetal.Fluorine), 1u)
         ))
         println(fckw)
     }

@@ -2,7 +2,7 @@ package chemistry
 
 data class OrganicMolecule(val clength :UByte, val type :BaseType =BaseType.Alkan, val moieties :List<PositionedMoiety> =emptyList()) {
     companion object {
-        val names = listOf("hydrogene", "Methane", "Ethane", "Propane", "Butane", "Pentane",
+        val names = listOf("hydrogen", "Methane", "Ethane", "Propane", "Butane", "Pentane",
             "Hexane", "Heptane", "Octane", "Nonane", "Decane")
     }
 
@@ -56,7 +56,7 @@ sealed interface Moiety {
         override fun toString() = "ol"
     }
 
-    data class Inorganic1(val atom :Atom.Nonmetal) :Moiety {
+    data class Inorganic1(val atom :Nonmetal) :Moiety {
         override fun toString() :String {
             val name = atom.toString()
             return name.substring(0 until name.length-3) +"o"
