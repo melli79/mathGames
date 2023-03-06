@@ -14,7 +14,7 @@ fun hydrate(element :Atom) :List<Bond> = when (element) {
         bind(Nonmetal.Hydrogen, element).toList() +
                 element.valences.filter { v -> v>0 }.map { v ->
                     Bond3(Nonmetal.Hydrogen, element, Nonmetal.Oxygen,
-                        1u, 1u, (v/2).toUByte())
+                        1u, 1u, (v/2+1).toUByte())
                 }
 
     in setOf(Nonmetal.Sulfur, Nonmetal.Selenium) ->
