@@ -21,7 +21,9 @@ class AcidBaseTester {
             bases.forEach { b -> assertEquals(Bond.Type.Base, b.type) }
         }
         for (semimetal in Semimetal.values()) {
-            println(hydrate(semimetal))
+            val acids = hydrate(semimetal)
+            println(acids)
+            acids.forEach { a -> assertEquals(Bond.Type.Acid, a.type) }
         }
     }
 }
