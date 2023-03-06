@@ -20,6 +20,9 @@ class AcidBaseTester {
             println(bases)
             bases.forEach { b -> assertEquals(Bond.Type.Base, b.type) }
         }
+    }
+
+    @Test fun semiMetalTester() {
         for (semimetal in Semimetal.values()) {
             val acids = hydrate(semimetal)
             println(acids)

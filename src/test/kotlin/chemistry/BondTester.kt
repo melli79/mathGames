@@ -55,11 +55,35 @@ class BondTester {
         assertEquals(1.toUByte(), diNitro.amount2)
     }
 
-    @Test fun bondsOfMetals() {
+    @Test fun metalOxides() {
+        for (metal in Metal.values()) {
+            println("${metal.name}: ${bind(metal, Nonmetal.Oxygen)}")
+        }
+    }
+
+    @Test fun salts() {
         for (metal in Metal.values()) {
             print("${metal.name}:  ")
-            for (nonmetal in Nonmetal.values()) {
+            for (nonmetal in Nonmetal.values()) if (nonmetal!=Nonmetal.Oxygen) {
                 print("${bind(metal, nonmetal)}, ")
+            }
+            println()
+        }
+    }
+
+    val weakMetals = listOf(
+        Metal.Sodium, Metal.Potassium, Metal.Rubidium, Metal.Franzium, Metal.Caesium,
+        Metal.Calcium, Metal.Gallium
+    )
+
+    @Test fun bondsOfSemimetals() {
+        for (element in Semimetal.values()) {
+            print(element.getIupacName()+":  ")
+            for (metal in weakMetals) {
+                print("${bind(metal, element)}, ")
+            }
+            for (oxidizer in oxidizers) {
+                print("${bind(element, oxidizer)}, ")
             }
             println()
         }
