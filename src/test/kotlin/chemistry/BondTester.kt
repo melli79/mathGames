@@ -11,23 +11,23 @@ class BondTester {
         val result2 = bind(Nonmetal.Fluorine, Noblegas.Neon)
         println("${Noblegas.Neon}: $result2")
         assertEquals(emptySet(), result2)
-        println("${Noblegas.Argon}: ${bind(Nonmetal.Fluorine, Noblegas.Argon)}")
-        println("${Noblegas.Crypton}: ${bind(Nonmetal.Fluorine, Noblegas.Crypton)}")
-        println("${Noblegas.Xenon}: ${bind(Nonmetal.Fluorine, Noblegas.Xenon)}")
-        println("${Noblegas.Radon}: ${bind(Nonmetal.Fluorine, Noblegas.Radon)}")
+        println("${Noblegas.Argon.name}: ${bind(Nonmetal.Fluorine, Noblegas.Argon)}")
+        println("${Noblegas.Crypton.name}: ${bind(Nonmetal.Fluorine, Noblegas.Crypton)}")
+        println("${Noblegas.Xenon.name}: ${bind(Nonmetal.Fluorine, Noblegas.Xenon)}")
+        println("${Noblegas.Radon.name}: ${bind(Nonmetal.Fluorine, Noblegas.Radon)}")
     }
 
     @Test fun hydrogenOxides() {
         val result = bind(Nonmetal.Hydrogen, Nonmetal.Oxygen)
         println(result)
         assertEquals(2, result.size)
-        val water = result.find { b -> b.amount1>1.toUByte() }
+        val water = result.find { b -> b.amount2==1.toUByte() }
         assertNotNull(water)
         assertEquals(2.toUByte(), water.amount1)
         assertEquals(1.toUByte(), water.amount2)
-        val peroxide = result.find { b -> b.amount1==1.toUByte() }
+        val peroxide = result.find { b -> b.amount2==2.toUByte() }
         assertNotNull(peroxide)
-        assertEquals(1.toUByte(), peroxide.amount2)
+        assertEquals(2.toUByte(), peroxide.amount1)
     }
 
     @Test fun copperOxides() {
@@ -57,7 +57,7 @@ class BondTester {
 
     @Test fun bondsOfMetals() {
         for (metal in Metal.values()) {
-            print("$metal:  ")
+            print("${metal.name}:  ")
             for (nonmetal in Nonmetal.values()) {
                 print("${bind(metal, nonmetal)}, ")
             }
@@ -67,7 +67,7 @@ class BondTester {
 
     @Test fun bondsOfNonmetals() {
         for (nonmetal in Nonmetal.values()) if (nonmetal!=Nonmetal.Oxygen) {
-            print("$nonmetal: ")
+            print("${nonmetal.name}: ")
             for (oxidizer in oxidizers) if (nonmetal!=oxidizer) {
                 print("${bind(nonmetal, oxidizer)}, ")
             }

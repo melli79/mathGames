@@ -10,6 +10,8 @@ sealed interface Atom {
     val symbol :String
     val masses :Map<Double, Double>
 
+    fun getIupacName() = name
+
     val period :UByte
         get() = when(order.toInt()) {
             in 1..2 -> 1u
@@ -80,6 +82,7 @@ enum class Metal(override val valences :ByteArray, override val order :UByte, ov
     Astatine(byteArrayOf(7, -1), 85u, Atom.Group.Halogen, "At");
 
     override val symbol = symb ?: name.substring(0..1)
+    override fun toString() = symbol
 }
 
 enum class Semimetal(override val valences :ByteArray, override val order :UByte, override val group :Atom.Group,
@@ -92,6 +95,7 @@ enum class Semimetal(override val valences :ByteArray, override val order :UByte
     ;
 
     override val symbol = symb ?: name.substring(0..1)
+    override fun toString() = symbol
 }
 
 enum class Nonmetal(override val valences :ByteArray, override val order :UByte,
@@ -107,6 +111,7 @@ enum class Nonmetal(override val valences :ByteArray, override val order :UByte,
     Carbon(byteArrayOf(4, 2, -4), 6u, Atom.Group.Carbons);
 
     override val symbol = symb ?: name.substring(0..0)
+    override fun toString() = symbol
 }
 
 enum class Noblegas(override val order :UByte, symb :String? =null,
@@ -118,4 +123,5 @@ enum class Noblegas(override val order :UByte, symb :String? =null,
         Radon(86u, symb= "Rn");
 
     override val symbol = symb ?: name.substring(0..1)
+    override fun toString() = symbol
 }

@@ -5,7 +5,12 @@ import java.util.*
 open class Bond3(
         override val element1 :Atom, override val element2 :Atom, val element3 :Atom,
         override val amount1 :UByte, override val amount2 :UByte, val amount3 :UByte) :Bond {
-    override fun toString() = when {
+    override fun toString() = if (amount2==amount3 && amount2>1u)
+            """$element1${amount(amount1)}($element2$element3)${amount(amount2)}"""
+        else
+            """$element1${amount(amount1)}$element2${amount(amount2)}$element3${amount(amount3)}"""
+
+    override fun getIupacName() = when {
         amount2==amount3 && element2== Nonmetal.Oxygen &&element3== Nonmetal.Hydrogen ->
             if (element1 is Metal) "$element1${valence1()}hydroxide"
             else "$element1 hydroxide"

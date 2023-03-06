@@ -28,12 +28,16 @@ sealed interface Bond {
     enum class Type {
         Ionic, Acid, Base, Polar, Nonpolar
     }
+
+    fun getIupacName() :String
 }
 
 open class Bond2(override val element1 :Atom, override val element2 :Atom,
                  override val amount1 :UByte, override val amount2 :UByte) :Bond {
 
-    override fun toString() :String {
+    override fun toString() = """$element1${amount(amount1)}$element2${amount(amount2)}"""
+
+    override fun getIupacName() :String {
         val part1 = if (element1 is Metal) {
             if (element1.valences.size<2)
                 "$element1"
@@ -80,7 +84,7 @@ val oxidizers = setOf(Nonmetal.Fluorine, Nonmetal.Oxygen, Nonmetal.Chlorine, Non
 fun bind(element1 :Atom, element2 :Atom) :Set<Bond2> {
     val result = mutableSetOf<Bond2>()
     if (element2==Nonmetal.Oxygen) when (element1) {
-        Nonmetal.Hydrogen -> result.add(Bond2(element1, element2, 1u, 1u))
+        Nonmetal.Hydrogen -> result.add(Bond2(element1, element2, 2u, 2u))
         Nonmetal.Nitrogen -> {
             result.add(Bond2(element1, element2, 2u, 1u))
             result.add(Bond2(element1, element2, 1u, 1u))
@@ -100,4 +104,9 @@ fun bind(element1 :Atom, element2 :Atom) :Set<Bond2> {
         }
     }
     return result
+}
+
+internal fun amount(n :UByte) = when (n.toInt()) {
+    1 -> ""
+    else -> "_$n "
 }
