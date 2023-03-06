@@ -78,8 +78,7 @@ enum class Metal(override val valences :ByteArray, override val order :UByte, ov
     Aluminium(byteArrayOf(3), 13u, Atom.Group.Borons), Gallium(byteArrayOf(3), 31u, Atom.Group.Borons),
         Indium(byteArrayOf(3), 49u, Atom.Group.Borons), Thallium(byteArrayOf(3), 81u, Atom.Group.Borons, "Tl"),
     Stannium(byteArrayOf(2, 4), 50u, Atom.Group.Carbons, "Sn"), Plumbum(byteArrayOf(2, 4), 82u, Atom.Group.Carbons, "Pb"),
-    Bismuth(byteArrayOf(3, 5), 83u, Atom.Group.Nitrogenes),
-    Astatine(byteArrayOf(7, -1), 85u, Atom.Group.Halogen, "At");
+    Bismuth(byteArrayOf(3, 5), 83u, Atom.Group.Nitrogenes);
 
     override val symbol = symb ?: name.substring(0..1)
     override fun toString() = symbol
@@ -91,8 +90,8 @@ enum class Semimetal(override val valences :ByteArray, override val order :UByte
     Boron(byteArrayOf(3), 5u, Atom.Group.Borons, "B"),
     Silicon(byteArrayOf(4, -4), 14u, Atom.Group.Carbons), Germanium(byteArrayOf(4, -4), 32u, Atom.Group.Carbons),
     Arsen(byteArrayOf(-3, 5), 33u, Atom.Group.Nitrogenes, "As"), Antimony(byteArrayOf(-3, 5), 51u, Atom.Group.Nitrogenes, "Sb"),
-    Tellurium(byteArrayOf(-2, 6), 52u, Atom.Group.Oxygenes), Polonium(byteArrayOf(-2, 6), 84u, Atom.Group.Oxygenes)
-    ;
+    Tellurium(byteArrayOf(-2, 6), 52u, Atom.Group.Oxygenes), Polonium(byteArrayOf(-2, 6), 84u, Atom.Group.Oxygenes),
+    Astatine(byteArrayOf(7, -1), 85u, Atom.Group.Halogen, "At");
 
     override val symbol = symb ?: name.substring(0..1)
     override fun toString() = symbol

@@ -25,7 +25,7 @@ open class Bond3(
 
 internal fun oxideName(element :Atom, oxygenAmount :UByte) = when (element) {
     Nonmetal.Fluorine -> "fluorite"
-    Nonmetal.Chlorine, Nonmetal.Bromine, Nonmetal.Iodine, Metal.Astatine,
+    Nonmetal.Chlorine, Nonmetal.Bromine, Nonmetal.Iodine, Semimetal.Astatine,
     Metal.Chromium -> when (oxygenAmount.toInt()) {
         1 -> "hypo${stem(element)}ic"
         2 -> "${stem(element)}ic"
