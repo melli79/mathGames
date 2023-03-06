@@ -8,15 +8,30 @@ sealed interface Bond {
     val element2 :Atom
     val amount1 :UByte
     val amount2 :UByte
+
     val type :Type
+        get() = when {
+            element1==Nonmetal.Hydrogen -> Type.Acid
+            element1 is Metal && element2==Nonmetal.Oxygen && this is Bond3 && element3==Nonmetal.Hydrogen
+                -> Type.Base
+            element1 is Semimetal && element2==Nonmetal.Oxygen && this is Bond3 && element3==Nonmetal.Hydrogen
+                -> Type.Acid
+            element1==Nonmetal.Nitrogen && element2==Nonmetal.Hydrogen -> Type.Base
+
+            element1 is Metal && element2 in oxidizers -> Type.Ionic
+            element1 in setOf(Nonmetal.Carbon, Nonmetal.Phosphorus, Nonmetal.Selenium) &&
+                    element2 in setOf(Nonmetal.Fluorine, Nonmetal.Oxygen, Nonmetal.Chlorine) -> Type.Polar
+            element1 is Metal || element2 is Metal || element1==Nonmetal.Phosphorus -> Type.Polar
+            else -> Type.Nonpolar
+        }
 
     enum class Type {
         Ionic, Acid, Base, Polar, Nonpolar
     }
 }
 
-open class Bond2(override val element1 :Atom, override val element2 :Atom, override val amount1 :UByte, override val amount2 :UByte,
-        override val type :Bond.Type) :Bond {
+open class Bond2(override val element1 :Atom, override val element2 :Atom,
+                 override val amount1 :UByte, override val amount2 :UByte) :Bond {
 
     override fun toString() :String {
         val part1 = if (element1 is Metal) {
@@ -60,34 +75,27 @@ internal fun count(amount :UByte) = when (amount.toUInt()) {
     else -> "poly"
 }
 
-val oxidizers = setOf(Nonmetal.Oxygen, Nonmetal.Fluorine, Nonmetal.Chlorine, Nonmetal.Bromine)
+val oxidizers = setOf(Nonmetal.Fluorine, Nonmetal.Oxygen, Nonmetal.Chlorine, Nonmetal.Nitrogen, Nonmetal.Bromine, Nonmetal.Iodine)
 
 fun bind(element1 :Atom, element2 :Atom) :Set<Bond2> {
     val result = mutableSetOf<Bond2>()
     if (element2==Nonmetal.Oxygen) when (element1) {
-        Nonmetal.Hydrogen -> result.add(Bond2(element1, element2, 1u, 1u, Bond.Type.Polar))
+        Nonmetal.Hydrogen -> result.add(Bond2(element1, element2, 1u, 1u))
         Nonmetal.Nitrogen -> {
-            result.add(Bond2(element1, element2, 2u, 1u, Bond.Type.Polar))
-            result.add(Bond2(element1, element2, 1u, 1u, Bond.Type.Polar))
-            result.add(Bond2(element1, element2, 1u, 2u, Bond.Type.Polar))
+            result.add(Bond2(element1, element2, 2u, 1u))
+            result.add(Bond2(element1, element2, 1u, 1u))
+            result.add(Bond2(element1, element2, 1u, 2u))
         }
+        Metal.Ferrum -> result.add(Bond2(element1, element2, 3u, 4u))
         else -> {}
     }
     for (valence1 in element1.valences) {
         for (valence2 in element2.valences) {
             if (valence1*valence2<0) {
-                val type = when {
-                    element1 is Metal || element2 is Metal -> Bond.Type.Ionic
-                    element1==element2 || element1 in oxidizers && element2 in oxidizers -> Bond.Type.Nonpolar
-                    element1==Nonmetal.Nitrogen && element2==Nonmetal.Hydrogen -> Bond.Type.Base
-                    (element1 is Nonmetal && element2==Nonmetal.Hydrogen) ||
-                            (element2 is Nonmetal && element1==Nonmetal.Hydrogen) -> Bond.Type.Acid
-                    else -> Bond.Type.Polar
-                }
                 val m = lcm(abs(valence1.toLong()).toULong(), abs(valence2.toLong()).toULong()).toInt()
                 result.add(Bond2(element1, element2,
-                    (m/abs(valence1.toInt())).toUByte(), (m/abs(valence2.toInt())).toUByte(),
-                    type))
+                    (m/abs(valence1.toInt())).toUByte(), (m/abs(valence2.toInt())).toUByte())
+                )
             }
         }
     }

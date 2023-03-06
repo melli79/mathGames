@@ -63,8 +63,8 @@ sealed interface Moiety {
         }
     }
 
-    class Inorganic2(element1 :Atom, element2 :Atom, amount1 :UByte, amount2 :UByte, type :Bond.Type) :Moiety,
-        Bond2(element1, element2, amount1, amount2, type) {}
+    class Inorganic2(element1 :Atom, element2 :Atom, amount1 :UByte, amount2 :UByte) :Moiety,
+        Bond2(element1, element2, amount1, amount2) {}
 
     class Inorganic3(element1 :Atom, element2 :Atom, element3 :Atom, amount1 :UByte, amount2 :UByte, amount3 :UByte) :Moiety,
             Bond3(element1, element2, element3, amount1, amount2, amount3) {}

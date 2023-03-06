@@ -4,7 +4,7 @@ import kotlin.test.*
 
 class BondTester {
     @Test fun noBondsWithNobleGases() {
-        val result = bind(Metal.Sodium, Noblegas.Helium)
+        val result = bind(Nonmetal.Fluorine, Noblegas.Helium)
         println("${Noblegas.Helium}: $result")
         assertEquals(emptySet(), result)
 

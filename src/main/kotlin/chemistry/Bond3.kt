@@ -16,17 +16,6 @@ open class Bond3(
     } +" ($type)"
 
     private fun valence1() = if (element1.valences.size==1) " " else "-$amount2-"
-
-    override val type :Bond.Type
-        get() = when {
-        element1==Nonmetal.Hydrogen -> Bond.Type.Acid
-        element1 is Metal && element2==Nonmetal.Oxygen && element3==Nonmetal.Hydrogen
-                -> Bond.Type.Base
-        element1 is Semimetal && element2==Nonmetal.Oxygen && element3==Nonmetal.Hydrogen
-                -> Bond.Type.Acid
-        element1 is Metal || element2 is Metal -> Bond.Type.Polar
-        else -> Bond.Type.Nonpolar
-    }
 }
 
 internal fun oxideName(element :Atom, oxygenAmount :UByte) = when (element) {
