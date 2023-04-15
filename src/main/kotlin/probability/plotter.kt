@@ -14,8 +14,9 @@ import kotlin.math.min
 fun main() {
     val thresholds = mutableMapOf<UInt, Triple<Double, Double, Double>>()
     var n = 4u
-    while (n<1048000u) {
-        thresholds[n] = Triple(findThreshold(n, 0.05), findThreshold(n), findThreshold(n, 0.95))
+    while (n<1096000123u) {
+        val triple = findThreshold(n, doubleArrayOf(0.95, 0.5, 0.05))
+        thresholds[n] = Triple(triple[0], triple[1], triple[2])
         n += n/4u
     }
     val points = thresholds.entries.map { Quadruple(ln(it.key.toDouble()), ln(it.value.first), ln(it.value.second), ln(it.value.third)) }
@@ -34,7 +35,7 @@ fun linReg(points: List<Quadruple<Double, Double, Double, Double>>) :Pair<Double
     val xy1 = points.sumOf { it.first*it.second*it.first }/n
     val m1 = (xy1 - x*y1) * f
     val b1 = y1 - m1*x
-    println("ln t_05 = %.5f*ln N %+.5f".format(m1, b1))
+    println("ln t_95 = %.5f*ln N %+.5f".format(m1, b1))
     val y2 = points.sumOf { it.third*it.first }/n
     val xy2 = points.sumOf { it.first*it.third*it.first }/n
     val m2 = (xy2 - x*y2) * f
@@ -44,7 +45,7 @@ fun linReg(points: List<Quadruple<Double, Double, Double, Double>>) :Pair<Double
     val xy3 = points.sumOf { it.first*it.fourth*it.first }/n
     val m3 = (xy3 - x*y3) * f
     val b3 = y3 - m3*x
-    println("ln t_95 = %.5f*ln N %+.5f".format(m3, b3))
+    println("ln t_05 = %.5f*ln N %+.5f".format(m3, b3))
     return Pair(m2, b2)
 }
 
@@ -114,7 +115,10 @@ class Plotter(private val points: List<Quadruple<Double, Double, Double, Double>
         drawString("1.0", x1-10,y0+16)
         val x10 = scale.px(10.0)
         drawLine(x10, y0, x10,y0+5)
-        drawString("10.0", x10-16,y0+16)
+        drawString("10.0", x10-18,y0+16)
+        val x20 = scale.px(20.0)
+        drawLine(x20, y0, x20,y0+5)
+        drawString("20.0", x20-18,y0+16)
 
         drawLine(0,y0, width,y0)
         val y1 = scale.py(1.0)
