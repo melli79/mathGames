@@ -2,10 +2,10 @@ package dynamic
 
 import common.Quadruple
 
-fun computeKnapsack(items :List<Pair<UInt, UInt>>, size :UInt) :Set<UInt> {
-    val result = mutableSetOf<UInt>()
+fun computeKnapsack(items :List<Pair<UInt, UInt>>, size :UInt) :Set<Int> {
+    val result = mutableSetOf<Int>()
     var value = 0u
-    val input = items.mapIndexed { i, p -> Triple(p.first, p.second, i.toUInt()) }
+    val input = items.mapIndexed { i, p -> Triple(p.first, p.second, i) }
     input.filter { t -> t.second==0u }.forEach {t ->
         result.add(t.third)
         value += t.first
@@ -16,10 +16,10 @@ fun computeKnapsack(items :List<Pair<UInt, UInt>>, size :UInt) :Set<UInt> {
     return result +bestChoices(size, options).second
 }
 
-private fun bestChoices(size :UInt, options :List<Quadruple<Double, UInt, UInt, UInt>>) :Pair<UInt, Set<UInt>> {
+private fun bestChoices(size :UInt, options :List<Quadruple<Double, UInt, UInt, Int>>) :Pair<UInt, Set<Int>> {
     val bestOptions = options.filter { q -> q.third <= size }
         .sortedWith(Comparator
-            .comparing<Quadruple<Double, UInt, UInt, UInt>, Double> { -it.first }
+            .comparing<Quadruple<Double, UInt, UInt, Int>, Double> { -it.first }
             .thenComparing<Int> { -it.second.toInt() })
     if (bestOptions.isNotEmpty()) {
         val choice = bestOptions.first()
