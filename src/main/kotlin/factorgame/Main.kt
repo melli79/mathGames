@@ -1,6 +1,6 @@
 package factorgame
 
-fun main(args: Array<String>) {
+fun main(args :Array<String>) {
     val server = Server(100u)
 //    if (random.nextBoolean()) {
         val player = StrategicPlayer()
