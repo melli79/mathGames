@@ -1882,7 +1882,7 @@ Goal is to build a working compiler.  You may want to read about more specific i
 
 2. Turing complete (addition, peek, poke, loop&exit, conditional execution)
 
-If you have no idea yet, read about the [Quorum](https://www.quorum.com/) project, i.e. evidence-based design of a programming language.
+If you have no idea yet, read about the [Quorum](https://quorumlanguage.com/) project, i.e. evidence-based design of a programming language.
 
 3. write at least 2 simple programs in it
 
