@@ -17,6 +17,6 @@ fun main() {
     println("c) p = $pc ≈ %.2g".format(pc.toDouble()))
     val fix = Rational.of((1*4 +0*3 +6*2 +4*2*1 +9*0).toLong(), (4*3*2*1).toLong())
     println("d) E fix = $fix ≈ %.2f".format(fix.toDouble()))
-    val loss = (Rational(4L, 1uL)-fix)*Rational(1L, 5uL)
+    val loss = (Rational.of(4L, 1L)-fix)*Rational.of(1L, 5L)
     println("e) E loss = $loss ≈ %.2g".format(loss.toDouble()))
 }
