@@ -648,6 +648,8 @@ Given a bi-partite graph $(M,E,F)$ where $V:=M\cup F$ and edges only connect $M$
 
 Hall's Marriage problem is a bi-partite network $(M,E,F,w)$ with $w\colon E\to[0,\infty)$ such that $w$ means the quality/happiness of that marriage.  Hall's Marriage is a matching with maximum sum weight.
 
+[The Hungarian Algorithm](https://en.wikipedia.org/wiki/Hungarian_algorithm#The_algorithm_in_O(n3)_time) is able to find a maximal matching of minimum sum weight in a bipartite graph in $\mathcal{O}(|F|^2|M|)$ if there are at most as many females $|F|$ as there are males $|M|$.
+
 
 ## 12. $k$-connected components
 
@@ -665,9 +667,9 @@ Q: Is that unique?
 
 ### Application: Tournament plans
 
-Given $N$ playes that play $k$-player games what is a minimal plan such that every playes has played with every other player in a $k$-player game.
+Given $N$ players that play $k$-player games, what is a minimal plan such that every player has played with every other player in a game.
 
-Hint:  Obviously, you need $r:=\lceil (N-1)/(k-1)\rceil$ rounds in order to reach that.  But can you actually find a partition of the $N$ players in $rk$ groups such that always $r$ groups can play simultaneously and nobody has to play more than $r$ games?
+Hint:  Obviously, you need at least $r:=\lceil (N-1)/(k-1)\rceil$ rounds in order to reach that.  But can you actually find a partition with $r$-fold repetition of the $N$ players in $rN/k$ groups such that always $\lceil N/k\rceil$ groups can play simultaneously and nobody has to play more than $r$ games?
 
 
 ## 13. String Matching Algorithms
