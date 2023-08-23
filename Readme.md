@@ -260,9 +260,9 @@ Given a collection, find a specific element knowing:
 
 ## Countable Tournament
 
-Given a list of $n$ players/teams which each have a different strength and according to strength they win against each other (no ties).  In the beginnin they are arranged in random order.  A tournament is as follows:
+Given a list of $n$ players/teams of which each 2 have a different strength and according to strength they win against each other (no ties).  In the beginning they are arranged in random order.  A tournament is as follows:
 
-The first to players compete against each other and the loser goes to the end of the row while the winner is sorted into the middle of the row.
+The first two players compete against each other and the loser goes to the end of the row while the winner is sorted into the middle of the row.
 
 Q1: How many steps are necessary to determine the best player (in worst case and in average case)?
 
@@ -644,9 +644,10 @@ If in addition you want to minimize the transport in the network, you can reduce
 
 ## 11. Maximum Matchings
 
-Given a bi-partite graph $(M,E,F)$ where $V:=M\cup F$ and edges only connect $M$-vertices with $F$-vertices.  A matching $m\subset E$ is a set of edges such that every $v\im M$ and every $f\in F$ lies on at most one edge $e\in m$.  A maximum matching is one to which you cannot add edges such that it remains a matching.  The maximum matching is a matching with the maximum number of edges.
+Given a bi-partite graph $(M,E,F)$ where $V:=M\cup F$ and edges only connect $M$-vertices with $F$-vertices.  A matching $m\subset E$ is a set of edges such that every $v\in M$ and every $f\in F$ lies on at most one edge $e\in m$.  A maximal matching is one to which you cannot add edges such that it remains a matching.  The maximal matching is a matching with the maximum number of edges.
 
 Hall's Marriage problem is a bi-partite network $(M,E,F,w)$ with $w\colon E\to[0,\infty)$ such that $w$ means the quality/happiness of that marriage.  Hall's Marriage is a matching with maximum sum weight.
+
 
 ## 12. $k$-connected components
 
@@ -661,6 +662,13 @@ Examples:
 Find a greedy algorithm that extracts a $CC_k$ component from a graph and use it to partition the whole graph into $CC_k$ components.
 
 Q: Is that unique?
+
+### Application: Tournament plans
+
+Given $N$ playes that play $k$-player games what is a minimal plan such that every playes has played with every other player in a $k$-player game.
+
+Hint:  Obviously, you need $r:=\lceil (N-1)/(k-1)\rceil$ rounds in order to reach that.  But can you actually find a partition of the $N$ players in $rk$ groups such that always $r$ groups can play simultaneously and nobody has to play more than $r$ games?
+
 
 ## 13. String Matching Algorithms
 
