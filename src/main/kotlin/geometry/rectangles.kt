@@ -8,26 +8,49 @@ fun computeTotalArea(rs: Collection<Rectangle>) :ULong {
     var candidates = rs.map { Pair(setOf(it), it) }.toMap()
     var depth = 2
     while (candidates.isNotEmpty()) {
-        val newCandidates = mutableMapOf<Set<Rectangle>, Rectangle>()
-        for (i1 in candidates) {
-            for (i2 in candidates) if (i1!=i2) {
-                val rects = i1.key + i2.key
-                if (rects.size==depth && rects !in newCandidates.keys) {
-                    val intersection = i1.value.intersect(i2.value)
-                    if (intersection!=null) {
-                        when (depth%2) {
-                            0 -> result -= intersection.area
-                            else -> result += intersection.area
-                        }
-                        newCandidates[rects] = intersection
-                    }
-                }
-            }
-        }
-        candidates = newCandidates
+        val pair = checkIntersections(candidates, depth, result)
+        result = pair.second
+        candidates = pair.first
         depth++
     }
     return result
+}
+
+private fun checkIntersections(
+    candidates :Map<Set<Rectangle>, Rectangle>,
+    depth :Int,
+    lastPartialArea :ULong
+) :Pair<MutableMap<Set<Rectangle>, Rectangle>, ULong> {
+    var partialArea = lastPartialArea
+    val newCandidates = mutableMapOf<Set<Rectangle>, Rectangle>()
+    for (i1 in candidates) {
+        for (i2 in candidates) if (i1 != i2) {
+            partialArea = mergeIntersections(i1, i2, depth, newCandidates, partialArea)
+        }
+    }
+    return Pair(newCandidates, partialArea)
+}
+
+private fun mergeIntersections(
+    i1 :Map.Entry<Set<Rectangle>, Rectangle>,
+    i2 :Map.Entry<Set<Rectangle>, Rectangle>,
+    depth :Int,
+    newCandidates :MutableMap<Set<Rectangle>, Rectangle>,
+    partialArea :ULong
+) :ULong {
+    val rects = i1.key + i2.key
+    if (rects.size == depth && rects !in newCandidates.keys) {
+        val intersection = i1.value.intersect(i2.value)
+        if (intersection != null) {
+            newCandidates[rects] = intersection
+            return if (depth % 2 == 0) {
+                partialArea - intersection.area
+            } else {
+                partialArea + intersection.area
+            }
+        }
+    }
+    return partialArea
 }
 
 data class Rectangle(val x0 :Int, val y0 :Int, val width :UInt, val height :UInt) {

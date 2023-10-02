@@ -1,6 +1,6 @@
 % Math Ideas for programming
-% 2010 - 2023
 % Collected by M. Gr.
+% 2010 - 2023
 
 # 0. Smaller ideas
 
@@ -117,7 +117,7 @@ This approaches a mastership:
   200: pir ry, 300: bei ry, ...
   1'000: pean, 1'001: pean muoy, ..., 2'000: pir pean, 3'000: bei pean, ...
   10'000: muoy meun, 10'001: muoy meun muoy, ... 20'000: pir meun, ...
-  100'000: muoy sen, muoy sen muoy, ..., muoy sen db, ..., muoy sen ry, ..., muoy sen muoy pean, ..., muoy sen muoy meun, ...
+  100'000: muoy sen, muoy sen muoy, ..., 100'010: muoy sen db, ..., 100'100:muoy sen ry, ..., 101'000:muoy sen muoy pean, ..., 110'000: muoy sen muoy meun, ...
   1"000'000: muoy lean, 1"000'001: muoy lean muoy, ..., 1"001'000: muoy lean muoy pean, ...
   10"000'000: db lean, 100"000'000: ry lean,
   1'000"000'000: pean lean, ...
@@ -489,7 +489,7 @@ Given a grid of integers, find all valleys, i.e. maximal convex domains.  A doma
 
 
 ## Ancestoral tree
-Write a `class Person` that contains data of a person (e.g. *familyName*, *givenNames*, *date of birth*, *deathDay*?, \dots) and links to the nearest relatives (*spouse*, *parents*, *children*). Write a recursive xml/json parser that reads the data from a file with DTD `rels.dtd`.
+Write a `class Person` that contains data of a person (e.g. *familyName*, *givenNames*, *date of birth*, *deathDay*?, ...) and links to the nearest relatives (*spouse*, *parents*, *children*). Write a recursive xml/json parser that reads the data from a file with DTD `rels.dtd`.
 
 _Implementation:_  Kotlin, Java, C++, Haskell, Python
 
@@ -635,7 +635,7 @@ Given any flow configuration $p$, then its free capacity is $f\colon E\to[0,\inf
 
  $$ f(e) = c(e) -p(e)\ge0.$$
 
-We can increase the total flow iff we find a path with positive minimal free capacity, i.e. $s\longrightarrow{P}d$, then $f(P):=\min_{e\in P} f(e)$.  Equivalently, we can increase the flow if there is a positive minimum cut capacity, i.e. $f(C):=\sum_{e\in C} f(e)$ with $C\subset E$ such that $(V,E)\setminus C$ separates $s$ from $d$.
+We can increase the total flow iff we find a path with positive minimal free capacity, i.e. $s\longrightarrow^{P}d$, then $f(P):=\min_{e\in P} f(e)$.  Equivalently, we can increase the flow if there is a positive minimum cut capacity, i.e. $f(C):=\sum_{e\in C} f(e)$ with $C\subset E$ such that $(V,E)\setminus C$ separates $s$ from $d$.
 
 Note that the solution may not be unique.  One way to produce a solution is to start from any flow, e.g. the 0-flow, and determine any path $s\longrightarrow{P}d$ with positive minimum free capacity $f(P)>0$ and increase the flow along this path by this $f(P)$.  Iterate over all paths until the minimum free capacity along all paths is 0.
 
@@ -753,7 +753,7 @@ Such as $\mathbb{P}^2\mathbb{R}$ or $\mathbb{S}^2\approx\mathbb{P}^1\mathbb{C}$,
 
 Find the analogon of the characteristic theorem and implement it in a class with points and lines as satellite classes.
 
-Thm.: Given an odd prime power $n=q=p^k$, then the isomorphisms are $\mathrm{PSl}_2(\mathbb{F}_q)\ltimes\mathbb{P^2F}_q$.
+Thm.: Given an odd prime power $n=q=p^k$, then the isomorphisms are $\mathrm{PSl}_2(\mathbb{F}_q)\ltimes\mathbb{P}^2\mathbb{F}_q$.
 
 
 ## 2H Hyperbolic Geometries
@@ -762,9 +762,9 @@ Such as $\mathbb{H}$ the upper half-plane or Poincaré Disk $\mathbb D^2$ where 
 
 Find the analogon of the characteristic theorem for regular finite hyperbolic geometries and implement it in a class with satellite classes for points and lines.
 
-Given an odd prime power $n=q=p^k$, then the isometries of the hyperbolic plane are $\mathrm{O}_{\mathbb{F}_q}(1,2)$, the stabilizer is $\mathrm{O}_{\mathbb{F}_q}(1)\times\mathrm{O}_{\mathbb{F}_q}(2)$ and thus the space has the same cardinality as $\mathbb{F}_q^2$??
+Given a power of an odd prime $n=q=p^k$, then the isometries of the hyperbolic plane are $\mathrm{O}_{\mathbb{F}_q}(1,2)$, the stabilizer is $\mathrm{O}_{\mathbb{F}_q}(1)\times\mathrm{O}_{\mathbb{F}_q}(2)$ and thus the space should be denoted as $\mathbb{H}_q^2$ and has dimension 2 (as an algebraïc variety over $\mathbb{F}_q$).
 
-### Example $\mathrm{O}_{\mathbb{F}_3}(1,2)/\mathrm{O}_{\mathbb{F}_3}(1)\times\mathrm{O}_{\mathbb{F}_3}(2)$
+### Example $\mathbb{H}^2_3 := \mathrm{O}_{\mathbb{F}_3}(1,2)/\mathrm{O}_{\mathbb{F}_3}(1)\times\mathrm{O}_{\mathbb{F}_3}(2)$
 
 $\eta^{1,2} = \mathrm{diag}(1,-1,-1)$,
 
@@ -773,9 +773,9 @@ $\eta^{1,2} = \mathrm{diag}(1,-1,-1)$,
 +==================================+======+============================================+
 | $\mathrm{O}_{\mathbb{F}_3}(1)$   | $2$  | $\{\pm1\}\cong C_2$                        |
 +----------------------------------+------+--------------------------------------------+
-| $\mathrm{O}_{\mathbb{F}_3}(2)$   | $4$  | $\{\pm1\!\!1, \pm[0,1; -1,0]\} \cong C_4$  |
+| $\mathrm{O}_{\mathbb{F}_3}(2)$   | $8$  | $\left\{\begin{pmatrix}\pm1& \\ &\pm1\end{pmatrix}, \begin{pmatrix} 0&\pm1\\ \pm1&0\end{pmatrix} \right\} =: C_2^2\bowtie S_2 \cong C_4\times C_2$    |
 +----------------------------------+------+--------------------------------------------+
-| $\mathrm{O}_{\mathbb{F}_3}(1,2)$ | $8$  | $\left\{\pm1\!\!1, \pm\begin{pmatrix}1&0&0\\ 0& 0&1\\ 0&-1&0\end{pmatrix}, \pm\begin{pmatrix}0&1&0\\ -1&0&0\\ 0&0&1\end{pmatrix}, \pm\begin{pmatrix}0&0&1\\ 0&1&0\\ -1&0&0\end{pmatrix}\right\} \cong OQ$ |
+| $\mathrm{O}_{\mathbb{F}_3}(1,2)$ | $16$ | $\left\langle \begin{pmatrix} \pm1&&\\ &\pm1&\\ &&\pm1\end{pmatrix}, S_1\times S_2\right\rangle =: C_2^3\bowtie (S_1\times S_2)$                        |
 +----------------------------------+------+--------------------------------------------+
 
 
@@ -807,10 +807,10 @@ Define the analoga of projective and hyperbolic geometries.  How can they be cha
 * typedefs to the `Object` and `Morphism` satelite classes
 * a method that returns the `id`entity morphism of an `Object`.
 
-1. Instead of a `class Object` implement an `abstract class Term<Object>` that represents a Term with value an `Object` and has the concrete subtype: `Variable`.
+1. Instead of the abstract `class Object` implement an `abstract class Term<Object>` that represents a Term with value an `Object` and has the concrete subtype: `Variable`.
    A `Term` should have an assigned `Cat`egory.
 
-2. Instead of a `class Morphism` implement an `abstract class Term<Morphism>` with concrete subtypes `Variable` and `Product`.
+2. Instead of the abstract `class Morphism` implement an `abstract class Term<Morphism>` with concrete subtypes `Variable` and `Product`.
 * A `Morphism` has assigned `source` and `target`.
 * Implement the `operator *` according to the rules of composition of morphisms in `Cat`egories.
 * Extend `Term<...>` such that one can add expressions for source, target, and identity.
@@ -911,13 +911,14 @@ You could start with polynomial curves in 2 variables: $0 = F(x,y)$
 0. A brute-force solution is to iterate over *all* $x\in\mathbb{R}$ and for each to solve the equation for $y\in\mathbb{R}$.
 
 
-## 2.5 [Finite groups](https://en.wikipedia.org/wiki/group_(mathematics)) on the Computer
+## 2.5 [Finitely generated groups](https://en.wikipedia.org/wiki/group_(mathematics)) on the Computer
 Start by implementing
 
 1. cyclic groups
 2. fin.gen. abelian groups
 3. Permutation groups
 4. semi-direct products
+9. (finitely generated) free groups
 
 The implementations of groups should have:
 
@@ -939,9 +940,11 @@ The direct product of 2 (non-necessarily abelian) groups is the set of pairs und
 
 A semi-direct product consists of pairs of elements, but the multiplication of the right elements is twised by an (outer) automorphism parametrized by the first left element, i.e.
 
- $$ G{}_\rho\ltimes H:= G\times H, (A,v)\circ(B,w) = (AB,v+\rho(A)w) $$
+ $$ G\,_\rho\!\!\ltimes H:= G\times H, (v,A)\circ(w,B) = (v+\rho(A)w, AB) $$
 
- The inverse elements are correspondingly $(A,v)^{-1}=(A^{-1}, \rho(A^{-1})v^{-1})$.
+ The inverse elements are correspondingly $(v,A)^{-1}=(\rho(A^{-1})v^{-1}, A^{-1})$.
+
+!Warning:  Not every fine resolution of a group is a series of semi-direct products, namely not every short exact sequence of groups splits: $0\to C_2\to C_4\to C_2\to 0$
 
 
 ## 2.6 [Rings](https://en.wikipedia.org/wiki/ring_(mathematics)) on the Computer
@@ -1425,7 +1428,7 @@ Given $N$ point in $\mathbb{R}^d$ find the set of subsets that form the hyperpla
 ### 3.1 Min and Max in $\mathcal O(N)$
 This is the convex hull in 1D
 
-### 3.2 [QuickHull](https://en.wikipedia.org/wiki/Quickhull) in 2D in $O(N\log r)$
+### 3.2 [QuickHull](https://en.wikipedia.org/wiki/Quickhull) in 2D in $\mathcal O(N\log r)$
 
 1.  Find the points $A$, $B$ with min/max x-coordinates  (if there are many of them, find those with min/max y-coordinates) and start with the line segment `AB` (=hyperplane) spanned by them.
 
@@ -1685,7 +1688,7 @@ Q: How can we capture finitely generated diffeologies, beyond finite spaces?
 
 # 7. Diverse Problems
 ## 1.  Learn another programming language
-e.g. [Python](https://python.org/), [Kotlin](https://kotlinlang.org/), [TypeScript](https://www.typeScriptLang.org/), [Scala](https://scala-lang.org/), [Rust](https://rust-lang.org/), [C++](https://www.cplusPlus.com/), [Haskell](https://haskell.org/), ... and implement some [elementary things](#smaller-ideas), e.g. polynomials.  Be sure to cover a common style guide as well as patterns and anti-patterns.  Note that the difference between programming languages is not the spelling of variables, functions, classes, ..., but the grammar, the (current) standard library as well as the (current) best practices.  Once you have learned 3 languages, start a comparison according to, e.g., speed, portability, availability of common libraries for common domains (e.g. web programming, algorithms, test driven development, graphics, signal processing, numerical simulations, ...), ... .
+e.g. [Python](https://python.org/), [Kotlin](https://kotlinlang.org/), [TypeScript](https://www.typeScriptLang.org/), [Scala](https://scala-lang.org/), [Rust](https://rust-lang.org/), [C++](https://www.cplusPlus.com/), [Haskell](https://haskell.org/), ... and implement some [elementary things](#smaller-ideas), e.g. polynomials.  Be sure to cover a common style guide as well as patterns and anti-patterns.  Note that the difference between programming languages is not the spelling of variables, functions, classes, ..., but the grammar, the (current) standard library as well as the (current) best practices.  Once you have learned 3 languages, start a comparison according to, e.g., speed, portability, availability of common libraries for common domains (e.g. web programming, algorithms, extreme testing, graphics, signal processing, numerical simulations, ...), ... .
 
 
 # 8. Mobile & Web Apps
