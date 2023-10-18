@@ -3,7 +3,7 @@ package cardgame
 import kotlin.test.*
 
 class PokerTester {
-    @Test fun case1() {
+    @Test fun onePair() {
         val hand1 = Hand.of("5H 5C 6S 7S KD")
         println(hand1)
         val rank1 = hand1.rank()
@@ -17,7 +17,7 @@ class PokerTester {
         assertTrue(rank2 > rank1)
     }
 
-    @Test fun case2() {
+    @Test fun highCards() {
         val hand1 = Hand.of("5D 8C 9S JS AC")
         val rank1 = hand1.rank()
         println("$hand1: $rank1")
@@ -29,7 +29,7 @@ class PokerTester {
         assertTrue(rank1 > rank2)
     }
 
-    @Test fun case3() {
+    @Test fun threeAndFlush() {
         val hand1 = Hand.of("2D 9C AS AH AC")
         val rank1 = hand1.rank()
         println("$hand1: $rank1")
@@ -41,7 +41,7 @@ class PokerTester {
         assertTrue(rank2 > rank1)
     }
 
-    @Test fun case4() {
+    @Test fun pairsAndHighCards() {
         val hand1 = Hand.of("4D 6S 9H QH QC")
         val rank1 = hand1.rank()
         println("$hand1: $rank1")
@@ -57,7 +57,7 @@ class PokerTester {
         assertTrue(rank1 > rank2)
     }
 
-    @Test fun case5() {
+    @Test fun fullHouse() {
         val hand1 = Hand.of("2H 2D 4C 4D 4S")
         val rank1 = hand1.rank()
         println("$hand1: $rank1")
@@ -67,5 +67,17 @@ class PokerTester {
         println("$hand2: $rank2")
         assertEquals(Rank.FullHouse(Suite.Three), rank2.first())
         assertTrue(rank1 > rank2)
+    }
+
+    @Test fun fourAndFullHouse() {
+        val hand1 = Hand.of("KC KS KH KD 9S")
+        val rank1 = hand1.rank()
+        println("$hand1: $rank1")
+        assertEquals(Rank.FourofaKind(Suite.King), rank1.first())
+        val hand2 = Hand.of("AC AS AH QS QD")
+        val rank2 = hand2.rank()
+        println("$hand2: $rank2")
+        assertEquals(Rank.FullHouse(Suite.Ace), rank2.first())
+        assertTrue(rank2 < rank1)
     }
 }

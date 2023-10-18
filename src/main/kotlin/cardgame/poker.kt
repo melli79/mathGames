@@ -8,7 +8,7 @@ enum class Color {
     companion object {
         fun of(c :Char) :Color? {
             val symbol = c.uppercase()[0]
-            return values().firstOrNull { it.symbol==symbol }
+            return entries.firstOrNull { it.symbol==symbol }
         }
     }
 }
@@ -36,7 +36,7 @@ enum class Suite(val symbol :Char) {
 
         fun of(c :Char) :Suite? {
             val symbol = c.uppercase()[0]
-            return values().firstOrNull { it.symbol==symbol }
+            return entries.firstOrNull { it.symbol==symbol }
         }
 
         val lowCards = setOf(Two, Three, Four, Five)
@@ -71,7 +71,7 @@ data class Hand(val cards :Set<Card>) {
     companion object {
         fun of(cards :String) :Hand {
             return Hand(cards.split("\\s+".toRegex())
-                .map { Card.of(it) }.filterNotNull()
+                .mapNotNull { Card.of(it) }
                 .toSet())
         }
     }
