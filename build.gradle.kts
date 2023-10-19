@@ -24,11 +24,11 @@ tasks.test {
 }
 
 tasks.withType<JavaCompile> {
-    targetCompatibility = "20"
+    targetCompatibility = "17"
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "20"
+    kotlinOptions.jvmTarget = "17"
 }
 
 application {
