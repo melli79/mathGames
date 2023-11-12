@@ -9,15 +9,11 @@ fun findPythagoreanTriples(limit :UInt) :Set<Triple<UInt, UInt, UInt>> {
         return result
     (1u..limit).forEach { f -> result.add(Triple(f, 0u, f))}
     for (m in 2u..isqrt(limit.toULong()-1uL)) {
-        var n = 1u
-        while (n<m) {
-            if (gcd(m.toULong(), n.toULong())==1uL) {
-                val a0 = sqr(m.toInt()).toUInt() - sqr(n.toInt()).toUInt()
-                val b0 = 2u *m * n
-                val c0 = a0 + 2u*sqr(n.toInt()).toUInt()
-                result.addAll((1u..limit / c0).map { f -> Triple(f * c0, f * a0, f * b0) })
-            }
-            n++
+        for (n in 1u..<m)  if (gcd(m.toULong(), n.toULong())==1uL) {
+            val a0 = sqr(m.toInt()).toUInt() - sqr(n.toInt()).toUInt()
+            val b0 = 2u *m * n
+            val c0 = a0 + 2u*sqr(n.toInt()).toUInt()
+            result.addAll((1u..limit / c0).map { f -> Triple(f * c0, f * a0, f * b0) })
         }
     }
     return result
