@@ -10,32 +10,40 @@ data class OrganicMolecule(val clength :UByte, val type :BaseType =BaseType.Alka
     }
 
     override fun toString() :String {
-        if (clength==1.toUByte()) {
-            val numH = (4 -moieties.sumOf { pm ->
-                val valence = if (pm.moiety== Moiety.Oxygen) 2  else 1
-                val num = pm.positions.size
-                if (num<1) valence  else num*valence
-            }).toUByte()
-            return Nonmetal.Carbon.symbol + (if (numH>0u) Nonmetal.Hydrogen.symbol+ amount(numH)  else "") +
-                    moieties.joinToString("")
-        }
-        val moieties :Map<UByte, List<Moiety>> = moieties.flatMap { pm ->
-            if (pm.positions.isEmpty()) listOf(Pair(1.toUByte(), pm.moiety))
-            else pm.positions.map { p :UByte -> Pair(p, pm.moiety) }
-        }.groupBy { p -> p.first }.entries.associate { (k :UByte, ps) -> Pair(k, ps.map { it.second }) }
+        if (clength==1.toUByte())
+            return methylToString()
+        val moieties = getOrderedMoieties()
 
         return (1u..max(clength.toUInt(), moieties.keys.maxOfOrNull { p :UByte -> p.toUInt() } ?: 0u))
-            .joinToString("- ") { p ->
-                val ms :Map<Moiety, List<Moiety>> = moieties.getOrDefault(p.toUByte(), emptyList()).groupBy { it }
-                val covalence = ms.entries.sumOf { it.value.size * if (it.key==Moiety.Oxygen) 2  else 1 }
-                val numH = if (p==1u||p==clength.toUInt()) 3- covalence
-                    else if (p<clength.toUInt()) 2- covalence  else 0
-                (if (p<=clength.toUInt()) Nonmetal.Carbon.symbol else "") +
-                    (if (numH>0) Nonmetal.Hydrogen.symbol+ amount(numH.toUByte()) else "") +
-                    ms.entries.joinToString("") { en ->
-                        en.key.toString()+ amount(en.value.size.toUByte())
-                    }
-            }
+            .joinToString("- ") { n -> moieties.moietiesOfLengthToString(n) }
+    }
+
+    private fun Map<UByte, List<Moiety>>.moietiesOfLengthToString(n :UInt) :String {
+        val countedMoieties :Map<Moiety, Int> = getOrDefault(n.toUByte(), emptyList()).groupBy { it }
+            .map { entry -> Pair(entry.key, entry.value.size) }.toMap()
+        val covalence = countedMoieties.entries.sumOf { it.value * if (it.key == Moiety.Oxygen) 2 else 1 }
+        val numH = if (n==1u || n==clength.toUInt()) 3 -covalence
+            else if (n<clength.toUInt()) 2 -covalence  else 0
+        return (if (n <= clength.toUInt()) Nonmetal.Carbon.symbol else "") +
+                (if (numH > 0) Nonmetal.Hydrogen.symbol + amount(numH.toUByte()) else "") +
+                countedMoieties.entries.joinToString("") { en ->
+                    en.key.toString() + amount(en.value.toUByte())
+                }
+    }
+
+    private fun getOrderedMoieties() :Map<UByte, List<Moiety>> = moieties.flatMap { pm ->
+        if (pm.positions.isEmpty()) listOf(Pair(1.toUByte(), pm.moiety))
+        else pm.positions.map { p: UByte -> Pair(p, pm.moiety) }
+    }.groupBy { p -> p.first }.entries.associate { (k: UByte, ps) -> Pair(k, ps.map { it.second }) }
+
+    private fun methylToString(): String {
+        val numH = (4 - moieties.sumOf { pm ->
+            val valence = if (pm.moiety == Moiety.Oxygen) 2 else 1
+            val num = pm.positions.size
+            if (num < 1) valence else num * valence
+        }).toUByte()
+        return Nonmetal.Carbon.symbol + (if (numH > 0u) Nonmetal.Hydrogen.symbol + amount(numH) else "") +
+                moieties.joinToString("")
     }
 
     fun getIupacName() :String {
@@ -132,6 +140,12 @@ sealed interface Moiety {
 
     class Inorganic2(element1 :Atom, element2 :Atom, amount1 :UByte, amount2 :UByte) :Moiety,
         Bond2(element1, element2, amount1, amount2) {}
+
+    companion object {
+        val methyl = Alkyl(1u)
+        val cyanide = Inorganic2(Nonmetal.Carbon, Nonmetal.Nitrogen, 1u, 1u)
+        val sulfhydril = Inorganic2(Nonmetal.Nitrogen, Nonmetal.Hydrogen, 1u,1u)
+    }
 
     class Inorganic3(element1 :Atom, element2 :Atom, element3 :Atom, amount1 :UByte, amount2 :UByte, amount3 :UByte) :Moiety,
             Bond3(element1, element2, element3, amount1, amount2, amount3) {}

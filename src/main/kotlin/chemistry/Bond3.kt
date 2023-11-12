@@ -15,29 +15,19 @@ open class Bond3(
             if (element1 is Metal) "$element1${valence1()}hydroxide"
             else "$element1 hydroxide"
         element3== Nonmetal.Oxygen -> if (element1 is Metal)
-                "$element1${valence1()}${oxideName(element2, amount3)}"
-            else "${count(amount1)}$element1 ${oxideName(element2, amount3)}"
+                "$element1${valence1()}${createOxideName(element2, amount3)}"
+            else "${count(amount1)}$element1 ${createOxideName(element2, amount3)}"
         else -> "${count(amount1)}$element1$element2${count(amount2)}$element3${count(amount3)}"
     } +" ($type)"
 
     private fun valence1() = if (element1.valences.size==1) " " else "-$amount2-"
 }
 
-internal fun oxideName(element :Atom, oxygenAmount :UByte) = when (element) {
+internal fun createOxideName(element :Atom, oxygenAmount :UByte) = when (element) {
     Nonmetal.Fluorine -> "fluorite"
     Nonmetal.Chlorine, Nonmetal.Bromine, Nonmetal.Iodine, Semimetal.Astatine,
-    Metal.Chromium -> when (oxygenAmount.toInt()) {
-        1 -> "hypo${stem(element)}ic"
-        2 -> "${stem(element)}ic"
-        3 -> "${stem(element)}ate"
-        else -> "per${stem(element)}ate"
-    }
-    Metal.Mangan -> when (oxygenAmount.toInt()) {
-        1 -> "hypomanganite"
-        2 -> "manganite"
-        3 -> "manganate"
-        else -> "permanganate"
-    }
+        Metal.Chromium -> createPolyOxideName(oxygenAmount, element)
+    Metal.Mangan -> createManganOxideName(oxygenAmount)
     Nonmetal.Sulfur -> if (oxygenAmount<=3u) "sulfite" else "sulfate"
     Nonmetal.Selenium -> if (oxygenAmount<=3u) "selenite" else "selenate"
     Nonmetal.Nitrogen -> if (oxygenAmount<=2u) "nitrite" else "nitrate"
@@ -53,6 +43,20 @@ internal fun oxideName(element :Atom, oxygenAmount :UByte) = when (element) {
     Metal.Argentum -> "argentate"
     Metal.Mercury -> "amalgam"
     else -> "${element}ate"
+}
+
+private fun createManganOxideName(oxygenAmount :UByte) = when (oxygenAmount.toInt()) {
+    1 -> "hypomanganite"
+    2 -> "manganite"
+    3 -> "manganate"
+    else -> "permanganate"
+}
+
+private fun createPolyOxideName(oxygenAmount :UByte, element :Atom) = when (oxygenAmount.toInt()) {
+    1 -> "hypo${stem(element)}ic"
+    2 -> "${stem(element)}ic"
+    3 -> "${stem(element)}ate"
+    else -> "per${stem(element)}ate"
 }
 
 private fun stem(element :Atom) :String {

@@ -91,7 +91,7 @@ fun bind(element1 :Atom, element2 :Atom) :Set<Bond2> {
             result.add(Bond2(element1, element2, 1u, 2u))
         }
         Metal.Ferrum -> result.add(Bond2(element1, element2, 3u, 4u))
-        else -> {}
+        else -> {/* ignore */}
     }
     for (valence1 in element1.valences) {
         for (valence2 in element2.valences) {
