@@ -14,12 +14,11 @@ class Server(val limit :UShort) {
         else if (otherPlayer==null)
             otherPlayer = player
         else
-            throw IllegalStateException("Already 2 players in the game.")
+            error("Already 2 players in the game.")
     }
 
     fun startGame() {
-        if (firstPlayer==null || otherPlayer==null)
-            throw IllegalStateException("Missing a Player before we can start")
+        check (firstPlayer==null || otherPlayer==null) { "Missing a Player before we can start" }
         board = (1u..limit.toUInt()).toMutableSet()
         lastMove = 0u
         firstPlayer!!.startGame(limit)
@@ -50,7 +49,7 @@ class Server(val limit :UShort) {
 
     private fun play(player :Player) :Boolean {
         println("${player.name}'s turn.")
-        if (board.isEmpty())
+        if (board.isLost(lastMove))
             return true
         while (true) {
             val choice = player.choose(board, lastMove)
@@ -68,4 +67,11 @@ class Server(val limit :UShort) {
             }
         }
     }
+}
+
+fun Board.isLost(lastMove :UInt) = findOptions(lastMove).isEmpty()
+
+fun Board.findOptions(lastMove :UInt) :Set<UInt> = when (lastMove) {
+    0u -> filter { o -> o%2u == 0u }.toSet()
+    else -> filter { it%lastMove==0u || lastMove%it==0u }.toSet()
 }

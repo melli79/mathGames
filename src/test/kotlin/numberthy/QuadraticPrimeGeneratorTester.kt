@@ -34,7 +34,7 @@ class QuadraticPrimeGeneratorTester {
                     println("new maximum $max for n^2 ${maxA}n $maxB")
                 else {
                     val limit = max(max(limit1, limit2), max(limit3, limit4))
-                    if (limit>5u)
+                    if (limit>20u)
                         println("n^2 ±${a}n ±$b produces primes up to $limit")
                 }
             }

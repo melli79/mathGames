@@ -1,7 +1,7 @@
 package factorgame
 
-fun main(args :Array<String>) {
-    val server = Server(100u)
+fun main() {
+    val server = Server(10u)
 //    if (random.nextBoolean()) {
         val player = StrategicPlayer()
         server.add(player)
@@ -13,6 +13,5 @@ fun main(args :Array<String>) {
     while (true) {
         server.runGame()
         println("Press <Ctrl>+<C> to abort.")
-        //Thread.sleep(3000)
     }
 }
