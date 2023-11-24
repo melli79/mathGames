@@ -37,7 +37,7 @@ fun main() {
         permuteBeverages(n, c, b, z, p) { n1, c1, b1, z1, p1 ->
             permuteCigarettes(n1, c1, b1, z1, p1) { n2, c2, b2, z2, p2 ->
                 permuteColors(n2, c2, b2, z2, p2) { n3, c3, b3, z3, p3 ->
-                    permutePets(n3, c3, b3, z3, p3) { n4, c4, b4, z4, p4 ->
+                    permutePets(n3, c3, b3, z3, p3) { _, _, _, _, _ ->
                         throw IllegalStateException("cannot be solved")
                     }
                 }
@@ -58,7 +58,7 @@ private fun Solutions.permutePets(
     pets :Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>)->Unit
 ) {
-    val petPermutations = permute(Pets.values(), pets)
+    val petPermutations = permute(Pets.entries.toTypedArray(), pets)
     for (pets1 in petPermutations) {
         val nationalities1 = nationalities.clone()
         val colors1 = colors.clone()
@@ -82,7 +82,7 @@ private fun Solutions.permuteColors(
     pets: Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>)->Unit
 ) {
-    val colorPermutations = permute(Colors.values(), colors)
+    val colorPermutations = permute(Colors.entries.toTypedArray(), colors)
     for (colors1 in colorPermutations) {
         val nationalities1 = nationalities.clone()
         val beverages1 = beverages.clone()
@@ -106,7 +106,7 @@ private fun Solutions.permuteCigarettes(
     pets: Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>)->Unit
 ) {
-    val cigarettePermutations = permute(CigaretteBrands.values(), cigarettes)
+    val cigarettePermutations = permute(CigaretteBrands.entries.toTypedArray(), cigarettes)
     for (cigarettes1 in cigarettePermutations) {
         val nationalities1 = nationalities.clone()
         val colors1 = colors.clone()
@@ -130,7 +130,7 @@ private fun Solutions.permuteBeverages(
     pets: Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>)->Unit
 ) {
-    val beveragePermutations = permute(Beverages.values(), beverages)
+    val beveragePermutations = permute(Beverages.entries.toTypedArray(), beverages)
     for (beverages1 in beveragePermutations) {
         val nationalities1 = nationalities.clone()
         val colors1 = colors.clone()
@@ -154,7 +154,7 @@ private fun Solutions.permuteNationalities(
     pets: Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>)->Unit
 ) {
-    val nationalityPermutations = permute(Nationalities.values(), nationalities)
+    val nationalityPermutations = permute(Nationalities.entries.toTypedArray(), nationalities)
     for (nationalities1 in nationalityPermutations) {
         val colors1 = colors.clone()
         val beverages1 = beverages.clone()
@@ -234,96 +234,25 @@ private fun <T :Option<T>> Can.Better<T>.improve(
 private fun canAccept(nationalities: Array<out Nationalities?>, colors: Array<out Colors?>, beverages: Array<out Beverages?>,
                       cigarettes: Array<out CigaretteBrands?>, pets: Array<out Pets?>) :Can {
     var candidate :Can = Can.YES
-    var result = canFirst(nationalities, colors)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canSecond(nationalities, pets)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canThird(nationalities, beverages)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canFourth(colors)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canFifth(colors, beverages)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canSixth(cigarettes, pets)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canSeventh(colors, cigarettes)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canEighth(beverages)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canNinth(nationalities)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canTenth(cigarettes, pets)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canEleventh(pets, cigarettes)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canTwelfth(cigarettes, beverages)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canThirteenth(nationalities, cigarettes)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canFourteenth(nationalities, colors)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-
-    result = canFifteenth(cigarettes, beverages)
-    if (result== Can.NO || result is Can.Better<*>)
-        return result
-    if (result== Can.MAYBE)
-        candidate = Can.MAYBE
-    return candidate
+    return listOf({canFirst(nationalities, colors)}, {canSecond(nationalities, pets)}, {canThird(nationalities, beverages)},
+            {canFourth(colors)}, {canFifth(colors, beverages)}, {canSixth(cigarettes, pets)}, {canSeventh(colors, cigarettes)},
+            {canEighth(beverages)}, {canNinth(nationalities)}, {canTenth(cigarettes, pets)}, {canEleventh(pets, cigarettes)},
+            {canTwelfth(cigarettes, beverages)}, {canThirteenth(nationalities, cigarettes)}, {canFourteenth(nationalities, colors)},
+            {canFifteenth(cigarettes, beverages)}, {candidate})
+        .foldRight(Can.YES) { rule, pre :Can ->
+            if (pre == Can.NO || pre is Can.Better<*>)
+                pre
+            else {
+                val result = rule()
+                if (result== Can.NO || result is Can.Better<*>)
+                    result
+                else {
+                    if (result == Can.MAYBE)
+                        candidate = Can.MAYBE
+                    pre
+                }
+            }
+        }
 }
 
 private fun check(nationalities: Array<out Nationalities?>, colors: Array<out Colors?>, beverages: Array<out Beverages?>,
@@ -331,36 +260,15 @@ private fun check(nationalities: Array<out Nationalities?>, colors: Array<out Co
     println("Does "+ (nationalities zip colors zip beverages zip cigarettes zip pets).mapIndexed { nr, (q, p :Pets?) ->
         "the ${q.first.first.first} live in the ${nr+1}th ${q.first.first.second} house drinking ${q.first.second} smoking ${q.second} breeding $p"
     }.joinToString(",\n\t") +"?")
-    if (canFirst(nationalities, colors) != Can.YES)
-        return 1
-    if (canSecond(nationalities, pets) != Can.YES)
-        return 2
-    if (canThird(nationalities, beverages) != Can.YES)
-        return 3
-    if (canFourth(colors) != Can.YES)
-        return 4
-    if (canFifth(colors, beverages) != Can.YES)
-        return 5
-    if (canSixth(cigarettes, pets) != Can.YES)
-        return 6
-    if (canSeventh(colors, cigarettes) != Can.YES)
-        return 7
-    if (canEighth(beverages) != Can.YES)
-        return 8
-    if (canNinth(nationalities) != Can.YES)
-        return 9
-    if (canTenth(cigarettes, pets) != Can.YES)
-        return 10
-    if (canEleventh(pets, cigarettes) != Can.YES)
-        return 11
-    if (canTwelfth(cigarettes, beverages) != Can.YES)
-        return 12
-    if (canThirteenth(nationalities, cigarettes) != Can.YES)
-        return 13
-    if (canFourteenth(nationalities, colors) != Can.YES)
-        return 14
-    if (canFifteenth(cigarettes, beverages) != Can.YES)
-        return 15
+    val error = listOf ({canFirst(nationalities, colors)}, {canSecond(nationalities, pets)}, {canThird(nationalities, beverages)},
+            {canFourth(colors)}, {canFifth(colors, beverages)}, {canSixth(cigarettes, pets)}, {canSeventh(colors, cigarettes)},
+            {canEighth(beverages)}, {canNinth(nationalities)}, {canTenth(cigarettes, pets)}, {canEleventh(pets, cigarettes)},
+            {canTwelfth(cigarettes, beverages)}, {canThirteenth(nationalities, cigarettes)}, {canFourteenth(nationalities, colors)},
+            {canFifteenth(cigarettes, beverages)})
+        .indexOfFirst { it()!=Can.YES }
+    if (error>=0)
+        return error+1
+
     val nr = pets.indexOf(Pets.FISH)
     if (nr>=0)
         println("The ${nationalities[nr]} owns the ${Pets.FISH}.")
