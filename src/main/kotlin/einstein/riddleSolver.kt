@@ -60,7 +60,7 @@ private fun Solutions.permutePets(
     pets :Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>) -> Unit
 ) {
-    val petPermutations = permute(Pets.entries.toTypedArray(), pets)
+    val petPermutations = permute(Pets.entries, pets)
     for (pets1 in petPermutations) {
         val nationalities1 = nationalities.clone()
         val colors1 = colors.clone()
@@ -84,7 +84,7 @@ private fun Solutions.permuteColors(
     pets :Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>) -> Unit
 ) {
-    val colorPermutations = permute(Colors.entries.toTypedArray(), colors)
+    val colorPermutations = permute(Colors.entries, colors)
     for (colors1 in colorPermutations) {
         val nationalities1 = nationalities.clone()
         val beverages1 = beverages.clone()
@@ -108,7 +108,7 @@ private fun Solutions.permuteCigarettes(
     pets :Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>) -> Unit
 ) {
-    val cigarettePermutations = permute(CigaretteBrands.entries.toTypedArray(), cigarettes)
+    val cigarettePermutations = permute(CigaretteBrands.entries, cigarettes)
     for (cigarettes1 in cigarettePermutations) {
         val nationalities1 = nationalities.clone()
         val colors1 = colors.clone()
@@ -132,7 +132,7 @@ private fun Solutions.permuteBeverages(
     pets :Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>) -> Unit
 ) {
-    val beveragePermutations = permute(Beverages.entries.toTypedArray(), beverages)
+    val beveragePermutations = permute(Beverages.entries, beverages)
     for (beverages1 in beveragePermutations) {
         val nationalities1 = nationalities.clone()
         val colors1 = colors.clone()
@@ -156,7 +156,7 @@ private fun Solutions.permuteNationalities(
     pets :Array<Pets?>,
     walker :Solutions.(Array<Nationalities?>, Array<Colors?>, Array<Beverages?>, Array<CigaretteBrands?>, Array<Pets?>) -> Unit
 ) {
-    val nationalityPermutations = permute(Nationalities.entries.toTypedArray(), nationalities)
+    val nationalityPermutations = permute(Nationalities.entries, nationalities)
     for (nationalities1 in nationalityPermutations) {
         val colors1 = colors.clone()
         val beverages1 = beverages.clone()
@@ -243,19 +243,30 @@ private fun canAccept(
     cigarettes :Array<out CigaretteBrands?>, pets :Array<out Pets?>
 ) :Can {
     var candidate :Can = Can.YES
-    return listOf({canFirst(nationalities, colors)}, {canSecond(nationalities, pets)}, {canThird(nationalities, beverages)},
-        {canFourth(colors)}, {canFifth(colors, beverages)}, {canSixth(cigarettes, pets)}, {canSeventh(colors, cigarettes)},
-        {canEighth(beverages)}, {canNinth(nationalities)}, {canTenth(cigarettes, pets)}, {canEleventh(pets, cigarettes)},
-        {canTwelfth(cigarettes, beverages)}, {canThirteenth(nationalities, cigarettes)}, {canFourteenth(nationalities, colors)},
-        {canFifteenth(cigarettes, beverages)}, {candidate})
+    return listOf({ canFirst(nationalities, colors) },
+        { canSecond(nationalities, pets) },
+        { canThird(nationalities, beverages) },
+        { canFourth(colors) },
+        { canFifth(colors, beverages) },
+        { canSixth(cigarettes, pets) },
+        { canSeventh(colors, cigarettes) },
+        { canEighth(beverages) },
+        { canNinth(nationalities) },
+        { canTenth(cigarettes, pets) },
+        { canEleventh(pets, cigarettes) },
+        { canTwelfth(cigarettes, beverages) },
+        { canThirteenth(nationalities, cigarettes) },
+        { canFourteenth(nationalities, colors) },
+        { canFifteenth(cigarettes, beverages) },
+        { candidate })
         .foldRight(Can.YES) { rule, pre :Can ->
-            if (pre==Can.NO || pre is Can.Better<*>)
+            if (pre == Can.NO || pre is Can.Better<*>)
                 pre
             else {
                 val result :Can = rule()
-             if (result == Can.NO || result is Can.Better<*>)
+                if (result == Can.NO || result is Can.Better<*>)
                     result
-             else {
+                else {
                     if (result == Can.MAYBE)
                         candidate = Can.MAYBE
                     pre
@@ -272,14 +283,24 @@ private fun check(
         "the ${q.first.first.first} live in the ${nr + 1}th ${q.first.first.second} house drinking ${q.first.second}" +
                 " smoking ${q.second} breeding $p"
     }.joinToString(",\n\t") + "?")
-    val error = listOf({canFirst(nationalities, colors)}, {canSecond(nationalities, pets)}, {canThird(nationalities, beverages)},
-            {canFourth(colors)}, {canFifth(colors, beverages)}, {canSixth(cigarettes, pets)}, {canSeventh(colors, cigarettes)},
-            {canEighth(beverages)}, {canNinth(nationalities)}, {canTenth(cigarettes, pets)},
-            {canEleventh(pets, cigarettes)}, {canTwelfth(cigarettes, beverages)}, {canThirteenth(nationalities, cigarettes)},
-            {canFourteenth(nationalities, colors)}, {canFifteenth(cigarettes, beverages)})
+    val error = listOf({ canFirst(nationalities, colors) },
+        { canSecond(nationalities, pets) },
+        { canThird(nationalities, beverages) },
+        { canFourth(colors) },
+        { canFifth(colors, beverages) },
+        { canSixth(cigarettes, pets) },
+        { canSeventh(colors, cigarettes) },
+        { canEighth(beverages) },
+        { canNinth(nationalities) },
+        { canTenth(cigarettes, pets) },
+        { canEleventh(pets, cigarettes) },
+        { canTwelfth(cigarettes, beverages) },
+        { canThirteenth(nationalities, cigarettes) },
+        { canFourteenth(nationalities, colors) },
+        { canFifteenth(cigarettes, beverages) })
         .indexOfFirst { it() != Can.YES }
-    if (error>=0)
-        return error+1
+    if (error >= 0)
+        return error + 1
 
     val nr = pets.indexOf(Pets.FISH)
     if (nr >= 0)
