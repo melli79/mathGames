@@ -1,4 +1,4 @@
-package cardgame
+package poker
 
 import kotlin.test.*
 

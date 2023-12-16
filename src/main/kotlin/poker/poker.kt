@@ -1,4 +1,4 @@
-package cardgame
+package poker
 
 enum class Color {
     Diamonds, Hearts, Spades, Clubs;

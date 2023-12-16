@@ -1,4 +1,4 @@
-package cardgame
+package poker
 
 import xmasaoc.getInput
 import xmasaoc.toReader
@@ -15,8 +15,8 @@ fun main() {
         else if (cards.size!=10)
             println("Incomplete game, expected: 10 cards,  got: ${cards.size} -- $cards")
         else {
-            val hand1 = Hand((cards as List<Card>).take(5).toSet())
-            val hand2 = Hand(cards.drop(5).toSet())
+            val hand1 = Hand(cards.filterNotNull().take(5).toSet())
+            val hand2 = Hand(cards.filterNotNull().drop(5).toSet())
             val cmp = hand1.rank().compareTo(hand2.rank())
             when {
                 cmp<0 -> losses++

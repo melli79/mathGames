@@ -1,4 +1,4 @@
-package cardgame
+package poker
 
 sealed interface Rank :Comparable<Rank> {
 
