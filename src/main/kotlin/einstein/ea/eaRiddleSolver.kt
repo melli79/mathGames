@@ -11,7 +11,7 @@ private enum class Nationalities(override val type :Type = Type.NATIONALITY) : O
 private enum class Beverages(override val type :Type = Type.BEVERAGE) : Option<Beverages> {
     YELLOW_WINE, SAKE, WHITE_SPIRIT, BEER, WATER;
 
-    override fun toString() = name.lowercase()
+    override fun toString() = name.replace('_', ' ').lowercase()
 }
 
 private enum class CigaretteBrands(override val type :Type = Type.CIGARETTE_BRAND) : Option<CigaretteBrands> {
@@ -239,46 +239,42 @@ private fun <T : Option<T>> Can.Better<T>.improve(
 private fun canAccept(
     nationalities :Array<out Nationalities?>, colors :Array<out Colors?>, beverages :Array<out Beverages?>,
     cigarettes :Array<out CigaretteBrands?>, pets :Array<out Pets?>
-) :Can {
-    var candidate :Can = Can.YES
-    return listOf({ canFirst(nationalities, colors) },
-        { canSecond(nationalities, pets) },
-        { canThird(nationalities, beverages) },
-        { canFourth(colors) },
-        { canFifth(colors, beverages) },
-        { canSixth(cigarettes, pets) },
-        { canSeventh(colors, cigarettes) },
-        { canEighth(beverages) },
-        { canNinth(nationalities) },
-        { canTenth(cigarettes, pets) },
-        { canEleventh(pets, cigarettes) },
-        { canTwelfth(cigarettes, beverages) },
-        { canThirteenth(nationalities, cigarettes) },
-        { canFourteenth(nationalities, colors) },
-        { canFifteenth(cigarettes, beverages) },
-        { candidate })
-        .foldRight(Can.YES) { rule, pre :Can ->
-            if (pre == Can.NO || pre is Can.Better<*>)
-                pre
-            else {
-                val result = rule()
-                if (result == Can.NO || result is Can.Better<*>)
-                    result
-                else {
-                    if (result == Can.MAYBE)
-                        candidate = Can.MAYBE
-                    pre
-                }
+) :Can = listOf({ canFirst(nationalities, colors) },
+    { canSecond(nationalities, pets) },
+    { canThird(nationalities, beverages) },
+    { canFourth(colors) },
+    { canFifth(colors, beverages) },
+    { canSixth(cigarettes, pets) },
+    { canSeventh(colors, cigarettes) },
+    { canEighth(beverages) },
+    { canNinth(nationalities) },
+    { canTenth(cigarettes, pets) },
+    { canEleventh(pets, cigarettes) },
+    { canTwelfth(cigarettes, beverages) },
+    { canThirteenth(nationalities, cigarettes) },
+    { canFourteenth(nationalities, colors) },
+    { canFifteenth(cigarettes, beverages) })
+    .foldRight(Can.YES) { rule, pre :Can ->
+        if (pre == Can.NO)
+            pre
+        else {
+            val result :Can = rule()
+            when {
+                result == Can.NO -> result
+                pre is Can.Better<*> -> pre
+                result is Can.Better<*> -> result
+                result == Can.MAYBE -> Can.MAYBE
+                else -> pre
             }
         }
-}
+    }
 
 private fun check(
     nationalities :Array<out Nationalities?>, colors :Array<out Colors?>, beverages :Array<out Beverages?>,
     cigarettes :Array<out CigaretteBrands?>, pets :Array<out Pets?>
 ) :Int? {
     println("Does " + (nationalities zip colors zip beverages zip cigarettes zip pets).mapIndexed { nr, (q, p :Pets?) ->
-        "the ${q.first.first.first} live in the ${nr + 1}th ${q.first.first.second} house drinking ${q.first.second} smoking ${q.second} breeding $p"
+        "the ${q.first.first.first} live in the ${(nr + 1).ordinal()} ${q.first.first.second} house drinking ${q.first.second} smoking ${q.second} breeding $p"
     }.joinToString(",\n\t") + "?")
     val error = listOf({ canFirst(nationalities, colors) },
         { canSecond(nationalities, pets) },
@@ -304,6 +300,13 @@ private fun check(
         println("The ${nationalities[nr]} owns the ${Pets.FISH}.")
     return null
 }
+
+private fun Int.ordinal() = when (this % 10) {
+    1 -> if (this/10%10!=1) "${this}st"  else null
+    2 -> if (this/10%10!=1) "${this}nd"  else null
+    3 -> if (this/10%10!=1) "${this}rd"  else null
+    else -> null
+} ?: "${this}th"
 
 private fun canFirst(nationalities :Array<out Nationalities?>, colors :Array<out Colors?>) :Can {
     val nr = nationalities.indexOf(Nationalities.CHINESE)

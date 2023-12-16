@@ -65,6 +65,12 @@ Note that the number of permutations of $n$ elements is $n!\sim \sqrt{2\pi n}(n/
 Instead of a set, you are given a multiset, maybe represented as a map from some input elements to natural numbers.
 
 
+## Ancestoral tree
+Write a `class Person` that contains data of a person (e.g. *familyName*, *givenNames*, *date of birth*, *deathDay*?, ...) and links to the nearest relatives (*spouse*, *parents*, *children*). Write a recursive xml/json parser that reads the data from a file with DTD `rels.dtd`.
+
+_Implementation:_  Kotlin, Java, C++, Haskell, Python
+
+
 ## Writing out numbers
 
 Write a function that maps a number (represented as `int`) to its text representation (e.g. as `string`).  For an easy start, you may begin with the Chinese number system.
@@ -409,6 +415,17 @@ The real trouble starts when you wish to erase `x` from the place $t+k:= h(x)\%p
 An alternative is to keep lists in each place $t:=h(x)\%p$ and if there is more than one element to be kept at $t$, then you chain them up in this list.  This way you just have to operate with inserting into / removing from / searching in lists (once you have narrowed to position $t$).  This performs better even when the table is considerably full.  But that too depends on the quality of the hashing function.
 
 
+## Tracking Loyal Customers
+
+Let’s say [we](https://carloarg02.medium.com/my-favorite-coding-question-to-give-candidates-17ea4758880c) have a website and we keep track of what pages customers are viewing, for things like business metrics.
+
+Every time somebody comes to the website, we write a record to a log file consisting of Timestamp, PageId, CustomerId. At the end of the day we have a big log file with many entries in that format. And for every day we have a new file.
+
+Now, given two log files (log file from day 1 and log file from day 2) we want to generate a list of ‘loyal customers’ that meet the criteria of: (a) they came on both days, and (b) they visited at least two unique pages.
+
+Before you start coding, think about the problem! Where is it sufficiently specified?  Which parts are ambiguous?  What would be an MVP, i.e. a choice that is beneficial yet sufficiently easy to implement?
+
+
 ## Interval calculus
 Write a `class Interval` that encodes the length and whether the end points are contained of an interval of real numbers. Write a wrapper class for `set<Interval>` such that sets can contain unions of finitely many `Interval`s (and points).
 
@@ -488,18 +505,12 @@ Given a list of integers, partition it into all maximal valleys, i.e. maximal co
 Given a grid of integers, find all valleys, i.e. maximal convex domains.  A domain must be connected, but there is no need for it to be neither convex nor simply connected.
 
 
-## Ancestoral tree
-Write a `class Person` that contains data of a person (e.g. *familyName*, *givenNames*, *date of birth*, *deathDay*?, ...) and links to the nearest relatives (*spouse*, *parents*, *children*). Write a recursive xml/json parser that reads the data from a file with DTD `rels.dtd`.
-
-_Implementation:_  Kotlin, Java, C++, Haskell, Python
-
-
 ## Memory
-Implement a strategy for the memory card game:  $2p$ cards of $p$ pairs are mixed and put face down on the table.  2 Players take turns.  When it is your turn, you are to flip 2 cards.  When they belong to a pair, you may keep them and it is your turn again.  If they are from different pairs, you have to revert them (but everybody has seen to which pairs they belong).
+Implement a strategy for the memory card game:  $2p$ cards of $p$ pairs are mixed and put face down on the table.  2 Players take turns.  When it is your turn, you are to flip 2 cards, one after the other.  When they belong to a pair, you may keep them and it is your turn again.  If they are from different pairs, you have to revert them (but everybody has seen to which pairs they belong).
 
 The goal is to win more pairs than the opponent.  A continuous value is to pay out the difference in won pairs.
 
-Obviously, the current game position is fixed by $(p,o)$ where there are still $p$ pairs in the game and $o$ cards were already revealed (assuming everybody remembers their faces).  The strategy needs to maximize the future value of a position, by choosing 2 consecutive moves.  Note that the optimal second move may depend on the outcome of the first move.
+Obviously, the current game position is fixed by $(p,o)$ where there are still $p$ pairs in the game and $o$ cards were already revealed (assuming everybody remembers their faces).  The strategy needs to maximize the future value of a position, by choosing 2 consecutive helf-moves.  Note that the optimal second half-move may depend on the outcome of the first half-move.
 
 The trivial game is with only one pair $(1,*)$, because whoever's turn it is, they win 1 point.
 
@@ -799,7 +810,7 @@ Write a class that represents a finite spatial incidence geometry and satellite 
 Define the analoga of projective and hyperbolic geometries.  How can they be characterized in the finite case?
 
 
-# 2 Algebra
+# 2. Algebra
 ## 2.1 Categories on the computer
 0. Define a `class Cat` with
 
@@ -1230,7 +1241,30 @@ This kata is based on 4 By 4 Skyscrapers and 6 By 6 Skyscrapers by FrankK. By no
 
 ### 8.2 Ghosts, Vampires and Mirrors
 
+You have an $m\times n$ grid, and each cell can be either empty, contain a ghost, a vampire or a mirror -- oriented diagonally right-upwards or diagonally right-downwards.  You are given the positions (and orientations) of mirrors and on the sides the numbers of beings visible when looking straight possibly reflected on a mirror: Ghosts are only visible through a mirror, vampires only visible in direct view.
+
+Q1:  Can you verify if the given boundary constraints are non-contradictory?
+
+Q2:  Can you verify if there is at most 1 solution?
+
+Q9: Can you generate a puzzle of given size and complexity (e/m/h/i)?
+
+#### With Zombies
+
+A zombie is always visible, no matter of whether directly or through a mirror.
+
+
 ### 8.3 Camping Sites
+
+Given an $m\times n$ grid where every cell is either empty or contains a tree or a tent.  A tent must always have an assigned tree in one of its 4 straight neighboring fields.  Every tree may have at most 1 tent assigned.  You are given the positions of trees and on the side for every row and every column the number of tents in there.
+
+Determine where there are tents.
+
+Q1: Can you check whether the given numbers are non-contradictory?
+
+Q2: Can you check whether there is at most 1 solution?
+
+Q9: Can you generate a puzzle of given size and complexity (e/m/h/i)?
 
 
 ## 9. AI bot for playing pacman
@@ -1850,6 +1884,11 @@ The app should thus have 4 components:
 
 You may consider the above "LineSketch" app as an idea.  The backend could host a collection of sample drawings.
 
+Possible implementation frameworks:  component/google+JetBrains, electron/js, unity/ms, ...
+
+Corresponding implementation languages:  Kotlin/multi-platform, ~~java~~TypeScript, ...
+
+
 ## 2. Implement servers for multi-player modes of the previous games
 
 ### 1. Five wins
@@ -1857,18 +1896,63 @@ You may consider the above "LineSketch" app as an idea.  The backend could host 
 ### 3. Groups Game
 
 
-## 3. Implement a server and clients for some of the [3 player chess games](http://en.wikipedia.org/wiki/Three-player_chess)
+## 3. Implement a Sustainability app
+
+0. Read about major human-caused environmental impacts, e.g. CO$_2$ footprint, garbage production, product turnover, ... -- how they can be measured, what is a healthy range, a common industry country range, a valid range for the SDG 2030.
+
+1. with a handy phone app that allows the user to keep track daily of environmentally important activities; MVP: Store the daily actions in an on-phone SQLite DB, give an onverview, recent 30 days
+
+2. with a self-hosted backend that stores the data, processes statistics
+
+3. Consinder selling it in an app store (Google/Android and/or Apple/iOS)
+
+4. make the app more resilient (phone buffering, migrating, ...) and more convenient (DB with standard acitivities)
+
+5. Let users fill your DB with standard activities
+
+
+## 4. Write a vocable Trainer
+
+write a desktop / smartphone app that allows to 
+
+0. show/query/remind of vocables from a static list 1-by-1 with learning statistics;
+
+1. load vocable lists from your homepage;
+
+2. Consider putting it into an app store (e.g. Google/Android or Apple/iOS store)
+
+3. Let users design their own vocable lists, modify existing lists,
+
+4. Let users upload their own / modified lists (better with a self-hosted backend)
+
+5. Let users rank the vocable lists, e.g. hardest words, mistakes, best list, ...
+
+
+## 5. Implement a server and clients for some of the [3 player chess games](http://en.wikipedia.org/wiki/Three-player_chess)
 
 Start with writing a simple application that permits to play at one computer and checks for all rules during moves. Extend by protocollizing the moves, saving, and restoring the game. First implementation can be in C++/Qt, but the internet version should be in TypeScript (or Kotlin/Java for the server).
 
 
-## 4. Hnefatafl
+## 6. Hnefatafl
 Implement the [Tafl games](https://en.wikipedia.org/wiki/Tafl_games) in the browser (with server backend).
 
 Add a computer strategy (s.th. one player can also play).
 
 
-## 5. Power Grid
+## 7. Implement a Fitness App
+
+0. smartphone daily diary to keep track of physical acitivites, dine-out/skipped meals
+
+1. weekly PE schedule with verification and weighing
+
+2. Put in app store
+
+3. record the food with lookup in a small database (start in-app)
+
+4. make the in-app db updating and let the users add/modify their own items
+
+
+## 9. Power Grid
 The board game consists of a map with a couple of cities and some of their
 connections.  The players are to start in one city and build power connections
 to some other cities while also buying power plants and fossils to fire those

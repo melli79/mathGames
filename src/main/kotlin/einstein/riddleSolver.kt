@@ -1,7 +1,7 @@
 package einstein
 
 fun String.titlecase() = split(' ', '\t', '\n').map { it.singleWordTitlecase() }.joinToString(" ")
-fun String.singleWordTitlecase() = this[0] + slice(1 until length).lowercase()
+fun String.singleWordTitlecase() = this[0].uppercase() + slice(1 until length).lowercase()
 
 private enum class Nationalities(override val type :Type = Type.NATIONALITY) : Option<Nationalities> {
     BRITISH, SWEDISH, DANISH, GERMAN, NORWEGIAN;
@@ -241,39 +241,35 @@ private fun <T : Option<T>> Can.Better<T>.improve(
 private fun canAccept(
     nationalities :Array<out Nationalities?>, colors :Array<out Colors?>, beverages :Array<out Beverages?>,
     cigarettes :Array<out CigaretteBrands?>, pets :Array<out Pets?>
-) :Can {
-    var candidate :Can = Can.YES
-    return listOf({ canFirst(nationalities, colors) },
-        { canSecond(nationalities, pets) },
-        { canThird(nationalities, beverages) },
-        { canFourth(colors) },
-        { canFifth(colors, beverages) },
-        { canSixth(cigarettes, pets) },
-        { canSeventh(colors, cigarettes) },
-        { canEighth(beverages) },
-        { canNinth(nationalities) },
-        { canTenth(cigarettes, pets) },
-        { canEleventh(pets, cigarettes) },
-        { canTwelfth(cigarettes, beverages) },
-        { canThirteenth(nationalities, cigarettes) },
-        { canFourteenth(nationalities, colors) },
-        { canFifteenth(cigarettes, beverages) },
-        { candidate })
-        .foldRight(Can.YES) { rule, pre :Can ->
-            if (pre == Can.NO || pre is Can.Better<*>)
-                pre
-            else {
-                val result :Can = rule()
-                if (result == Can.NO || result is Can.Better<*>)
-                    result
-                else {
-                    if (result == Can.MAYBE)
-                        candidate = Can.MAYBE
-                    pre
-                }
+) :Can = listOf({ canFirst(nationalities, colors) },
+    { canSecond(nationalities, pets) },
+    { canThird(nationalities, beverages) },
+    { canFourth(colors) },
+    { canFifth(colors, beverages) },
+    { canSixth(cigarettes, pets) },
+    { canSeventh(colors, cigarettes) },
+    { canEighth(beverages) },
+    { canNinth(nationalities) },
+    { canTenth(cigarettes, pets) },
+    { canEleventh(pets, cigarettes) },
+    { canTwelfth(cigarettes, beverages) },
+    { canThirteenth(nationalities, cigarettes) },
+    { canFourteenth(nationalities, colors) },
+    { canFifteenth(cigarettes, beverages) })
+    .fold(Can.YES) { pre :Can, rule ->
+        if (pre == Can.NO)
+            pre
+        else {
+            val result :Can = rule()
+            when {
+                result == Can.NO -> result
+                pre is Can.Better<*> -> pre
+                result is Can.Better<*> -> result
+                result == Can.MAYBE -> Can.MAYBE
+                else -> pre
             }
         }
-}
+    }
 
 private fun check(
     nationalities :Array<out Nationalities?>, colors :Array<out Colors?>, beverages :Array<out Beverages?>,
@@ -367,7 +363,7 @@ private fun canFourth(colors :Array<out Colors?>) :Can {
     val nc = colors.indexOf(Colors.WHITE)
     if (nr < 0 || nc < 0)
         return Can.MAYBE
-    return if (nr == nc + 1 || nr + 1 == nc) Can.YES else Can.NO
+    return if (nr == nc + 1 || nr + 1 == nc) Can.YES  else Can.NO
 }
 
 private fun canFifth(colors :Array<out Colors?>, beverages :Array<out Beverages?>) :Can {
