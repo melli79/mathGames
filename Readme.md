@@ -4,23 +4,6 @@
 
 # 0. Smaller ideas
 
-## Hamming distance
-The Hamming or editing distance between to character sequences is the number of characters we have to change in one sequence to transform it into the other sequence.
-
-Example 1: Between "abcdefg" and "abbdeeg" it is 2: 'c'->'b' and 'f'->'e' (replace)
-Example 2: Between "Hallo" and "Hell" it is 2: 'a'->'e', 'o'->'' (delete)
-Example 3: Between "aloa" and "Hallo" it is 3: (0)''->'H', (2)''->'l', (4)'a'->'' (add and delete)
-
-Given two strings, determine their Hamming distance!
-
-### Twist
-Given two integers, determine the Hamming distance of their binary representations.
-
-### Follow up Questions:
-1. What is your algorithm's complexity?
-2. Can you do that in $\mathcal{O}(1)$?
-
-
 ## Fractional School
 
 In the fractional school every child is given $n$ fractions (of numerator and denominator with natural numbers, the denominator not being 0).  When a child claps once, it can multiply either one numerator or one denominator with a natural number (not 0 for denominators).  What is the minimum number of claps that is needed to make all fractions the same value?
@@ -449,6 +432,7 @@ Given a fixed $k$ and $N$ a bit smaller than the above optimum.  How many cards 
 
 What happens if for a fixed $k$ you have more than the optimal number $N$ of different symbols?
 
+
 ## Analyze $\sum_{n\ge1} \tan n$
 
 Draw the first few partial sums, draw higher partial sums,
@@ -525,6 +509,27 @@ The possibilities of 2 pairs has the following 3 cases:
 0. $(2,0)$ then the player can only play NN.  In 1/3 of cases they win 2 points, in 2/3 of cases they lose 2 points.  Thus expectation value is again -2/3.
 
 Obviously you need to iterate over increasing number of pairs and within that over decreasing number of revealed cards.
+
+
+## Hamming distance
+The Hamming or editing distance between to character sequences is the number of characters we have to change in one sequence to transform it into the other sequence.
+
+Example 1: Between "abcdefg" and "abbdeeg" it is 2: 'c'->'b' and 'f'->'e' (replace)
+Example 2: Between "Hallo" and "Hell" it is 2: 'a'->'e', 'o'->'' (delete)
+Example 3: Between "aloa" and "Hallo" it is 3: (0)''->'H', (2)''->'l', (4)'a'->'' (add and delete)
+
+Given two strings, determine their Hamming distance!
+
+Hint:  This is a classical problem of dynamic programming, i.e. start filling a list of changes, in every step in the list, you go from the intermediate form towards the target string.  The `changes` is a set of all possible new versions, possibly pruned by what approaches the target string.
+
+You should aim for a time complexity of $\mathcal{O}((l_1+l_2)^2)$
+
+### Twist
+Given two integers, determine the Hamming distance of their binary representations.
+
+### Follow up Questions:
+1. What is your algorithm's complexity?
+2. Can you do that in $\mathcal{O}(l_1+l_2)$?
 
 
 

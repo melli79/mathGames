@@ -1,5 +1,7 @@
 package chaos
 
+import common.math.geometry.Point2D
+import common.math.geometry.Rect
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Graphics
@@ -7,30 +9,38 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import javax.swing.JComponent
 import javax.swing.JFrame
-import kotlin.math.roundToInt
+import javax.swing.SwingUtilities
 import kotlin.math.tan
 import kotlin.system.exitProcess
 
 class SumTanN :JComponent() {
     private var limit = 16u
-    private var points :List<Point> = emptyList()
+    private var points :List<Point2D> = emptyList()
+    private var range = Rect.of(0.0, -10.0, limit.toDouble(), 1.0)
+
+    init {
+        computePoints()
+    }
 
     fun scaleUp() {
         if (limit<UInt.MAX_VALUE/2u)
             limit *= 2u
-        repaint()
+        if (limit>points.size.toUInt())
+            SwingUtilities.invokeLater { computePoints() }
+        else {
+            this.range = computeRange()
+            repaint()
+        }
     }
 
     fun scaleDown() {
-        if (limit>128u)
+        if (limit>=32u)
             limit /= 2u
+        this.range = computeRange()
         repaint()
     }
 
     override fun paint(g :Graphics) {
-        if (points.size.toUInt()<limit)
-            points = computePoints()
-        val range = computeRange()
         val scale = computeScale(range, width, height)
         drawAxes(g, scale)
         g.color = Color.BLACK
@@ -61,28 +71,17 @@ class SumTanN :JComponent() {
         return Rect(xm-0.05*dx, ym-0.05*dy, dx*1.1, dy*1.1)
     }
 
-    private fun computePoints() :List<Point> {
+    private fun computePoints() {
         var sum = 0.0
-        val result = mutableListOf(Point(0.0, sum))
+        val result = mutableListOf(Point2D(0.0, sum))
         for (n in 1u..limit) {
             sum += tan(n.toDouble())
-            result.add(Point(n.toDouble(), sum))
+            result.add(Point2D(n.toDouble(), sum))
         }
-        return result
+        this.points = result
+        this.range = computeRange()
+        repaint()
     }
-}
-
-data class Point(val x :Double, val y :Double) {}
-
-data class Rect(val x0 :Double, val y0 :Double, val dx :Double, val dy :Double) {
-    companion object {
-        fun of(x0 :Double, y0 :Double, x1 :Double, y1 :Double) =
-            Rect(x0, y0, x1-x0, y1-y0)
-    }
-
-    val y1 = y0+dy
-    fun px(x :Double) = ((x-x0)*dx).roundToInt()
-    fun py(y :Double) = ((y-y0)*dy).roundToInt()
 }
 
 class MyWindow(val content :SumTanN) :JFrame(), KeyListener {
@@ -94,16 +93,16 @@ class MyWindow(val content :SumTanN) :JFrame(), KeyListener {
         setSize(800, 600)
     }
 
-    override fun keyTyped(event :KeyEvent) = when (event.keyChar) {
+    override fun keyTyped(event :KeyEvent) {/* not needed */}
+
+    override fun keyPressed(event :KeyEvent) {/* not needed */}
+
+    override fun keyReleased(event :KeyEvent) = when (event.keyChar) {
         '+', '=' -> content.scaleUp()
         '-' -> content.scaleDown()
         'q', 'Q', 'x', 'X' -> exitProcess(0)
-        else -> {}
+        else -> {/* ignore */}
     }
-
-    override fun keyPressed(event :KeyEvent?) {}
-
-    override fun keyReleased(event :KeyEvent?) {}
 }
 
 fun main() {

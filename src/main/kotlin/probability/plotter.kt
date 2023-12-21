@@ -1,6 +1,6 @@
 package probability
 
-import chaos.Rect
+import common.math.geometry.Rect
 import common.Quadruple
 import common.math.epsilon
 import java.awt.BorderLayout
@@ -129,7 +129,7 @@ class Plotter(private val points: List<Quadruple<Double, Double, Double, Double>
         drawString("10.0", x0-32,y10+4)
     }
 
-    private fun computeScale(width: Int, height: Int): Rect {
+    private fun computeScale(width: Int, height: Int):Rect {
         val dx = min(width/range.dx, height/range.dy)*0.95
         return Rect(range.x0 -(width/dx-range.dx)/2, range.y1 +(height/dx-range.dy), dx, -dx)
     }
