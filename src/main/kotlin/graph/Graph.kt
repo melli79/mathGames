@@ -2,6 +2,7 @@ package graph
 
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.random.Random
 
 interface Graph {
     companion object {
@@ -35,3 +36,12 @@ interface Graph {
 
 fun graphOf(numVertices :UInt, edges :Collection<Graph.Edge> =emptyList(), name :String="G$numVertices")
     = ALGraph(numVertices, edges, name)
+
+fun Random.edge(n :Int) :Graph.Edge {
+    val u = nextInt(n)
+    var v = u
+    while (v == u) {
+        v = nextInt(n)
+    }
+    return Graph.Edge.of(u, v)
+}
