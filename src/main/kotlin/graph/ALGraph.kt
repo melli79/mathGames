@@ -7,5 +7,12 @@ class ALGraph(override val numVertices :UInt, edges :Collection<Graph.Edge>, val
 
     override fun getEdges() = edges.flatMapIndexed { v, ws -> ws.map { w -> Graph.Edge.of(v, w) } }
 
+    override fun countEdges() = edges.sumOf { it.size }
+    override fun findNeighbors(v :Int) :List<Int> = edges[v] +edges.mapIndexed { w, neighbors ->
+        if (v in neighbors) w  else null
+    }.filterNotNull()
+
     override fun toString() = name
+
+    override fun describe() = toString()+"\n  "+ edges.mapIndexed { v, ws -> "$v: "+ws.joinToString() }.joinToString("\n  ")
 }

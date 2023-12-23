@@ -32,6 +32,11 @@ interface Graph {
 
         override fun clone() = Edge(v0, v1)
     }
+
+    fun describe() :String
+
+    fun countEdges() = getEdges().size
+    fun findNeighbors(v :Int) :Collection<Int>
 }
 
 fun graphOf(numVertices :UInt, edges :Collection<Graph.Edge> =emptyList(), name :String="G$numVertices")
