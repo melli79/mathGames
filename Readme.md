@@ -532,6 +532,14 @@ Given two integers, determine the Hamming distance of their binary representatio
 2. Can you do that in $\mathcal{O}(l_1+l_2)$?
 
 
+## Nim Games
+
+This is a game for 2 players with $h$ heaps of stones.  The players move alternatingly, and in every move the player can take stones from one heap of their liking, but at least 1 stone and at most as many stones as there are on the heap.  The player that has no move left loses the game.
+
+Q: Given a stone distribution `stones :List<UInt>` which player has a winning strategy?
+
+Hint: you probably want to solve that with dynamic programming.  What are the terminating conditions?
+
 
 # 1A Graph Algorithms
 ## 0. Representation on the computer
