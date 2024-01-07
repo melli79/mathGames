@@ -21,12 +21,12 @@ fun List<Point2D>.findPosition(p :Point2D) :Position {
     var off2 = (p-bezier(t)).norm2()
     var lastT = if (t>=0.01) t -0.01  else 0.01
     var lastOff2 = (p-bezier(lastT)).norm2()
-    while (t-lastT > dt0) {
+    while (abs(t-lastT) > dt0) {
         val dt = t - lastT
         val dy = off2 - lastOff2
         if (abs(dy) < 5*dt0)
             break
-        val t1 = t -off2/dy*dt
+        val t1 = t -(dt/2)*off2/dy
         lastT = t;  lastOff2 = off2
         t = t1;  off2 = (p-bezier(t)).norm2()
         if (lastOff2<off2) {
@@ -35,7 +35,7 @@ fun List<Point2D>.findPosition(p :Point2D) :Position {
         }
     }
     val p0 = bezier(t)
-    val s = sgn((p - p0).dot((bezier(t + dt0) - p0).perp()))
+    val s = sgn((p-p0).dot((bezier(t+dt0) -p0).perp()))
     return Position(t, s * sqrt(off2))
 }
 
