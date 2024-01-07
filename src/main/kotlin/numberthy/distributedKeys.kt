@@ -47,7 +47,7 @@ object KeyDistributions {
 fun main() {
     val ns = mutableMapOf<Int, Int>()
     var min = choose(10u, 7u).toInt()
-    repeat(10000) {
+    repeat(100_000) {
         val n = KeyDistributions.minDistribution(7u, 10u).sumOf { it.size }
         ns[n] = (ns[n] ?: 0) + 1
         if (n<min) {

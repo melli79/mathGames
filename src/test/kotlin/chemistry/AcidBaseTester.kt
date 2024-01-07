@@ -4,7 +4,7 @@ import kotlin.test.*
 
 class AcidBaseTester {
     @Test fun acidTester() {
-        for (nonmetal in Nonmetal.values()) if (nonmetal!=Nonmetal.Oxygen && nonmetal!=Nonmetal.Hydrogen) {
+        for (nonmetal in Nonmetal.entries) if (nonmetal!=Nonmetal.Oxygen && nonmetal!=Nonmetal.Hydrogen) {
             val acids = hydrate(nonmetal)
             println(acids)
             acids.forEach { a -> if (a !is Bond2 || a.element1!=Nonmetal.Nitrogen)
@@ -15,7 +15,7 @@ class AcidBaseTester {
     }
 
     @Test fun baseTester() {
-        for (metal in Metal.values()) {
+        for (metal in Metal.entries) {
             val bases = hydrate(metal)
             println(bases)
             bases.forEach { b -> assertEquals(Bond.Type.Base, b.type) }

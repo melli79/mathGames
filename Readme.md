@@ -1139,14 +1139,18 @@ Q: What is an exponent whose fully optimized shortest path is shorter than any i
 Q2:  How much is the gain compared to the intermediate optimization?  Compared to the canonized greedy optimization?  Compared to the quickPower?
 
 ## 3. Chocolate problem
-Given a $w\times h$ bar of chocolate and $n$ friends that desire $s_i$ pieces of chocolate ($i=1,\dots,n$). Determine whether it is possible (and how) to break[^1] the chocolate bar into these pieces without remainder and each piece entire.
+Given a $w\times h$ bar of chocolate and $n$ friends that desire $s_i$ pieces of chocolate ($i=1,\dots,n$). Determine whether it is possible (and how) to break the chocolate bar into these pieces without remainder and each piece entire.
 
 0. The target pieces obviously have to be convex thus are rectangles.
 1. The obvious constraint is $\sum_i s_i = w h$, but also
 2. For every piece there must be positive integers $a_i,b_i$ such that $a_ib_i=s_i$ and $a_i\le w$, $b_i\le h$.
-3. 1: breaking means a partition along a horizontal or vertical line through one whole piece.
+3. Breaking means to iteratively split the original bar along a horizontal or vertical line through one whole piece.
 
 In a back-tracking search algorithm try to find a splitting of the bar such that the biggest piece fits into the first part and the other pieces can be split evenly. Then work recursively from there until all pieces are fit.
+
+### Variation
+
+Sometimes it is impossible to reach the $n$ pieces with exactly $n-1$ splits of the bar.  So the question may instead be what is the minimum number $b$ of breaks such that the remaining $b$ pieces can be combined to the $n$ required amounts.  (Obviously, you need $b≥n$, but also $(w-1)+w(h-1)$ is the maximum number of splits that you can do.)
 
 
 ## 4. Black-white Tiling
