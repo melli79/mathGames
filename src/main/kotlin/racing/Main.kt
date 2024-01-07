@@ -27,6 +27,7 @@ class MyWindow(private val mainComponent :KeyBoardComponent) : JFrame("Vector Ra
         this.contentPane = mainComponent
         defaultCloseOperation = EXIT_ON_CLOSE
         setSize(800, 600)
+        addKeyListener(this)
     }
 
     override fun keyTyped(event :KeyEvent) {/* not needed */}

@@ -13,6 +13,7 @@ data class Vector2D(val x :Double, val y :Double) {
 
     operator fun plus(v :Vector2D) = Vector2D(x+v.x, y+v.y)
     operator fun unaryMinus() = Vector2D(-x, -y)
+    operator fun minus(v :Vector2D) = Vector2D(x-v.x, y-v.y)
 
     fun dot(v :Vector2D) = x*v.x +y*v.y
     fun norm2() = x*x +y*y
