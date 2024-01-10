@@ -10,6 +10,8 @@ import java.awt.Graphics
 import java.awt.event.KeyEvent
 import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_BYTE_BINARY
+import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.*
 
 class VectorRace(val numPlayers :UInt) : KeyBoardComponent() {
