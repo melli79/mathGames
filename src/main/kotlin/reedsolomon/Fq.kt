@@ -1,6 +1,6 @@
 package reedsolomon
 
-import numberthy.ipow
+import common.math.ipow
 
 @OptIn(ExperimentalUnsignedTypes::class)
 data class Fq private constructor(val p :FpPolynomial, val xs :ULongArray) :Comparable<Fq> {
@@ -112,9 +112,9 @@ data class Fq private constructor(val p :FpPolynomial, val xs :ULongArray) :Comp
         return Fq(p, (result.second/result.third.lc()).cs)
     }
 
-    fun range() = FqRange(p, 0u, ipow(p.p, p.deg.toUByte())-1uL)
+    fun range() = FqRange(p, 0u, p.p.ipow(p.deg.toUByte())-1uL)
 
-    fun rangeMult() = FqRange(p, 1u, ipow(p.p, p.deg.toUByte())-1uL)
+    fun rangeMult() = FqRange(p, 1u, p.p.ipow(p.deg.toUByte())-1uL)
 
     @OptIn(ExperimentalStdlibApi::class)
     class FqRange(val p :FpPolynomial, private val begin :ULong, private val end :ULong) :OpenEndRange<Fq> {

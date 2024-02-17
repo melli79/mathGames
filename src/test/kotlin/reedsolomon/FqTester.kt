@@ -1,6 +1,6 @@
 package reedsolomon
 
-import numberthy.ipow
+import common.math.ipow
 import kotlin.test.*
 
 class FqTester {
@@ -31,7 +31,7 @@ class FqTester {
         var prod = ONE
         val len = (p0*(p0-1u)/2u).toUInt()
         var c = 1u
-        for (i in 1u..(ipow(p0, p.deg.toUByte())-1u).toUInt()) {
+        for (i in 1u..(p0.ipow(p.deg.toUByte())-1u).toUInt()) {
             prod *= gen
             print("$prod, ")
             if (c%len==0u||prod.isInFp()) {

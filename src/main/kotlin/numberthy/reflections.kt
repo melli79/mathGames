@@ -1,5 +1,6 @@
 package numberthy
 
+import common.math.ipow
 import kotlin.math.log10
 
 private val reflexiveDigits = setOf(0u, 1u, 2u, 5u, 8u)
@@ -22,9 +23,6 @@ fun generateReflectives(low :ULong, high :ULong) :List<String> {
 }
 
 fun numDigits(value :ULong) = if (value < 1uL) 1u  else (log10(value.toDouble()).toInt() +1).toUByte()
-
-private fun ULong.ipow(e :UByte) :ULong = (1u..e.toUInt()).toList()
-    .foldRight(1uL) { _, p :ULong -> p*this }
 
 @OptIn(ExperimentalUnsignedTypes::class)
 fun isReflective(number :UByteArray) :Boolean {

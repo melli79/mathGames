@@ -16,7 +16,7 @@ fun main() {
     println("Multiplikation modulo $n:")
     for (y in 0 until n!!) {
         for (x in 0 until n)
-            print("%2d ".format(x*y%n))
+            print("%2d ".format((x*y)%n))
         println()
     }
 }
