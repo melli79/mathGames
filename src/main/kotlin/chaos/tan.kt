@@ -2,27 +2,23 @@ package chaos
 
 import common.math.geometry.Point2D
 import common.math.geometry.Rect
-import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Graphics
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
-import javax.swing.JComponent
-import javax.swing.JFrame
 import javax.swing.SwingUtilities
 import kotlin.math.tan
-import kotlin.system.exitProcess
 
-class SumTanN :JComponent() {
+class SumTanN :MyComponent() {
     private var limit = 16u
     private var points :List<Point2D> = emptyList()
     private var range = Rect.of(0.0, -10.0, limit.toDouble(), 1.0)
+
+    override val title = "Sum tan n"
 
     init {
         computePoints()
     }
 
-    fun scaleUp() {
+    override fun scaleUp() {
         if (limit<UInt.MAX_VALUE/2u)
             limit *= 2u
         if (limit>points.size.toUInt())
@@ -33,7 +29,7 @@ class SumTanN :JComponent() {
         }
     }
 
-    fun scaleDown() {
+    override fun scaleDown() {
         if (limit>=32u)
             limit /= 2u
         this.range = computeRange()
@@ -84,28 +80,3 @@ class SumTanN :JComponent() {
     }
 }
 
-class MyWindow(val content :SumTanN) :JFrame(), KeyListener {
-    init {
-        this.layout = BorderLayout()
-        this.contentPane = content
-        defaultCloseOperation = EXIT_ON_CLOSE
-        addKeyListener(this)
-        setSize(800, 600)
-    }
-
-    override fun keyTyped(event :KeyEvent) {/* not needed */}
-
-    override fun keyPressed(event :KeyEvent) {/* not needed */}
-
-    override fun keyReleased(event :KeyEvent) = when (event.keyChar) {
-        '+', '=' -> content.scaleUp()
-        '-' -> content.scaleDown()
-        'q', 'Q', 'x', 'X' -> exitProcess(0)
-        else -> {/* ignore */}
-    }
-}
-
-fun main() {
-    val window = MyWindow(SumTanN())
-    window.isVisible = true
-}

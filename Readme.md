@@ -125,8 +125,8 @@ Half of the mastership is German:
   1000: eintausend, 1001: eintausdeins, 1002: eintausendzwei, ..., 2000: zweitausend, 3000: dreitausend, 4000: viertausend, ...
   10'000: zehntausend, 10'001: zehntausendeins, ... 20'000: zwanzigtausend, ...
   100'000: (ein)hunderttausend, ...
-  1"000'000: eine Million, 1'000'001: eine Million eins, ..., 1'001'000: eine Million eintausend, ...
-  10"000'000: zehn Million, ..., 100'000'000: hundert Million, ...
+  1"000'000: eine Million, 1"000'001: eine Million eins, ..., 1"001'000: eine Million eintausend, ...
+  10"000'000: zehn Million, ..., 100"000'000: hundert Million, ...
   1'000"000'000: eine Milliarde, ...
   1"000'000"000'000: eine Billion, ...
 </pre>
@@ -142,8 +142,8 @@ The other half are French numbers:
   80: quatre-vingt, ..., 90: quatre-vingt-dix, 91: quatre-vingt-once, ...
   100: cent, 101: cent-un, ..., 110: cent-dix, ...
   200: deux-cent, ...
-  1000: mille, 1001: mille-et-un,..., 1010: mille-dix, ..., 1100: mille-cent, ...
-  2000: deux-mille, ..., 3000: trois-mille, ...
+  1'000: mille, 1'001: mille-et-un,..., 1'010: mille-dix, ..., 1'100: mille-cent, ...
+  2'000: deux-mille, ..., 3'000: trois-mille, ...
   10'000: dix-mille, ..., 100'000: cent-mille, ...
   1"000'000: un million, ..., 2"000'000: deux million,..., 10"000'000: dix million, ..., 100"000'000: cent million, ...
   1'000"000'000: un milliard, ...
@@ -365,6 +365,20 @@ As an easier exercise, you may consider the form of $t(n,y)=2\uparrow^n y$.
 
 Can you prove them (induction)?
 
+## Additive grid
+
+Given an $n\times n$ grid, filled with the integers 1,\dots,n^2.  An elementary operation consists of taking the number of one cell and adding it to the cell and its 2--4 direct neighbors.
+
+### Q1:  Can you reach the specific configuration
+
+where all cells are equal?
+
+### Q2:  Can you find an invariant subset of grids?
+
+### Q3:  Write a program that computes the maximal orbit
+
+You may start with $n=2$ and think about efficiently encoding the configuration.  Then think about how to express an elementary operation, indexed by $1\le i\le n^2$.
+
 
 ## Chemistry in Kotlin
 
@@ -512,10 +526,12 @@ Obviously you need to iterate over increasing number of pairs and within that ov
 
 
 ## Hamming distance
-The Hamming or editing distance between to character sequences is the number of characters we have to change in one sequence to transform it into the other sequence.
+The Hamming or editing distance between 2 character sequences is the number of characters we have to change in one sequence to transform it into the other sequence.
 
 Example 1: Between "abcdefg" and "abbdeeg" it is 2: 'c'->'b' and 'f'->'e' (replace)
+
 Example 2: Between "Hallo" and "Hell" it is 2: 'a'->'e', 'o'->'' (delete)
+
 Example 3: Between "aloa" and "Hallo" it is 3: (0)''->'H', (2)''->'l', (4)'a'->'' (add and delete)
 
 Given two strings, determine their Hamming distance!
@@ -1391,6 +1407,10 @@ Again you can start by filling the window with a square and then iterating down 
 
 
 ## 3. Iterated function systems
+
+### 0. Iterated Logarithm
+
+Try to plot the iterations $f_{n+1}(x) = \ln|f_n(x)|$ starting from $f_0(x)=x\in (0,1)$ for the first ~20 iterations.  You may loop over all x coordinates of the window, scale the window coordinate onto $(0,1)$ and inside this loop over $n=0\ldots20$ computing the next $y_{n+1}$, and the draw the point $(x,y_n)$ with color $n$.
 
 ### 1. Encode an elementary class of transformations of $\mathbb{R}^d$
 via parameters and pick $n$ $(f_1, \dots, f_n)$ of them (contracting or only weakly stretching).
