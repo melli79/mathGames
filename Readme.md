@@ -548,6 +548,21 @@ Given two integers, determine the Hamming distance of their binary representatio
 2. Can you do that in $\mathcal{O}(l_1+l_2)$?
 
 
+## Biased Split
+
+The goal is to guess an integer between `min` and `max`, but you are only allowed to ask a couple of yes/no questions (and conclude from the answer).
+
+### 0. Minimize the number of queries.
+
+Then you would do binary search
+
+### 1. Minimize the number of Nos
+
+Try a biased split, i.e. choose a `bias in 0..1` and choose the comparing element as `bias*min+(1-bias)*max`, and conclude as before.
+
+Q: What is the optimal bias?  What is the number of Nos you will get in that case?
+
+
 ## Nim Games
 
 This is a game for 2 players with $h$ heaps of stones.  The players move alternatingly, and in every move the player can take stones from one heap of their liking, but at least 1 stone and at most as many stones as there are on the heap.  The player that has no move left loses the game.
@@ -1410,7 +1425,7 @@ Again you can start by filling the window with a square and then iterating down 
 
 ### 0. Iterated Logarithm
 
-Try to plot the iterations $f_{n+1}(x) = \ln|f_n(x)|$ starting from $f_0(x)=x\in (0,1)$ for the first ~20 iterations.  You may loop over all x coordinates of the window, scale the window coordinate onto $(0,1)$ and inside this loop over $n=0\ldots20$ computing the next $y_{n+1}$, and the draw the point $(x,y_n)$ with color $n$.
+Try to plot the iterations $f_{n+1}(x) = \ln|f_n(x)|$ starting from $f_0(x)=x\in (0,1)$ for the first ~20 iterations.  You may loop over all x coordinates of the window, scale the window coordinate to $(0,1)$ and inside this loop over $n=0\ldots20$ computing the next $y_{n+1}$, and draw the point $(x,y_n)$ with color $n$.
 
 ### 1. Encode an elementary class of transformations of $\mathbb{R}^d$
 via parameters and pick $n$ $(f_1, \dots, f_n)$ of them (contracting or only weakly stretching).
