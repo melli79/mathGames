@@ -59,6 +59,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 }
 
 fun main() {
-    val window = MyWindow(Mandelbrot())
+    val window = MyWindow(TanMandel())
     window.isVisible = true
 }
