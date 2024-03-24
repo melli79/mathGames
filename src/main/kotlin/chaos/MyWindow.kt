@@ -36,6 +36,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener {
 }
 
 fun main() {
-    val window = MyWindow(LogComponent())
+    val window = MyWindow(LogFractal())
     window.isVisible = true
 }
