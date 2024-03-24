@@ -26,6 +26,7 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
         addKeyListener(this)
         addMouseListener(this)
         setSize(800, 600)
+        title = content.title
     }
 
     override fun keyTyped(event :KeyEvent) {/* not needed */}
