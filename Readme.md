@@ -1,6 +1,6 @@
-% Math Ideas for programming
+% Math Ideas for Programming
 % Collected by M. Gr.
-% 2010 - 2023
+% 2010 - 2024
 
 # 0. Smaller ideas
 
@@ -20,7 +20,7 @@ Can you make the algorithm efficient as to provide the answer in the range $0\ld
 You missed the Formula 1 live broadcasting last weekend, but after digging a while, you come up with the list of events for that race.  The players are numbered from 1 to 100 when starting and during the race a list of events happen: An event is a pilot ID followed by a type and an optional parameter. There are 3 types of events:
 
 'O': a pilot is overtaking the one just in front of him
-'R': a pilot does a box stop for refuelling and retuning his machine, the number afterwards tells after which player he re-enters the race.
+'R': a pilot does a box stop for refueling and returning his machine, the number afterwards tells after which player he re-enters the race.
 'I': a pilot had an incident... and is forced to quit the race (and subsequently all pilots after this one gain one rank)
 
 goals:
@@ -87,7 +87,7 @@ That is more tricky.  If you have learned the language well, you may remember th
   200:twohundred, 300:threehundred, 400:fourhundred, ...
   1000:onethousand, 1001: onethousandone, 1002: onethousandtwo, ..., 2000: twothousand, 3000: threethousand, 4000: fourthousand, ...
   10'000: tenthousand, 10'001: tenthousandone, ... 20'000: twentythousand, ...
-  100'000: hundredthousand, ...
+  100'000: onehundredthousand, ...
   1"000'000: one million, 1"000'001: one million one, ..., 1"001'000: one million one thousand, ...
   10"000'000: ten million, 100"000'000: hundred million,
   1'000"000'000: one billion, ...
@@ -124,7 +124,7 @@ Half of the mastership is German:
   200: zweihundert, 300: dreihundert, 400: vierhundert, ...
   1000: eintausend, 1001: eintausdeins, 1002: eintausendzwei, ..., 2000: zweitausend, 3000: dreitausend, 4000: viertausend, ...
   10'000: zehntausend, 10'001: zehntausendeins, ... 20'000: zwanzigtausend, ...
-  100'000: (ein)hunderttausend, ...
+  100'000: einhunderttausend, ...
   1"000'000: eine Million, 1"000'001: eine Million eins, ..., 1"001'000: eine Million eintausend, ...
   10"000'000: zehn Million, ..., 100"000'000: hundert Million, ...
   1'000"000'000: eine Milliarde, ...
@@ -260,7 +260,7 @@ Q2: What happens after a while?
 Q3: Given the initial order (a permutation of integers) and $g$ games, can you determine who won&lost how many times?
 
 
-## Sieve of Erathostenes
+## Sieve of Eratosthenes
 Find all primes between 1 and an upper bound $N$.
 
 A prime is an integer that has exactly 4 divisors.
@@ -270,7 +270,7 @@ Examples:
 0. ±1 are units, because every integer can be divided by them;
 1. the smallest positive primes are 2, 3, 5, 7, 11, 13, ...
 
-The idea of Erathostenes is as follows:
+The idea of Eratosthenes is as follows:
 
 0. write down all numbers from 1 to $N$;
 1. strike out 1, because it is a unit;
@@ -282,7 +282,7 @@ Given a prime $p$, determine all monic irreducible polynomials of degree $d$ mod
 
 Hint: as a warm-up, you can determine all irreducible polynomials upto degree $d>0$ modulo $p$.
 
-Hint2: What is the use of $d/2$ for factors?
+Hint 2: What is the use of $d/2$ for factors?
 
 
 ## Fibonacci Numbers
@@ -329,7 +329,7 @@ Out of the 2 summands which one can be neglected for large $n$?
 
 What is the meaning for $n<0$?
 
-### 3. Repeat the same for Tribonacci numbers
+### 3. Repeat the same for Tribonacci Numbers
 
 -1. $t_{-1}=0$,
 
@@ -363,11 +363,12 @@ up $a(2,n)$ in order to compute $a(4,1)$.
 
 As an easier exercise, you may consider the form of $t(n,y)=2\uparrow^n y$.
 
-Can you prove them (induction)?
+Can you prove them (by induction)?
+
 
 ## Additive grid
 
-Given an $n\times n$ grid, filled with the integers 1,\dots,n^2.  An elementary operation consists of taking the number of one cell and adding it to the cell and its 2--4 direct neighbors.
+Given an $n\times n$ grid, filled with the integers $1,\dots,n^2$.  An elementary operation consists of taking the number of one cell and adding it to the cell and its 2--4 direct neighbors.
 
 ### Q1:  Can you reach the specific configuration
 
@@ -384,13 +385,13 @@ You may start with $n=2$ and think about efficiently encoding the configuration.
 
 You are to write a set of functions (preferably in a module) that allow to manipulate atoms into molecules.
 
-You can start with an enum of atom(trunks), e.g. oxygene, hydrogene, carbon, nitrogene, sulfur, ferrum, aluminium, potasium, sodium, chlorine, ... and allow for
+You can start with an `enum` of atom(trunks), e.g. oxygen, hydrogen, carbon, nitrogen, sulfur, ferrum, aluminium, potassium, sodium, chlorine, ... and allow for
 
-2. binary and ternary bonds (of 2 or 3 atom types only) and determine their ratio and character (unpolar, polar, ionic bond) ...;
+2. binary and ternary bonds (of 2 or 3 atom types only) and determine their ratio and character (non-polar, polar, ionic bond) ...;
 
-3. organic bonds (of 3 atom types only, C, H, ...) and determine their structure, sum formula and solubility in water or oil, ... -- start with linear hydrogene carbonates, then branching (handling moities), then polycyclic;
+3. organic bonds (of 3 atom types only, C, H, ...) and determine their structure, sum formula and solubility in water or oil, ... -- start with linear hydrogen carbonates, then branching (handling moieties), then poly-cyclic;
 
-4. complexes, i.e. consisting of a known core (e.g. ferrum-n-oxide, copper-oxide, zink-oxide, ...) and counter-ions and determine their sum-formula, ...;
+4. complexes, i.e. consisting of a known core (e.g. ferrum-n-oxide, copper-oxide, zinc-oxide, ...) and counter-ions and determine their sum-formula, ...;
 
 
 ## Linear Probing
@@ -414,7 +415,7 @@ An alternative is to keep lists in each place $t:=h(x)\%p$ and if there is more 
 
 ## Tracking Loyal Customers
 
-Let’s say [we](https://carloarg02.medium.com/my-favorite-coding-question-to-give-candidates-17ea4758880c) have a website and we keep track of what pages customers are viewing, for things like business metrics.
+Let us say [we](https://carloarg02.medium.com/my-favorite-coding-question-to-give-candidates-17ea4758880c) have a website and we keep track of what pages customers are viewing, for things like business metrics.
 
 Every time somebody comes to the website, we write a record to a log file consisting of Timestamp, PageId, CustomerId. At the end of the day we have a big log file with many entries in that format. And for every day we have a new file.
 
@@ -458,7 +459,7 @@ Remember Alon's argument (irrational number)
 
 ## Color Reduction in Paintings
 
-Given a painting of size $n$, i.e. an $n\times n$ square of integers which we call colors, we wish to modify it in steps with as low as possible total weight such that the result has only $r$ remaining colors (i.e. different integers).  A step consists of choosing a sub-square $1\le x_1\le x_2\le n$ and $1\le y_1\le y_2\le n$ with $y_2-y_1=x_2-x_1$ and an integer $c$, replacing all cells of the subsquare by the new color $c$.  The weight of this step is $(x_2-x_1)(y_2-y_1)$.
+Given a painting of size $n$, i.e. an $n\times n$ square of integers which we call colors, we wish to modify it in steps with as low as possible total weight such that the result has only $r$ remaining colors (i.e. different integers).  A step consists of choosing a sub-square $1\le x_1\le x_2\le n$ and $1\le y_1\le y_2\le n$ with $y_2-y_1=x_2-x_1$ and an integer $c$, replacing all cells of the sub-square by the new color $c$.  The weight of this step is $(x_2-x_1)(y_2-y_1)$.
 
 Hint: First focus on the total number of pixels to be changed.
 
@@ -471,7 +472,7 @@ The penalty for small rectangles is increased, it is now $(x_2-x_1)(y_2-y_1)+1$.
 
 ## Corner Reduction
 
-Given a painting, i.e. a matrix of size $m\times n$ filled with 0s and 1s.  A corner is a $2\times2$ square filled with 3x 1s and 1x 0 or 3x 0s and 1x 1.  An operation consists of taking any non-homogeneous $2\times2$ subsquare and make it homogeneous, i.e. with either 4x 0s or 4x 1s.
+Given a painting, i.e. a matrix of size $m\times n$ filled with 0s and 1s.  A corner is a $2\times2$ square filled with 3x 1s and 1x 0 or 3x 0s and 1x 1.  An operation consists of taking any non-homogeneous $2\times2$ sub-square and make it homogeneous, i.e. with either 4x 0s or 4x 1s.
 
 Q1:  What is the minimum number of corners you can produce in any painting?
 
@@ -508,9 +509,9 @@ Implement a strategy for the memory card game:  $2p$ cards of $p$ pairs are mixe
 
 The goal is to win more pairs than the opponent.  A continuous value is to pay out the difference in won pairs.
 
-Obviously, the current game position is fixed by $(p,o)$ where there are still $p$ pairs in the game and $o$ cards were already revealed (assuming everybody remembers their faces).  The strategy needs to maximize the future value of a position, by choosing 2 consecutive helf-moves.  Note that the optimal second half-move may depend on the outcome of the first half-move.
+Obviously, the current game position is fixed by $(p,o)$ where there are still $p$ pairs in the game and $o$ cards were already revealed (assuming everybody remembers their faces).  The strategy needs to maximize the future value of a position, by choosing 2 consecutive half-moves.  Note that the optimal second half-move may depend on the outcome of the first half-move.
 
-The trivial game is with only one pair $(1,*)$, because whoever's turn it is, they win 1 point.
+The trivial game is with only one pair $(1,*)$, because whose-ever turn it is, they win 1 point.
 
 The simplification rules also state that when a pair was revealed, then $p$ reduces by one and so does $o$.
 
@@ -544,6 +545,7 @@ You should aim for a time complexity of $\mathcal{O}((l_1+l_2)^2)$
 Given two integers, determine the Hamming distance of their binary representations.
 
 ### Follow up Questions:
+
 1. What is your algorithm's complexity?
 2. Can you do that in $\mathcal{O}(l_1+l_2)$?
 
@@ -561,22 +563,30 @@ Then you would do binary search
 Try a biased split, i.e. choose a `bias in 0..1` and choose the comparing element as `bias*min+(1-bias)*max`, and conclude as before.
 
 Q: What is the optimal bias?  What is the number of Nos you will get in that case?
-
+,0
 
 ## Nim Games
 
-This is a game for 2 players with $h$ heaps of stones.  The players move alternatingly, and in every move the player can take stones from one heap of their liking, but at least 1 stone and at most as many stones as there are on the heap.  The player that has no move left loses the game.
+This is a game for 2 players with $h$ heaps of stones.  The players move alternately, and in every move the player can take stones from one heap of their liking, but at least 1 stone and at most as many stones as there are on the heap.  The player that has no move left loses the game.
 
 Q: Given a stone distribution `stones :List<UInt>` which player has a winning strategy?
 
 Hint: you probably want to solve that with dynamic programming.  What are the terminating conditions?
+
+### Variation: Poisoned Chocolate
+
+Given a $w\times h$ bar of chocolate whose top-left piece is poisoned.  2 players are taking moves alternately.  In every move, you have to bite off pieces from the bottom-right, at least 1.
+
+Since the game is finite and there are no ties, one of the players must have a winning strategy.  Can you determine it?
+
+Hint: Dynamic programming may be helpful
 
 
 # 1A Graph Algorithms
 ## 0. Representation on the computer
 
   - directed/ undirected, simple/ multigraph (as two template parameters)
-  - operations: addEdge[s], eraseEdge[s], addNode[s], eraseNode[s], operator +/+=, operator -/-=, res (induced subgraph)
+  - operations: addEdge[s], eraseEdge[s], addNode[s], eraseNode[s], operator +/+=, operator -/-=, res (induced sub-graph)
 
 Applications:
 
@@ -635,9 +645,9 @@ Given an (undirected simple) Graph, try to draw it in a GUI.
 
 2. Continue with complete bipartite graphs: $K_{2,2}=(\{1,2, A,B\},\{(1,A),(1,B), (2,A), (2,B)\})$, $K_{3,3}=(\{1,2,3, A,B,C\},\{1,2,3\}\times\{A,B,C\})$ (all edges from every vertex in the first set to every vertex in the second set), ... -- Where is the limit?
 
-**Theorem.**  A simple (undirected) graph is plane iff it does not contain any subgraph contractible to a $K_5$ or to a $K_{3,3}$.
+**Theorem.**  A simple (undirected) graph is plane iff it does not contain any sub-graph contractible to a $K_5$ or to a $K_{3,3}$.
 
-*Rem:* Given a graph $g=(V,E)$.  A subgraph $g'=(V',E')\subseteq g$ consists of a subset $V'\subseteq V$ of vertices and a subset $E'\subseteq E|V'$ where $E|V' = \{e\in E: start(e),end(e)\in V'\}$.  The induced subgraph is $g'=(V', E|V')$.
+*Rem:* Given a graph $g=(V,E)$.  A sub-graph $g'=(V',E')\subseteq g$ consists of a subset $V'\subseteq V$ of vertices and a subset $E'\subseteq E|V'$ where $E|V' = \{e\in E: start(e),end(e)\in V'\}$.  The induced sub-graph is $g'=(V', E|V')$.
 
 One possibility is to
 
@@ -699,7 +709,7 @@ If in addition you want to minimize the transport in the network, you can reduce
 
 ## 11. Maximum Matchings
 
-Given a bi-partite graph $(M,E,F)$ where $V:=M\cup F$ and edges only connect $M$-vertices with $F$-vertices.  A matching $m\subset E$ is a set of edges such that every $v\in M$ and every $f\in F$ lies on at most one edge $e\in m$.  A maximal matching is one to which you cannot add edges such that it remains a matching.  The maximal matching is a matching with the maximum number of edges.
+Given a bipartite graph $(M,E,F)$ where $V:=M\cup F$ and edges only connect $M$-vertices with $F$-vertices.  A matching $m\subset E$ is a set of edges such that every $v\in M$ and every $f\in F$ lies on at most one edge $e\in m$.  A maximal matching is one to which you cannot add edges such that it remains a matching.  The maximal matching is a matching with the maximum number of edges.
 
 Hall's Marriage problem is a bi-partite network $(M,E,F,w)$ with $w\colon E\to[0,\infty)$ such that $w$ means the quality/happiness of that marriage.  Hall's Marriage is a matching with maximum sum weight.
 
@@ -708,7 +718,7 @@ Hall's Marriage problem is a bi-partite network $(M,E,F,w)$ with $w\colon E\to[0
 
 ## 12. $k$-connected components
 
-Given any undirected graph $(V,E)$, then the $k$-connected components $CC_k$ are a partitition of $V$ such that for every $C\in CC_k$, the graph $(C,E|C)$ is $k$-connected.
+Given any undirected graph $(V,E)$, then the $k$-connected components $CC_k$ are a partition of $V$ such that for every $C\in CC_k$, the graph $(C,E|C)$ is $k$-connected.
 
 Examples:
 
@@ -741,11 +751,11 @@ An alternative (and better scaling) method would be to construct a matching grap
 
 1. a DFA that starts with a vertex $s_0$ and for every character in $s$ there is an edge from the previous vertex $s_n$ to a new vertex $s_{n+1}$ annotated with the character $s$.  The last vertex is the accepting vertex $z$.
 
-### 13.2 Simultaneous matching (Knut-Morris-Pratt algorithm)
+### 13.2 Simultaneous matching (Knuth-Morris-Pratt algorithm)
 
-If instead of 1 substring $s$, we are given a set $S\subset\Sigma^*$ of strings or a regular expression, and we wish to figure out whether any one of them matches, then we can construct an NFA as follows:
+If instead of 1 sub-string $s$, we are given a set $S\subset\Sigma^*$ of strings or a regular expression, and we wish to figure out whether any one of them matches, then we can construct an NFA as follows:
 
-0. Start with a single state $s_0$ for every different first character $c$ of any $s\in S$ draw and edge from $s_0$ to a new vertex and annotate it with $c$.  If at some point a substring is complete, annotate the vertex with that substring and take it to the accepting states $Z_f\subset Z$.
+0. Start with a single state $s_0$ for every different first character $c$ of any $s\in S$ draw and edge from $s_0$ to a new vertex and annotate it with $c$.  If at some point a sub-string is complete, annotate the vertex with that sub-string and take it to the accepting states $Z_f\subset Z$.
 
 1. Construct the state transition DFA as follows:  $Z_{DFA}=2^Z$ and the edges are annotated with those characters that transition every state $s\in z\subset Z$ to every other state $s'\in z'\subset Z$. The initial state is $s_{DFA}:=\{s_0\}\subset Z$.  Now parsing an input string $l$ corresponds to computations in the DFA, but it is much bigger than the previous NFA.  You may discover the reachable graph by starting from the initial state $s_{DFA}$ and only add those vertices $z\subset Z$ that are reachable by an immediate edge.
 
@@ -760,16 +770,16 @@ The compression works mostly in C with some bit manipulations.
 ### 8. Prefix Trees, Suffix Trees, Suffix Automation (Ukkonen Algorithm)
 
 
-# 1B Hypergraphs on the computer
+# 1B Hyper-graphs on the computer
 ## 0. Implementation
-A hypergraph is a pair $h=(V,E)$ where $V$ is a finite set – the vertices – and $E\subseteq 2^V\setminus\emptyset$ are the hyper edges. Condition: with $s\in E$ also all faces $\partial s$ are in $E$.  Given any hyperedge $s=\{v_0,v_1,\dots,v_d\}$, then its faces are the hyperedges $s_k=\{v_0,v_1,\dots,\hat{v}_k,\dots,v_d\}$ (and for $d=0$ there are no such faces).
+A hyper-graph is a pair $h=(V,E)$ where $V$ is a finite set – the vertices – and $E\subseteq 2^V\setminus\emptyset$ are the hyper edges. Condition: with $s\in E$ also all faces $\partial s$ are in $E$.  Given any hyper-edge $s=\{v_0,v_1,\dots,v_d\}$, then its faces are the hyper-edges $s_k=\{v_0,v_1,\dots,\hat{v}_k,\dots,v_d\}$ (and for $d=0$ there are no such faces).
 
 Implement the following:
 
-  - operations: `addEdge[s]`, `eraseEdge[s]`, `eraseNode[s]`, `operator +`,`+=` (union), `-`,`-=` (difference), `cap` (intersection), `*`, `*=` (cartesian product, needs a triangulation mechanism)
+  - operations: `addEdge[s]`, `eraseEdge[s]`, `eraseNode[s]`, `operator +`,`+=` (union), `-`,`-=` (difference), `cap` (intersection), `*`, `*=` (Cartesian product, needs a triangulation mechanism)
 
-## 1. Dual Hypergraph
-i.e. the hyper graph $h':=(E, V')$ such that $X\in V'\subseteq 2^E$ iff there is an $x\in V$ such that for all $e\in X$: $x\in e$;
+## 1. Dual Hyper-graph
+i.e. the hyper-graph $h':=(E, V')$ such that $X\in V'\subseteq 2^E$ iff there is an $x\in V$ such that for all $e\in X$: $x\in e$;
 
 Hint: You may have to use an enumeration that maps $E$ to integers.
 
@@ -778,7 +788,7 @@ Hint: You may have to use an enumeration that maps $E$ to integers.
 Given any graph $(V,E)$, then its dual graph is the graph $(E,V')$ such that $X\in V'\subset 2^E$ iff there is a $v\in V$ such that for all $e\in X$: $v\in e$.
 
 
-## 2. Implement chain complexes on Hypergraphs
+## 2. Implement chain complexes on Hyper-graphs
 Find a definition of hyper-orientation.
 
 operations: `operator` `+`,`+=`, `-`,`-=`, `cap` (intersection), `boundary` (such that `boundary`$^2=0$)
@@ -793,7 +803,7 @@ Def.: A finite plane incidence geometry is a triple $(P,I,L)$ consisting of fini
 2. Through every pair of points there is exactly one line;
 3. There is a line and a point not on that line;
 4. To every line and a point, there is a unique parallel line (i.e. either no common points or the same line) through that point;
-5. The 3 paralleles axiom.
+5. The 3 parallels axiom.
 
 Thm.: A finite incidence geometry is characterized by the number $n$ of points on every line.  There are in total $n^2$ points, through every point pass $(n^2-1)/(n-1)=n+1$ lines and in total there are $n^2+n$ lines.
 
@@ -806,7 +816,7 @@ Thm.:  Given a prime power $n=q=p^k$, then the isomorphisms are $\mathrm{Gl}_2(\
 
 Such as $\mathbb{P}^2\mathbb{R}$ or $\mathbb{S}^2\approx\mathbb{P}^1\mathbb{C}$, i.e. every 2 lines intersect in a point.
 
-Find the analogon of the characteristic theorem and implement it in a class with points and lines as satellite classes.
+Find the analog of the characteristic theorem and implement it in a class with points and lines as satellite classes.
 
 Thm.: Given an odd prime power $n=q=p^k$, then the isomorphisms are $\mathrm{PSl}_2(\mathbb{F}_q)\ltimes\mathbb{P}^2\mathbb{F}_q$.
 
@@ -851,7 +861,7 @@ Write a class that represents a finite spatial incidence geometry and satellite 
 
 ## 3P, 3H
 
-Define the analoga of projective and hyperbolic geometries.  How can they be characterized in the finite case?
+Define the analogs of projective and hyperbolic geometries.  How can they be characterized in the finite case?
 
 
 # 2. Algebra
@@ -859,13 +869,13 @@ Define the analoga of projective and hyperbolic geometries.  How can they be cha
 0. Define a `class Cat` with
 
 * the `name`
-* typedefs to the `Object` and `Morphism` satelite classes
+* typedefs to the `Object` and `Morphism` satellite classes
 * a method that returns the `id`entity morphism of an `Object`.
 
-1. Instead of the abstract `class Object` implement an `abstract class Term<Object>` that represents a Term with value an `Object` and has the concrete subtype: `Variable`.
+1. Instead of the abstract `class Object` implement an `abstract class Term<Object>` that represents a Term with value an `Object` and has the concrete sub-type: `Variable`.
    A `Term` should have an assigned `Cat`egory.
 
-2. Instead of the abstract `class Morphism` implement an `abstract class Term<Morphism>` with concrete subtypes `Variable` and `Product`.
+2. Instead of the abstract `class Morphism` implement an `abstract class Term<Morphism>` with concrete sub-types `Variable` and `Product`.
 * A `Morphism` has assigned `source` and `target`.
 * Implement the `operator *` according to the rules of composition of morphisms in `Cat`egories.
 * Extend `Term<...>` such that one can add expressions for source, target, and identity.
@@ -897,8 +907,8 @@ See if you can produce most solutions for $n=0,\dots,32$ in moderate time.
 ### (3,4) Sum of Four Cubes ($n=a^3+b^3+c^3+e^3$)
 Repeat the same with four cubes.
 
-### (4,5) Sum of 5 Bisquares ($n=v^4+w^4+x^4+y^4+z^4$)
-Repeat the same with 5 bisquares.
+### (4,5) Sum of 5 Bi-squares ($n=v^4+w^4+x^4+y^4+z^4$)
+Repeat the same with 5 bi-squares.
 
 The current conjecture is that
 
@@ -946,13 +956,13 @@ Implement an `operator +(Term t2)` in the class `Term` that handles addition cor
 #. Write simplification, such that expressions, e.g. `Var("x")+Const(0)`, `Var("x")+Var("x")`, `Var("x")*Var("x")`, ... are simplified accordingly.
 
 ### Extension to vector-valued terms
-Write an `abstract template class Termn` that takes the dimension $n$ as parameter. Implement concrete subclasses:
+Write an `abstract template class Termn` that takes the dimension $n$ as parameter. Implement concrete sub-classes:
 
 #. `Tuple` that takes $n$ `Term`s,
 #. `Funn1` that takes a `Termn`, an integer $0\ldots(n-1)$ and is a `Term`.
 
 
-If you implement in C++, write a wrapper class for `Term`s that handles the subtype change in the argument under assignment and frees the application programmer from handling pointers.
+If you implement in C++, write a wrapper class for `Term`s that handles the sub-type change in the argument under assignment and frees the application programmer from handling pointers.
 
 ### Application: integration of linear ODEs (with constant coefficients)
 
@@ -993,7 +1003,7 @@ The direct product of 2 (non-necessarily abelian) groups is the set of pairs und
 
 ### 2.5.2 Semi-direct Products
 
-A semi-direct product consists of pairs of elements, but the multiplication of the right elements is twised by an (outer) automorphism parametrized by the first left element, i.e.
+A semi-direct product consists of pairs of elements, but the multiplication of the right elements is twisted by an (outer) automorphism parametrized by the first left element, i.e.
 
  $$ G\,_\rho\!\!\ltimes H:= G\times H, (v,A)\circ(w,B) = (v+\rho(A)w, AB) $$
 
@@ -1069,7 +1079,7 @@ Remember the algorithm to approximate some dyadic number (finite binary fraction
 
 ### 2. Lattice approximation
 
-According to Alon Amit, the analogon for an algebraic approximation of a dyadic number can be achieved as follows:  You need to choose a large integer $M$, e.g. $\mathrm{gcd}_{k=2}^n k$ and a maximum degree $D$.  Then you form the lattice vectors
+According to Alon Amit, the analog for an algebraïc approximation of a dyadic number can be achieved as follows:  You need to choose a large integer $M$, e.g. $\mathrm{gcd}_{k=2}^n k$ and a maximum degree $D$.  Then you form the lattice vectors
 
  $$\begin{array}{cccccrr}
    v_0 &= (1,&0,&0,&\ldots,&0,&M),\\
@@ -1085,9 +1095,9 @@ Limits:  Note that if $x$ has an absolute error of $\epsilon$, then you need to 
 
 
 # 3. Optimization and large-scale Combinatorial problems I
-## 3.-1 Fabergée eggs
+## 3.-1 Fabergé eggs
 
-Given a set of `n` Fabergée eggs, you wish to find out from wich maximum height in a tower you can drop them such that they do not break.  Even giving only 1 egg, you could start dropping it from the 1F, then 2F, then 3F and so on, until it breaks, which would then tell you the maximum height.
+Given a set of `n` Fabergé eggs, you wish to find out from which maximum height in a tower you can drop them such that they do not break.  Even giving only 1 egg, you could start dropping it from the 1F, then 2F, then 3F and so on, until it breaks, which would then tell you the maximum height.
 
 Given however the second constraint that you may throw eggs at most `m` times in total, what is the maximum height of a skyscraper for which you can find out the maximum dropping height for the eggs?
 
@@ -1114,7 +1124,7 @@ for some strictly periodical function $f\colon\mathbb{R}\to[0,1]$.
 [BKM17] T.v.d. Brug, W. Kager, R. Meester: *The Asymptotics of Group Russian Roulette*, in Markov Processes and Related Fields, vol. 23, pp.35-66 **(2017)** [arXiv:mathPR/1507.03805](https://arxiv.org/pdf/1507.03805.pdf).
 
 ## 1. Tower of Hanoi
-The actual problem was first stated and popularized by É. Lucas in 1884, but it reads nicer in the following way:  According to legend there are three pegs in the dungeon of some Brahmin temple (in Hanoi, Vietnam). They were created with 64 golden disks of decreasing size on the first peg at the beginning of the universe. The monks have to move them by the rules
+The actual problem was first stated and popularized by É. Lucas in 1884, but it reads nicer in the following way:  According to legend there are three pegs in the dungeon of some Brahman temple (in Hanoi, Vietnam). They were created with 64 golden disks of decreasing size on the first peg at the beginning of the universe. The monks have to move them by the rules
 
 * only one disk per second,
 * Never a bigger disk on a smaller one,
@@ -1212,19 +1222,19 @@ Do the same for arbitrary $n\ge3$ and fixed $1<m<n$.
 
 ### 5.2 Prisoner Dilemma
 
-Two prisoners sit together in a cell/before the judge.  They are each simultaneously offered to either blame the other and if successfull get 5 years earlier released, they can stick together and get released 3 years earlier for lack of evidence or if they both betray each other get no early release due to conviction of the crime.  Unfortunately they may not communicate with each other, except that they will see the other's choice after the round.
+Two prisoners sit together in a cell/before the judge.  They are each simultaneously offered to either blame the other and if successful get 5 years earlier released, they can stick together and get released 3 years earlier for lack of evidence or if they both betray each other get no early release due to conviction of the crime.  Unfortunately they may not communicate with each other, except that they will see the other's choice after the round.
 
 The game repeats every day and the question is what is a good strategy to spend as little time in prison as possible.
 
 ### 5.n Iterated Prisoner Dilemma
 
-Instead of just 2 prisoners, there are $n$ prisoners which play in all possible pairs for $t$ turns each game and in the end the prisonser with the highest reduction of prison time wins.
+Instead of just 2 prisoners, there are $n$ prisoners which play in all possible pairs for $t$ turns each game and in the end the prisoner with the highest reduction of prison time wins.
 
 1. Write a server that can be handed `n` prisoners and then plays the tournament and shows the results;
 
 2. Write some prisoners, e.g. `Good` who always cooperates, `Evil` who always tricks, `Pattern(p :List<Choice>)` who plays a pattern of Choices repeatedly, `Random(bias :Double)` who flips a coin with `0≤bias≤1`, `Adjusting` who is a `Random` prisoner starting out with fair `bias=0.5` but for every trick lowers its `bias` and for every cooperation rises its `bias`, a `TitForTat` that starts out collaborating and then always does what the opponent did in the last move, ...
 
-3. Observe the winning chances/ranking in different social environments, e.g. `Evil` among only `TitForTat`, `Evil` among `Good`s, `TitForTat` amoung `Adjusters` and the like.
+3. Observe the winning chances/ranking in different social environments, e.g. `Evil` among only `TitForTat`, `Evil` among `Good`s, `TitForTat` among `Adjusters` and the like.
 
 ### 5.q Option to Quit for Good
 
@@ -1315,7 +1325,7 @@ Q2: Can you check whether there is at most 1 solution?
 Q9: Can you generate a puzzle of given size and complexity (e/m/h/i)?
 
 
-## 9. AI bot for playing pacman
+## 9. AI Bot for Playing Pacman
 
 Given an implementation of [Pacman](#grazing-maze) with an API (point 4), implement a strategy that explores the unknown grid and collects as many fruits as possible, avoiding collisions with evil bots.
 
@@ -1325,13 +1335,13 @@ Write an AI bot for a hamster that walks through a maze and collects randomly sc
 
 
 ## 10. Puzzling Computer
-Write an algorithm that finds a solution of a puzzle.  You may assume that the total shape is a rectangle and the parts have "tetris look", i.e. simply connected groups of squares.
+Write an algorithm that finds a solution of a puzzle.  You may assume that the total shape is a rectangle and the parts have "Tetris look", i.e. simply connected groups of squares.
 
 ## 11. Vector Race
 
 ### 11.1 The GUI
 
-A vector race happens on a grid with a drawn racing loop.  All players start at the starting line, next to each other in a fixed order.  In every turn you move your car forward by the last motion plus/minus one step in each direction.  If you hit / exceed the track or if you hit another player, you are deccelerated to speed 0 and have to accelerate again in the next round.  The winner is who passes the goal line in a minimal number of steps.
+A vector race happens on a grid with a drawn racing loop.  All players start at the starting line, next to each other in a fixed order.  In every turn you move your car forward by the last motion plus/minus one step in each direction.  If you hit / exceed the track or if you hit another player, you are decelerated to speed 0 and have to accelerate again in the next round.  The winner is who passes the goal line in a minimal number of steps.
 
 Make it an interactive game for 2 players (input either via mouse or via keyboard).
 
@@ -1374,7 +1384,7 @@ The machine needs only an instruction pointer per thread and a list of threads p
 ### possible Assembler Instructions:
 
   - `mov` to from registers, memory (data, relative, indexed, indirect)
-  - `jmp`, `jCond, jnCond`, `call` for jumping to another part (`call` stores the return address on the stack, Cond is a flag).
+  - `jmp`, `jCond, jnCond`, `call` for jumping to another part (`call` stores the return address on the stack, *Cond* is a flag).
   - `add, sub, cmp` elementary operations with the register and memory
   - `fork` and `stop` for multi threading. The interpreter serializes all threads of one process and runs the processes strictly interlaced.
 
@@ -1495,7 +1505,7 @@ Given $N$ different points in $\mathbb R^d$, determine the 2 points with the clo
 Make sure your algorithms has time complexity $\mathcal{O}(N^2d)$.
 
 
-## 1. Brillouin zones / Voronoi diagram
+## 1. Brillouin Zones / Voronoi Diagram
 
 Given a $D$ dimensional space ($D=2,3$) with $k$ distinct points, partition the space into $k$ regions such that for each region $k$ and each point $P$ within the region distance to the center $k$ is the smallest among all distances of $P$ to any center.
 
@@ -1504,7 +1514,7 @@ Given a $D$ dimensional space ($D=2,3$) with $k$ distinct points, partition the 
 *Gamification:*  Draw $k=3,...$ centers in $\mathbb E(2)$ and let the user spray the outlines of the Brillouin zones (the above partitions).
 
 
-## 2. Construction of semi-regular (Archimedean) polyhedra
+## 2. Construction of semi-regular (Archimedean) Polyhedra
 A semi-regular polyhedron consists of only 2 or 3 types of regular $n$-gons and each vortex has the same structure i.e. the same number of each type of polygon meeting.  Input should be the vertex description.  Draw the polyhedron and transform it into a graph.
 
 
@@ -1712,12 +1722,12 @@ Read the book *Computing for Topology* and implement some of its algorithms in K
 
 # 5D. Manifolds on the computer
 
-A manifold can be represented by a Čech groupoid, i.e. a collection of connected and simply connected open coordinate patches that are glued together along connected simply connected subpatches.
+A manifold can be represented by a Čech groupoid, i.e. a collection of connected and simply connected open coordinate patches that are glued together along connected simply connected sub-patches.
 
-While in mathematics, manifolds are typically paracompat (i.e. have a locally countable cover), we will restrict to finitely generated manifolds for obvious reasons.
+While in mathematics, manifolds are typically paracompact (i.e. have a locally countable cover), we will restrict to finitely generated manifolds for obvious reasons.
 
 
-_Medium sized subprojects_
+_Medium sized sub-projects_
 
 ## 0 [Simplicial complexes](https://en.wikipedia.org/wiki/Simplicial_complex)
 Implement a simplex as a set/ vector of vertices, a simplicial complex as a set of simplices. Implement the properties `vertices` and `segments`, and operations `addSimplex`, `removeSimplex`, `union`, `disjointUnion`, ...
@@ -1765,7 +1775,7 @@ are diffeologies.  The difference between $[0,1]\times\{0,1\}\cup\{0,1\}\times[0
 
 
 ### 2. Square with extending line segment
-It is possible to define a diffeology on the union of an (open) square with a line segment (that overlap).  Namely, let $X, Y$ be two diffeological spaces that are topological subspaces of $X\cup Y$, then we can endow $X\cup Y$ with the union diffeology that is generated by all maps to either $X$ or $Y$.
+It is possible to define a diffeology on the union of an (open) square with a line segment (that overlap).  Namely, let $X, Y$ be two diffeological spaces that are topological sub-spaces of $X\cup Y$, then we can endow $X\cup Y$ with the union diffeology that is generated by all maps to either $X$ or $Y$.
 
 
 Q: How can we capture finitely generated diffeologies, beyond finite spaces?
@@ -1786,7 +1796,7 @@ Write a mobile app with which you can
 3. scale and rotate (about its center),
 4. multiple selection with the operations (except endpoint drag) and persisting (app sleep/restart),
 5. grouping (at least 2 elements) where drag, scale and rotate operate on the whole group together,
-6. copy, cut, paste the selection (with multiple pasting, other app interoperation)
+6. copy, cut, paste the selection (with multiple pasting, other app inter-operation)
 
 Please complete in Scrum style (not waterfall), i.e. finish each point as MVP (not too much future designed)
 
@@ -1797,7 +1807,7 @@ Pattern recommendation: MVC, MVVM or the platform's recommended structure
 _Implementation:_ Kotlin, TypeScript, Haskell, Python
 
 
-## 2. Timeline Infographic
+## 2. Timeline Info-graphic
 
 Develop a web app which documents a series of historic events. Ideally dates are separated evenly (or exponentially) and make use of infinite scrolling. This implies that scrolling back to 1980's is quick but scrolling back to the age of the dinosaurs is tedious. The interface should be engaging. The app should provide filters and make use of common gestures.
 
@@ -1809,7 +1819,7 @@ Develop a web app which documents a series of historic events. Ideally dates are
 - Interactivity
 
 ## 3. Five wins
-2 players put symbols (cross and circle) alternatingly on an infinite grid.
+2 players put symbols (cross and circle) alternately on an infinite grid.
 The winner is who first gets 5 of their symbols in a tight row/column or diagonal, e.g.
 `xxxxx`, or
 ```
@@ -1899,12 +1909,12 @@ Write a browser game that simulates tennis playing i.e. a ball (small circle) mo
 
 ## 8. Grazing maze
 
-### 1. Implement pacman in the browser
+### 1. Implement Pacman in the Browser
 A Maze in which there are dots along the walking ways and from time to time fruits (giving extra points).  The player is to graze the maze in limited time and collect as many points as possible (but with limited speed).
 
 ### 2. Add automated evil bots
 
-Whenever the player collides with an evil bot, they die.  There may be an undestructible mode for 20s after picking a particular fruit in which you can kill evil bots by touching and collect points for them.
+Whenever the player collides with an evil bot, they die.  There may be an indestructible mode for 20s after picking a particular fruit in which you can kill evil bots by touching and collect points for them.
 
 ### 3. Allow Multiplayer games
 
@@ -1952,13 +1962,13 @@ Corresponding implementation languages:  Kotlin/multi-platform, ~~java~~TypeScri
 
 0. Read about major human-caused environmental impacts, e.g. CO$_2$ footprint, garbage production, product turnover, ... -- how they can be measured, what is a healthy range, a common industry country range, a valid range for the SDG 2030.
 
-1. with a handy phone app that allows the user to keep track daily of environmentally important activities; MVP: Store the daily actions in an on-phone SQLite DB, give an onverview, recent 30 days
+1. with a handy phone app that allows the user to keep track daily of environmentally important activities; MVP: Store the daily actions in an on-phone SQLite DB, give an overview, recent 30 days
 
 2. with a self-hosted backend that stores the data, processes statistics
 
-3. Consinder selling it in an app store (Google/Android and/or Apple/iOS)
+3. Consider selling it in an app store (Google/Android and/or Apple/iOS)
 
-4. make the app more resilient (phone buffering, migrating, ...) and more convenient (DB with standard acitivities)
+4. make the app more resilient (phone buffering, migrating, ...) and more convenient (DB with standard activities)
 
 5. Let users fill your DB with standard activities
 
@@ -1982,7 +1992,7 @@ write a desktop / smartphone app that allows to
 
 ## 5. Implement a server and clients for some of the [3 player chess games](http://en.wikipedia.org/wiki/Three-player_chess)
 
-Start with writing a simple application that permits to play at one computer and checks for all rules during moves. Extend by protocollizing the moves, saving, and restoring the game. First implementation can be in C++/Qt, but the internet version should be in TypeScript (or Kotlin/Java for the server).
+Start with writing a simple application that permits to play at one computer and checks for all rules during moves. Extend by protocolizing the moves, saving, and restoring the game. First implementation can be in C++/Qt, but the internet version should be in TypeScript (or Kotlin/Java for the server).
 
 
 ## 6. Hnefatafl
@@ -1993,7 +2003,7 @@ Add a computer strategy (s.th. one player can also play).
 
 ## 7. Implement a Fitness App
 
-0. smartphone daily diary to keep track of physical acitivites, dine-out/skipped meals
+0. smartphone daily diary to keep track of physical activities, dine-out/skipped meals
 
 1. weekly PE schedule with verification and weighing
 
