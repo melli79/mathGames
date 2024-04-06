@@ -1714,10 +1714,45 @@ Verify your algorithm by approximating the Black-Scholes-Mertens formula for Eur
 Simulate American Options Pricing and Pricing of Options of Stock with Dividend payments.
 
 
-# 5C. Algorithms for Topology
+# 5C. Algorithmic Algebraïc Geometry
+
+## 0. Algorithms for Topology
 
 Read the book *Computing for Topology* and implement some of its algorithms in Kotlin/Scala/Haskell/C++.
 
+## 2. Counting (stable) Rational Curves
+
+Given the projective plane $\mathbb P^2\mathbb{k}$ where $\mathbb{k}$ is an algebraïcally closed field of characteristic not 2, e.g. the complex numbers.  Then an algebraïc curve of degree $d$ can be parametrized as
+
+$$\begin{align}
+  X(t) &= a_dt^d+\dots+a_0, \\
+  Y(t) &= b_dt^d+\dots+b_0, \\
+  Z(t) &= c_dt^d+\dots+c_0.
+\end{align}$$
+
+But two such curves are equivalent if $(X(t)/Z(t),Y(t)/Z(t))=(X_1(t)/Z_1(t),Y_1(t)/Z_1(t))$, i.e. among the $3d+3$ parameters, we can eleminate at least 1 (e.g. $c_d$).  Moreover two curves are equivalent if we can transform one into the other by a fractional linear transformation $t\mapsto (At+B)/(Ct+D)$ with $\begin{pmatrix}A&B\\ C&D\end{pmatrix}\in\mathrm{Sl}_2(\mathbb k)$.  That eleminates another 4 parameters, such that we are left with $3d-1$ parameters.
+
+In particular that means that a stable rational curve of degree $d$ is uniquely determined by $3d-1$ points in the projective plane in generic position (i.e. not coinciding).
+
+But given $3d-1$ points in generic position, there are $N_d$ many rational curves of degree $d$.  It is clear from conic sections that $N_1=1$.  For higher $d$, Kotsevich found the recursion formula:
+
+$$ N_d = \sum_{a+b=d, a,b\ge1} N_aN_b\left[a^2b^2{3d-4\choose 3a-2} - a^3b{3d-4\choose 3a-1}\right] $$
+
+Write a recursive method that computes the lowest $N_d$.  Estimate their asymptotic.
+
+The lowest numbers are:
+
++-------+---+---+----+---------+---+---+---+---------+
+| $d$   | 1 | 2 | 3  |      4  | 5 | 6 | 7 | $\dots$ |
++=======+===+===+====+=========+===+===+===+=========+
+| $N_d$ | 1 | 1 | 12 | $\dots$ |   |   |   |         |
++-------+---+---+----+---------+---+---+---+---------+
+
+### 2.2 Curve Fitting
+
+Write a linear solver that fits an algebraïc curve of degree $d$ through $3d-1$ points in generic position.
+
+Where does the ambiguity come into play?  Can you enhance it such that it produces all solutions?
 
 
 # 5D. Manifolds on the computer
