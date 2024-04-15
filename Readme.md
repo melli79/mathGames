@@ -887,8 +887,71 @@ A `class Cat2` with
 * `Morphism`s as above, and
 * `TwoMorphism`s analog to `Morphism`s.
 
+## 2.2 From Boolean Logic via Ternary Logic to Fuzzy Logic
 
-## 2.2 Warring's Problem ($n=a^d+b^d+\dotsm+z^d$)
+Remember the logic tables of Boolean logic:  $\mathbb{B}=\{F, T\}$
+
++-----+-----+-----+-----+-----+-----+-----+
+|  a  |  b  | ¬a  | a∧b | a⋁b | a≡b | a⊕b |
++:===:+:===:+:===:+:===:+:===:+:===:+:===:+
+|  F  |  F  |  T  |  F  |  F  |  T  |  F  |
++-----+-----+-----+-----+-----+-----+-----+
+|  F  |  T  |  T  |  F  |  T  |  F  |  T  |
++-----+-----+-----+-----+-----+-----+-----+
+|  T  |  F  |  F  |  F  |  T  |  F  |  T  |
++-----+-----+-----+-----+-----+-----+-----+
+|  T  |  T  |  F  |  T  |  T  |  T  |  F  |
++-----+-----+-----+-----+-----+-----+-----+
+
+### 3. Ternary Logic
+
+In addition to true and false, there is a 3rd state of unknown: $\mathbb T = \{F,U,T\}$  Therefore the logic tables extend to 3x3 = 9 cases.  A guideline is to ask for a minimal revealing principle:
+
+A ternary logic table is correct iff every Unknown input can be replaced by F or T and there is replacement for the Unknown states in the output such that all arising lines are correct in Boolean logic.
+
+A ternary logic table is minimally hiding iff every Unknown in the target value can be made F and also T by replacing the Unknown inputs with F or T appropriately.
+
+Q3:  What are the tables for not, and, or, equality, xor?
+
+
+### 4. Boolean algebra
+
+Instead of $\mathbb{B}=\{F,T\}$ we use $2^X$ for any (discrete) set $X$ and introduce the following 2 elementary operations:
+
+ $A\cap B:= \{a\in A: a\in B\}$ intersection,
+
+ $A\,\Delta\,B := (A\cup B)\setminus (A\cap B)$ -- symmetric difference
+
+ $A^C := X\setminus A$ -- complement (negation)
+
+Q4: e.g. for $\mathbb{F}_4=\mathbb{F}_2(\omega)$ ($\omega^2=\omega+1$) find the differences between $\lnot$, $\land$, $\lor$, xor and $\cdot$, $\oplus$ from the field operations.
+
+### 5. Pentary Logic
+
+Extend the ternary logic by 2 additional states: $\mathcal{P} := \{F, u, M, l, T\}$ -- False, unlikely, Middle, likely, True.
+
+Find meaningful generalizations of $\lnot$, $\land$, $\lor$ from the ternary logic.
+
+Can you find a generalization of xor?
+
+Q5: Can you find a binary operation that is symmetric $y*x=x*y$, associative $x*(y*z) = (x*y)*z$ and its adjoint an involution $x*y*x = y$.
+
+### F. Fuzzy Logic
+
+Similar to probability theory we extend the range to $R=[0,1]$ i.e. all real values between 0 and 1 where 0 is false and 1 is true.
+
+The generalization of the elementary operations is $\lnot a = 1-a$, $a\land b = \min(a,b)$, $a\lor b = \max(a,b)$.
+
+Q6:  Is there a binary operation on $R$ that is symmetric, associative and its adjoint an involution?
+
+Hint: Compare to 2
+
+If there are multiple solutions, can you make it continuous, piecewise linear or measurable?
+
+Try to visualize an approximation
+
+
+## 2.3 Warring's Problem ($n=a^d+b^d+\dotsm+z^d$)
 Find out whether the lowest positive integers can be written as sums of $g$, $d$-th powers.
 
 For example Lagrange's 4 Squares Theorem states that for $d=2$, $g(2)\le4$.  On the other hand for $n=7$ we see that $g=1,2,3$ are not sufficient.
@@ -915,7 +978,7 @@ The current conjecture is that
  $$ g(d) = 2^d +\lfloor(3/2)^d\rfloor -2. $$
 
 
-## 2.3 Diophantine Equations
+## 2.4 Diophantine Equations
 ### 1. Linear Diophantine Equations
 
 Write Gaussian eliminations over the integers and implement a solver for linear Diophantine Equation systems.  You may start with a single equation and consider it modulo various remainders.  Then compose via the Chinese remainder Theorem.
@@ -933,7 +996,7 @@ Example: $$X+Y+Z=XYZ$$
 or in homogenization $(X+Y+Z)T^2=XYZ$ for rational numbers $X,Y,Z,T$ not all vanishing simultaneously.  Thus the solution is a compact hyper surface in $\mathbb{P}^3$.
 
 
-## 2.4 Implement mathematical expressions on the computer
+## 2.5 Implement mathematical expressions on the computer
 i.e. good enough for a CAS (Computer Algebra System). Start with an `abstract class Term` that encodes the type of the term and has abstract (i.e. purely virtual) methods `show`/ `toString`, `evalf`, `subst`, `compare`, `pgroup`, `sgroup`. Have five concrete implementations:
 
 #. `class Constant` that encodes real (complex), rational, and named constants. A constant can be `evalf`-ed and the usual operations for a field are defined on constants giving a real constant if one of the components is a real constant. Constants are compared/ grouped by the above hierarchy and constants of the same type by their natural order.
@@ -976,7 +1039,7 @@ You could start with polynomial curves in 2 variables: $0 = F(x,y)$
 0. A brute-force solution is to iterate over *all* $x\in\mathbb{R}$ and for each to solve the equation for $y\in\mathbb{R}$.
 
 
-## 2.5 [Finitely generated groups](https://en.wikipedia.org/wiki/group_(mathematics)) on the Computer
+## 2.6 [Finitely generated groups](https://en.wikipedia.org/wiki/group_(mathematics)) on the Computer
 Start by implementing
 
 1. cyclic groups
@@ -997,11 +1060,11 @@ _Implementation:_ an abstract `class Group` and a `template <...> class Element`
 
 _Languages:_ C++, Kotlin, Scala, Haskell, Java, Ruby
 
-### 2.5.1 Direct products
+### 2.6.1 Direct products
 
 The direct product of 2 (non-necessarily abelian) groups is the set of pairs under component-wise multiplication.  In particular, the components commute.
 
-### 2.5.2 Semi-direct Products
+### 2.6.2 Semi-direct Products
 
 A semi-direct product consists of pairs of elements, but the multiplication of the right elements is twisted by an (outer) automorphism parametrized by the first left element, i.e.
 
@@ -1012,7 +1075,7 @@ A semi-direct product consists of pairs of elements, but the multiplication of t
 !Warning:  Not every fine resolution of a group is a series of semi-direct products, namely not every short exact sequence of groups splits: $0\to C_2\to C_4\to C_2\to 0$
 
 
-## 2.6 [Rings](https://en.wikipedia.org/wiki/ring_(mathematics)) on the Computer
+## 2.7 [Rings](https://en.wikipedia.org/wiki/ring_(mathematics)) on the Computer
 Start with implementing
 
 ### finite cyclic rings $\mathbb{Z}/(n)$
@@ -1028,7 +1091,7 @@ Together with a `template<...> class Element` that holds particular elements and
 as `template class`, parameter is the base ring for the coefficients.
 
 
-## 2.7 Finite dimensional [Fields](https://en.wikipedia.org/wiki/Field_of_fractions)
+## 2.8 Finite dimensional [Fields](https://en.wikipedia.org/wiki/Field_of_fractions)
 
 #. Implement the `template class Rational` which has the Euclidean domain as a parameter.
 
@@ -1039,7 +1102,7 @@ as `template class`, parameter is the base ring for the coefficients.
 _Implementation languages_: Kotlin, Scala, C++, Haskell, Java, Ruby
 
 
-## 2.8 Primality Testing
+## 2.9 Primality Testing
 
 Def.:  Given an integer $n$, it is a prime iff it has exactly 4 factors, $\pm1$ and $\pm n$.  The element $0$ is a 0-divisor, the elements $\pm1$ are called the units.
 
@@ -1059,7 +1122,7 @@ This is not a deterministic test, e.g. it can fail despite the number not being 
 
 ### other tests
 
-## 2.9 Algebraic Approximation
+## 2.10 Algebraic Approximation
 
 ### 1. Rational Approximation
 Remember the algorithm to approximate some dyadic number (finite binary fraction) by a rational number with small numerator and denominator.  The core is the following chain fraction expansion:
@@ -1736,7 +1799,7 @@ In particular that means that a stable rational curve of degree $d$ is uniquely 
 
 But given $3d-1$ points in generic position, there are $N_d$ many rational curves of degree $d$.  It is clear from conic sections that $N_1=1$.  For higher $d$, Kotsevich found the recursion formula:
 
-$$ N_d = \sum_{a+b=d, a,b\ge1} N_aN_b\left[a^2b^2{3d-4\choose 3a-2} - a^3b{3d-4\choose 3a-1}\right] $$
+$$ N_d = \sum_{\substack{a+b=d,\\ a,b\ge1}} N_aN_b\left[a^2b^2{3d-4\choose 3a-2} - a^3b{3d-4\choose 3a-1}\right] $$
 
 Write a recursive method that computes the lowest $N_d$.  Estimate their asymptotic.
 
