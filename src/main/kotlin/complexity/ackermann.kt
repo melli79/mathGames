@@ -1,6 +1,6 @@
 package complexity
 
-import rational.ipow
+import numberthy.ipow
 
 fun ackermann(m :UByte, n :ULong) :ULong {
     if (m.toInt()==0)

@@ -1,23 +1,23 @@
-package rational
+package numberthy
 
+import algebra.QPolynomial
 import common.math.*
-import numberthy.abs
 
 /**
  * rationalize the denominator of 1/denom(\sqrt[d]{n})
  */
-fun rationalize(denom :QPolynomial, n :Long, d :UByte =2u) :QPolynomial {
-    if (denom==QPolynomial.ZERO)
+fun rationalize(denom : QPolynomial, n :Long, d :UByte =2u) : QPolynomial {
+    if (denom== QPolynomial.ZERO)
         throw DivisionByZeroException()
     assert(denom.deg<d.toInt())
     assert(isPowerFree(abs(n), d))
-    val p = QPolynomial.monom(d) -QPolynomial.const(Rational.of(n))
+    val p = QPolynomial.monom(d) - QPolynomial.const(Rational.of(n))
     val (num, _, f) = gcf(denom, p)
     assert(f.deg==0)
     return num * f.lc.inv()
 }
 
-fun gcf(a :QPolynomial, b :QPolynomial) :Triple<QPolynomial, QPolynomial, QPolynomial> {
+fun gcf(a : QPolynomial, b : QPolynomial) :Triple<QPolynomial, QPolynomial, QPolynomial> {
     var a0 = a
     var f0 = QPolynomial.ONE; var f1 = QPolynomial.ZERO
     var a1 = b

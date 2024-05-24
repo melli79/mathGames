@@ -1,4 +1,4 @@
-package rational
+package algebra
 
 import common.math.DivisionByZeroException
 import org.junit.jupiter.api.assertThrows

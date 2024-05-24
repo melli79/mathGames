@@ -1,4 +1,4 @@
-package sequences
+package numberthy
 
 fun fib(n :UByte) :ULong {
     var f_1 = 0uL;  var fk = 1uL

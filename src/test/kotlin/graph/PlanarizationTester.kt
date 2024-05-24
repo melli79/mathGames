@@ -33,4 +33,11 @@ class PlanarizationTester {
             result
         )
     }
+
+    @Test fun joinedCircles() {
+        val g = graphOf(4u, listOf(Edge.of(0,1), Edge.of(1,2), Edge.of(2,0),
+            Edge.of(1,3), Edge.of(3,0)), "OO")
+        val result = planarize(g)
+        println("Planarization of $g is:"+ result.joinToString(" ü "))
+    }
 }

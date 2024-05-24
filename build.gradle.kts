@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.0.0-Beta5"
+    kotlin("jvm") version "2.0.0-RC3"
     application
 }
 
@@ -15,8 +15,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.mockk:mockk:1.13.10")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0-M1")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.11.0-M1")
 }
 
 tasks.test {
@@ -32,5 +32,5 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    mainClass.set("winningminorities.MainKt")
+    mainClass.set("pandemic.MainKt")
 }

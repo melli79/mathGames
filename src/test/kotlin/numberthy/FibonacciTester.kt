@@ -1,4 +1,4 @@
-package sequences
+package numberthy
 
 import kotlin.test.*
 

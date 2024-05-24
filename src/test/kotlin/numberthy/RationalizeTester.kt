@@ -1,13 +1,14 @@
-package rational
+package numberthy
 
+import algebra.QPolynomial
 import common.math.Rational
 import common.math.Rational.Companion.ONE
 import common.math.Rational.Companion.TWO
 import common.math.Rational.Companion.HALF
 import common.math.Rational.Companion.ZERO
-import rational.QPolynomial.Companion.X
-import rational.QPolynomial.Companion.const
-import rational.QPolynomial.Companion.monom
+import algebra.QPolynomial.Companion.X
+import algebra.QPolynomial.Companion.const
+import algebra.QPolynomial.Companion.monom
 import kotlin.test.*
 
 class RationalizeTester {

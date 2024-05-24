@@ -1,17 +1,6 @@
 package graph
 
-import kotlin.math.max
-import kotlin.math.min
-
-data class UEdge private constructor(val v0 :Int, val v1 :Int) :Cloneable {
-    companion object {
-        fun of(v1 :Int, v2 :Int) = UEdge(min(v1,v2), max(v1,v2))
-    }
-
-    override fun clone() = UEdge(v0, v1)
-}
-
-fun cliqueFinder(n :UInt, es :Collection<UEdge>) :Set<Set<Int>> {
+fun cliqueFinder(n :UInt, es :Collection<Graph.Edge>) :Set<Set<Int>> {
     val result = (1..n.toInt()).map { setOf(it) }.toMutableSet()
     for (edge in es) if (edge.v0!=edge.v1) {
         val first = result.find { edge.v0 in it }

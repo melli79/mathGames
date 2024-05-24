@@ -1,5 +1,7 @@
 package graph
 
+import graph.Graph.Edge
+
 import kotlin.test.*
 
 class CliqueTester {
@@ -20,13 +22,13 @@ class CliqueTester {
     }
 
     @Test fun join() {
-        val result = cliqueFinder(3u, listOf(UEdge.of(1, 2)))
+        val result = cliqueFinder(3u, listOf(Edge.of(1, 2)))
         println(result)
         assertEquals(setOf(setOf(1,2), setOf(3)), result)
     }
 
     @Test fun path() {
-        val result = cliqueFinder(4u, listOf(UEdge.of(1,2), UEdge.of(2,3), UEdge.of(3,4)))
+        val result = cliqueFinder(4u, listOf(Edge.of(1,2), Edge.of(2,3), Edge.of(3,4)))
         println(result)
         assertEquals(setOf(setOf(1,2,3,4)), result)
     }

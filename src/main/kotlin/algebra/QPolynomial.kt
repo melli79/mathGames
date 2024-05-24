@@ -1,4 +1,4 @@
-package rational
+package algebra
 
 import common.math.DivisionByZeroException
 import common.math.Rational
@@ -10,7 +10,7 @@ class QPolynomial(cs0 :Collection<Rational>) {
         val X = QPolynomial(listOf(Rational.ZERO, Rational.ONE))
 
         fun const(c :Rational) = QPolynomial(listOf(c))
-        fun monom(d :UByte) :QPolynomial {
+        fun monom(d :UByte) : QPolynomial {
             val cs = (0 until d.toInt()).map { Rational.ZERO } + listOf(Rational.ONE)
             return QPolynomial(cs)
         }
@@ -48,14 +48,14 @@ class QPolynomial(cs0 :Collection<Rational>) {
             } }
     }
 
-    operator fun plus(s :QPolynomial) = if (deg<s.deg)
+    operator fun plus(s : QPolynomial) = if (deg<s.deg)
         QPolynomial(cs.zip(s.cs).map { (c, c1) -> c+c1 } +s.cs.slice((deg+1)..s.deg))
     else
         QPolynomial(cs.zip(s.cs).map { (c, c1) -> c+c1 } +cs.slice((s.deg+1)..deg))
 
     operator fun unaryMinus() = QPolynomial(cs.map { c -> -c }.toList())
 
-    operator fun minus(s :QPolynomial) = plus(-s)
+    operator fun minus(s : QPolynomial) = plus(-s)
 
     override fun equals(other: Any?): Boolean {
         if (other !is QPolynomial)
@@ -65,18 +65,18 @@ class QPolynomial(cs0 :Collection<Rational>) {
 
     override fun hashCode() = cs.hashCode()
 
-    operator fun times(f :Rational) :QPolynomial {
+    operator fun times(f :Rational) : QPolynomial {
         if (f==Rational.ZERO)
             return ZERO
         return QPolynomial(cs.map { c -> c*f })
     }
 
-    fun shl(d :UShort) :QPolynomial {
+    fun shl(d :UShort) : QPolynomial {
         val result :List<Rational> = (0 until d.toInt()).map { Rational.ZERO } +cs.toList()
         return QPolynomial(result)
     }
 
-    operator fun times(p :QPolynomial) :QPolynomial {
+    operator fun times(p : QPolynomial) : QPolynomial {
         if (deg<0||p.deg<0)
             return ZERO
         if (deg==0)
@@ -93,8 +93,8 @@ class QPolynomial(cs0 :Collection<Rational>) {
                 .foldRight(ZERO) { s, s1 -> s+s1 }
     }
 
-    fun div(denom :QPolynomial) :Pair<QPolynomial, QPolynomial> {
-        if (denom==ZERO)
+    fun div(denom : QPolynomial) :Pair<QPolynomial, QPolynomial> {
+        if (denom== ZERO)
             throw DivisionByZeroException()
         if (denom.deg==0)
             return Pair(this*(denom.lc.inv()), ZERO)

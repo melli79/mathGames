@@ -1,6 +1,6 @@
 package complexity
 
-import rational.ipow
+import numberthy.ipow
 import kotlin.test.*
 
 class AckermannTester {
