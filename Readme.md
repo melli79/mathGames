@@ -563,7 +563,7 @@ Then you would do binary search
 Try a biased split, i.e. choose a `bias in 0..1` and choose the comparing element as `bias*min+(1-bias)*max`, and conclude as before.
 
 Q: What is the optimal bias?  What is the number of Nos you will get in that case?
-,0
+
 
 ## Nim Games
 
@@ -736,6 +736,13 @@ Given $N$ players that play $k$-player games, what is a minimal plan such that e
 
 Hint:  Obviously, you need at least $r:=\lceil (N-1)/(k-1)\rceil$ rounds in order to reach that.  But can you actually find a partition with $r$-fold repetition of the $N$ players in $rN/k$ groups such that always $\lceil N/k\rceil$ groups can play simultaneously and nobody has to play more than $r$ games?
 
+### Kirkman's Schoolgirl Problem
+
+Given 15 school girls, they walk out every day for 7 days, always 3 in a row.  Can you arrange the 7 days such that no 2 girls walk in the same row for more than a day?
+
+In other words you are searching for a maximal coloring of the $K_{15}$ by $K_3$s such that no 2 $K_3$s have a common edge.
+
+
 
 ## 13. String Matching Algorithms
 
@@ -837,11 +844,11 @@ $\eta^{1,2} = \mathrm{diag}(1,-1,-1)$,
 | Group                            | Size | Elements                                   |
 +==================================+======+============================================+
 | $\mathrm{O}_{\mathbb{F}_3}(1)$   | $2$  | $\{\pm1\}\cong C_2$                        |
-+----------------------------------+------+--------------------------------------------+
-| $\mathrm{O}_{\mathbb{F}_3}(2)$   | $8$  | $\left\{\begin{pmatrix}\pm1& \\ &\pm1\end{pmatrix}, \begin{pmatrix} 0&\pm1\\ \pm1&0\end{pmatrix} \right\} =: C_2^2\bowtie S_2 \cong C_4\times C_2$    |
-+----------------------------------+------+--------------------------------------------+
-| $\mathrm{O}_{\mathbb{F}_3}(1,2)$ | $16$ | $\left\langle \begin{pmatrix} \pm1&&\\ &\pm1&\\ &&\pm1\end{pmatrix}, S_1\times S_2\right\rangle =: C_2^3\bowtie (S_1\times S_2)$                        |
-+----------------------------------+------+--------------------------------------------+
++----------------------------------+------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+| $\mathrm{O}_{\mathbb{F}_3}(2)$   | $8$  | $\left\{\begin{pmatrix}\pm1& \\ &\pm1\end{pmatrix}, \begin{pmatrix} 0&\pm1\\ \pm1&0\end{pmatrix} \right\} =: C_2^2\bowtie S_2 \cong C_4\times C_2$ |
++----------------------------------+------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+| $\mathrm{O}_{\mathbb{F}_3}(1,2)$ | $16$ | $\left\langle \begin{pmatrix} \pm1&&\\ &\pm1&\\ &&\pm1\end{pmatrix}, S_1\times S_2\right\rangle =: C_2^3\bowtie (S_1\times S_2)$                   |
++----------------------------------+------+----------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 ## 3D
@@ -1727,8 +1734,34 @@ $$ \partial_x \varphi_{00}(x,y) = \begin{cases} 1+y &\text{for } -1< x,y<0, \\
 $$
 The matrix $A$ has only 8 non-zero diagonals, namely for the generic row $(i,j)$ the entries $(i-1,j-1)$, $(i-1,j)$, $(i-1,j+1)$, $(i,j-1)$, $(i,j+1)$, $(i+1,j-1)$, $(i+1,j)$, $(i+1,j+1)$.
 
+## 3. Modeling Pandemics
 
-## 3. Spectral Method for non-linear PDEs
+### 3.1 SIR Model
+
+Assume that every individuum can have 1 of 3 possible states:  Susceptible (i.e. not yet infected, but can be infected), infected (can spread the infection), recovered (neither infectable nor infected)
+
+In the beginning you have almost all people suseptible, except for a small percentage ($p_0$) of the population that is already infected and then the SIR rates propagate according to the nonlinear ODE-System:
+
+ $$\begin{align}
+    \dot{S} &= -iSI, \\
+    \dot{I} &= iSI -rI, \\
+    \dot(R) &= rI
+ \end{align}$$
+
+Describe the behavior of the three curves $S(t)$, $I(t)$, $R(t)$ in terms of characteristic quantities: What is the generic behavior, what are characteristic quantities?
+
+### 3.2 ERG Graph
+
+Assuming a population size of $N$, assume that infections happen only along symmetric contacts between individiuals.  Beyond the quantities $i$ and $r$, there is also a Poisson distribution of contacts between people (parameter $\lambda$).
+
+Compare the behavior with that of the plain SIR model.
+
+
+### 3.3 Scale-free random Graphs
+
+Instead of a Poisson distribution of completely random connections, assume that the number of contacts $k$ is $P(k)\sim k^{-3}$ distributed.  Introduce a overall factor $\kappa$ and simulate the spreading of a disease.  Compare to the simple SIR model as well as to the ERG Graph model.
+
+## 6. Spectral Method for non-linear PDEs
 Read a book about the spectral transform for solving the KdV equation, e.g. [1], and implement it.
 
 Try to solve the Ernst equation
@@ -1737,7 +1770,7 @@ Try to solve the Ernst equation
 [1] F. Calogero and S. Degasperis: *Spectral Transform and Solitons*, **1983**.
 
 
-## 4. Genetic Algorithms -- Large scale (discrete) optimization problems II
+## 7. Genetic Algorithms -- Large scale (discrete) optimization problems II
 A genetic algorithm is an optimization program that finds the optimal solution by mutation, crossover, and multiplication of the fittest from a population of potential solutions (gene pool). A sample problem is:
 
 * Find the global minimum of the function $$f(x_1,x_2)=\sum_{i=1}^N \left[i+(x_1-a_{1i})^6+(x_2-a_{2i})^6\right]^{-1}$$
@@ -1749,7 +1782,7 @@ A genetic algorithm is an optimization program that finds the optimal solution b
 * Iteration until either a target value is *found* (approximated sufficiently close) or the population is almost homogeneous.
 
 
-## 5. [Neural Networks on the Computer](https://en.wikipedia.org/wiki/Artificial_neural_network)
+## 8. [Neural Networks on the Computer](https://en.wikipedia.org/wiki/Artificial_neural_network)
 Read a good book about Neuronal Networks and implement them on the computer.
 
 _Implementation languages:_ Python (tensorflow library, pytorch), Fortran, C++, Matlab
@@ -1768,7 +1801,7 @@ Starting from the [3 player chess server & client](#implement-a-server-and-clien
 As a hint for implementations as well as strategies consult [ThreeWayChess.org/Thinking strategies](http://www.threewaychess.org/Comparison of breadth, depth, and kinds of thinking required5.pdf).
 
 
-## 6. Hastings-Metropolis Algorithm
+## 9. Hastings-Metropolis Algorithm
 
 Implement the HM algorithm and statistical sampling as an approximation for computing path integrals.
 
@@ -2128,7 +2161,7 @@ Once you have run (or ruined) your first larger project.  It is time to do proje
 
 
 # 9. Compiler
-Goal is to build a working compiler.  You may want to read about more specific ideas in e.g.
+Goal is to build a working compiler, iterpreter or transpiler.  You may want to read about more specific ideas in e.g.
 
 [1] D. Grune, K.v.Reeuwijk, H.E. Bal, C.J.H. Jacobs, K. Langendoen: *Modern Compiler Design*, **2012**.
 
