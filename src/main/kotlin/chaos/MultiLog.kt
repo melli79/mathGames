@@ -6,7 +6,7 @@ import java.awt.Graphics
 import kotlin.math.abs
 import kotlin.math.ln
 
-class LogComponent(xrange :ClosedRange<Double> = (1e-3) ..1.0) : MyComponent() {
+class MultiLog(xrange :ClosedRange<Double> = (1e-3) ..1.0) : MyComponent() {
     companion object {
         val maxIt = 20
 

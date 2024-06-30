@@ -89,7 +89,7 @@ enum class Semimetal(override val valences :ByteArray, override val order :UByte
 ) :Atom {
     Boron(byteArrayOf(3), 5u, Atom.Group.Borons, "B"),
     Silicon(byteArrayOf(4, -4), 14u, Atom.Group.Carbons), Germanium(byteArrayOf(4, -4), 32u, Atom.Group.Carbons),
-    Arsen(byteArrayOf(-3, 5), 33u, Atom.Group.Nitrogenes, "As"), Antimony(byteArrayOf(-3, 5), 51u, Atom.Group.Nitrogenes, "Sb"),
+    Arsenic(byteArrayOf(-3, 5), 33u, Atom.Group.Nitrogenes, "As"), Antimony(byteArrayOf(-3, 5), 51u, Atom.Group.Nitrogenes, "Sb"),
     Tellurium(byteArrayOf(-2, 6), 52u, Atom.Group.Oxygenes), Polonium(byteArrayOf(-2, 6), 84u, Atom.Group.Oxygenes),
     Astatine(byteArrayOf(7, -1), 85u, Atom.Group.Halogen, "At");
 

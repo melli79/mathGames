@@ -5,9 +5,12 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
+import java.util.*
 import javax.swing.JComponent
 import javax.swing.JFrame
 import kotlin.system.exitProcess
+
+val random = Random(System.currentTimeMillis())
 
 abstract class MyComponent :JComponent() {
     abstract val title :String
@@ -60,6 +63,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 }
 
 fun main() {
-    val window = MyWindow(TanMandel())
+    val window = MyWindow(LogFractal()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
     window.isVisible = true
 }

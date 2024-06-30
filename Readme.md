@@ -1,6 +1,6 @@
 % Math Ideas for Programming
 % Collected by M. Gr.
-% 2010 - 2024
+% 2010 –– 2024
 
 # 0. Smaller ideas
 
@@ -392,6 +392,14 @@ You can start with an `enum` of atom(trunks), e.g. oxygen, hydrogen, carbon, nit
 3. organic bonds (of 3 atom types only, C, H, ...) and determine their structure, sum formula and solubility in water or oil, ... -- start with linear hydrogen carbonates, then branching (handling moieties), then poly-cyclic;
 
 4. complexes, i.e. consisting of a known core (e.g. ferrum-n-oxide, copper-oxide, zinc-oxide, ...) and counter-ions and determine their sum-formula, ...;
+
+### Chemistry in other OO Programming Lanuages
+
+While it is easy to translate the above Kotlin example into Java.  It is much harder to encode all the information in a convenient way in Rust or C++.  The main translation work will be to implement some substitute of rich enums.
+
+### Chemistry in Haskell
+
+This is a bit harder than in C++.  But on the same side it is also more conventient, because in Haskell it is straight forward to write down compond constants.
 
 
 ## Linear Probing
@@ -792,7 +800,7 @@ Hint: You may have to use an enumeration that maps $E$ to integers.
 
 ### 1.0 Edge graph
 
-Given any graph $(V,E)$, then its dual graph is the graph $(E,V')$ such that $X\in V'\subset 2^E$ iff there is a $v\in V$ such that for all $e\in X$: $v\in e$.
+Given any graph $(V,E)$, then its dual graph is the graph $(E,V')$ such that $X\in V'\subset 2^E$ iff there is a $v\in V$ such that for all $e\in E$: $e\in X\Rightleftarrow v\in e$.
 
 
 ## 2. Implement chain complexes on Hyper-graphs
@@ -892,7 +900,8 @@ A `class Cat2` with
 
 * `Object`s,
 * `Morphism`s as above, and
-* `TwoMorphism`s analog to `Morphism`s.
+* `TwoMorphism`s analog to `Morphism`s but between Morphisms.
+
 
 ## 2.2 From Boolean Logic via Ternary Logic to Fuzzy Logic
 
@@ -918,7 +927,7 @@ A ternary logic table is correct iff every Unknown input can be replaced by F or
 
 A ternary logic table is minimally hiding iff every Unknown in the target value can be made F and also T by replacing the Unknown inputs with F or T appropriately.
 
-Q3:  What are the tables for not, and, or, equality, xor?
+Q3:  What are the tables for not, and, or, equality, neq?
 
 
 ### 4. Boolean algebra
@@ -951,7 +960,7 @@ The generalization of the elementary operations is $\lnot a = 1-a$, $a\land b = 
 
 Q6:  Is there a binary operation on $R$ that is symmetric, associative and its adjoint an involution?
 
-Hint: Compare to 2
+Hint: Compare to 4.
 
 If there are multiple solutions, can you make it continuous, piecewise linear or measurable?
 
@@ -1129,6 +1138,7 @@ This is not a deterministic test, e.g. it can fail despite the number not being 
 
 ### other tests
 
+
 ## 2.10 Algebraic Approximation
 
 ### 1. Rational Approximation
@@ -1155,8 +1165,8 @@ According to Alon Amit, the analog for an algebraïc approximation of a dyadic n
    v_0 &= (1,&0,&0,&\ldots,&0,&M),\\
    v_1 &= (0,&1,&0,&\ldots,&0,&\lfloor Mx\rfloor),\\
        &\vdots \\
-  v_D &= (0,&0,&0,&\ldots,&0,1,&\lfloor Mx^D\rfloor).
-  \end{array}$$
+   v_D &= (0,&0,&0,&\ldots,&0,1,&\lfloor Mx^D\rfloor).
+ \end{array}$$
 
 And use the [Lattice reduction algorithm](https://en.wikipedia.org/wiki/Lenstra%E2%80%93Lenstra%E2%80%93Lov%C3%A1sz_lattice_basis_reduction_algorithm) on them to find a minimal vector in this lattice.  If the minimal vector is the combination $v_m=a_0v_0+\dotsm+a_Dv^D$, then $x$ is an (approximate) root of the polynomial $p(x)=a_0+a_1x+\dotsm+a_Dx^D$.  If $x$ can fulfill a simple lower degree polynomial, then the higher coefficients will be 0.
 
@@ -1192,6 +1202,7 @@ $$ \lim_{x\to\infty} |p_1(\exp(x))-f(x)| = 0 $$
 for some strictly periodical function $f\colon\mathbb{R}\to[0,1]$.
 
 [BKM17] T.v.d. Brug, W. Kager, R. Meester: *The Asymptotics of Group Russian Roulette*, in Markov Processes and Related Fields, vol. 23, pp.35-66 **(2017)** [arXiv:mathPR/1507.03805](https://arxiv.org/pdf/1507.03805.pdf).
+
 
 ## 1. Tower of Hanoi
 The actual problem was first stated and popularized by É. Lucas in 1884, but it reads nicer in the following way:  According to legend there are three pegs in the dungeon of some Brahman temple (in Hanoi, Vietnam). They were created with 64 golden disks of decreasing size on the first peg at the beginning of the universe. The monks have to move them by the rules
@@ -1249,6 +1260,7 @@ Q: What is an exponent whose fully optimized shortest path is shorter than any i
 
 Q2:  How much is the gain compared to the intermediate optimization?  Compared to the canonized greedy optimization?  Compared to the quickPower?
 
+
 ## 3. Chocolate problem
 Given a $w\times h$ bar of chocolate and $n$ friends that desire $s_i$ pieces of chocolate ($i=1,\dots,n$). Determine whether it is possible (and how) to break the chocolate bar into these pieces without remainder and each piece entire.
 
@@ -1287,6 +1299,7 @@ Do the same 4 parts on a $4\times4$ grid, $m=2$ and $m=3$, respectively.
 Do the same for arbitrary $n\ge3$ and fixed $1<m<n$.
 
 #### f) What about 3 Colors (e.g. +red)
+
 
 ## 5. Write a Server and strategies for the Iterated Prisoner dilemma
 
@@ -1349,7 +1362,7 @@ Hints:
 
 Hint: reverse the computation w/o penalty, i.e.
 
-1. starting from 2 multiply with primes that are less than the current number;
+1. starting from 2 multiply with primes that are at most the current number;
 2. make the tree contain every number only once: starting from 2, you pass on paths on non-decreasing factors.
 
 
@@ -1407,6 +1420,7 @@ Write an AI bot for a hamster that walks through a maze and collects randomly sc
 ## 10. Puzzling Computer
 Write an algorithm that finds a solution of a puzzle.  You may assume that the total shape is a rectangle and the parts have "Tetris look", i.e. simply connected groups of squares.
 
+
 ## 11. Vector Race
 
 ### 11.1 The GUI
@@ -1434,6 +1448,7 @@ Implement a generic finite state machine, i.e. a finite set $S$ of states togeth
 
 ### 1.2 Can you augment to an non-Deterministic Finite Automaton (NFA)
 The difference is a transition relation $\Delta\colon C\times S\to [0,1]^S$ with the transition rules $S_0=\{s_0:1\}$ and $S_{k+1} = \bigcup_{s\in S_k} \Delta(s)$ with the corresponding probabilities, i.e. the state at any moment in time consists of a probability distribution over all possible atomic states (with the constraint that the total probability adds up to 1).
+
 
 ## 2. [Turing machine](https://en.wikipedia.org/wiki/Turing_machine) on the computer
 A Turing machine is a set $Z$ of states containing $z_0$ the initial state (and $z_f$ the final state), a set $\Sigma$ of letters, a transition function $\delta\colon Z\times\Sigma \to Z\times\Sigma\times\{ L,H,R \}$, and a two-sided growable $\mathbb{Z}$-sequence $b$ of letters from $\Sigma$. A step in computation consists of reading the letter $b_i$ (start with $i=0$) and mapping it together with the state $z_i\in Z$ to the new state $z_{i+1}$, new letter at $b_i$ and the shift operation depending on the third argument of δ moving the sequence $b$ left, not, or right (translation).
@@ -1476,19 +1491,20 @@ Optimization:
 ###  You can also draw Julia sets, i.e. points
 $z_0\in\mathbb{C}$ for which the sequence remains bounded. The Julia set depends on the parameter $c\in\mathbb{C}$.
 
+
 ## 2. Śierpinski Triangle and Carpet
 ### 2.1 Cantor's Mid-third Set
 This is the interval $[0,1]$ except for the middle third, and then repeat the same procedure for each of the remaining intervals.
 
 ### 2.S Devil's Staircase
-This is Cantor's set stretched in 2D, i.e. instead of drawing the set on a line, we use it as a description for a monotone function:  We start with the identity function on the unit interval $1\colon:[0,1]\to[0,1]$.  Then we remove the middle third piece and replace it with a constant function
+This is Cantor's set stretched in 2D, i.e. instead of drawing the set on a line, we use it as a description for a monotone function:  We start with the identity function on the unit interval $f_0\colon[0,1]\to[0,1]: x\mapsto x$.  Then we remove the middle third piece and replace it with a constant function
  $$ f_1(x) = \begin{cases} {}^3/_2x &\text{for }0\le x<{}^1/_3, \\
    {}^1/_2 &\text{for }{}^1/_3\le x\le{}^2/_3, \\
    {}^3/_2x-{}^1/_2 &\text{for } {}^2/_3<x\le1.  \end{cases}
  $$
 Then we repeat the procedure on every interval where the function is not yet constant.
 
-The result is a function that is almost everywhere constant but has a net increment of 1 on the unit interval.
+The result is a function that is almost everywhere constant but has a net increment of 1 on the unit interval.  Its Radon-Nikodym derivation is an exceptional measure, i.e. one that is not continuous w.r.t. the Lebesgue measure and nowhere atomic either.
 
 ### 2.T Śierpinski Triangle
 The triangle can be computed by the first $2^n$ rows of Pascal's triangle modulo 2, i.e. start from a single $1$ on top and in every following row place numbers between the columns from the previous row as the sum of the 2 neighboring values, padding with 0s on the boundaries.
@@ -1500,8 +1516,18 @@ Starting from a Square, remove the middle 1/3 square and repeat the procedure wi
 
 Again you can start by filling the window with a square and then iterating down to the pixel size.
 
+## 3. Brownian Tree / Diffusion-limited aggregation
 
-## 3. Iterated function systems
+Given a probability measure $\mu$ on a finite-dimensional metric space $(X,d)$ that has the tree property, i.e. for every pair of points there is a unique shortest path. The tree is called Brownian if $n$ points drawn independently identically distributed by $\mu$ have the joint probability measure
+
+ $$ \mathbb{P}(\{l_k :1\le k\le 2n-1\}) = s\exp(-s^2/2)dl_1\dotsm dl_{2n-1} $$
+
+where $l_k$ are the lengths of the branches in the subtree spanned over the $n$ points in $X$ and $s:=\sum_{k=1}^{2n-1} l_k$ is the total length.
+
+The goal is to find such a measure µ for a given nice tree space $(X, d)$.
+
+
+## 4. Iterated function systems
 
 ### 0. Iterated Logarithm
 
@@ -1525,7 +1551,7 @@ You can use the following strategy to approximate the set:
   $z_{n+1} = \log_{(0)} (z_n+2\pi k_n\mathsf{i})$, $k_n \sim p_{\mathbb Z}\approx N(0,\sigma^2)$ and $p_{\mathbb Z}$ means a random distribution on integers that has a (finite) second moment when read as a continuous real random variable. $p_{\mathbb Z}\approx N(0,\sigma^2)$ means that we compute the integral random variable as the integer approximation of a continuous normal distributed random variable with expectation value 0 and variance $\sigma^2>0$.  The higher $\sigma$, the better the approximation to a uniform distribution on $\mathbb Z$, but also the slower the convergence of the pointed approximation of the figure.
 
 
-## 4. Zeros of Littlewood polynomials.
+## 5. Zeros of Littlewood polynomials.
 A Littlewood polynomial is a polynomial $p(z) = 1 \pm z \pm z^2 \pm \dotsm \pm z^d$. I.e. there are $2^d$ Littlewood polynomials of degree $d>0$. It is easy to show that all roots of Littlewood polynomials are within $1/2\le|z|\le2$. The interesting thing is that the set $D\subset\mathbb{C}$ of zeros of all Littlewood polynomials is a fractal. For implementation:
 
 #. Write a function that finds a complex zero of a polynomial $p\in\mathbb{C}[z]$.
@@ -1541,7 +1567,7 @@ A Littlewood polynomial is a polynomial $p(z) = 1 \pm z \pm z^2 \pm \dotsm \pm z
 #. Make the `QWidget` interactive such that one can zoom into the set and increase/ decrease the maximum degree $d$.
 
 
-## 5. Attractor of a discrete dynamical system.
+## 6. Attractor of a discrete dynamical system.
 Such a system is given by a map $\phi\colon X\to X$ and may depend on additional parameters. Starting from an arbitrary point, the system converges to the nearest stable minimal fixed-set unless it is exactly on an unstable fixed-set. As a particular example draw the
 
 ### A. Feigenbaum scenario
@@ -1557,12 +1583,12 @@ with the range $0<\lambda<1$.
   $$\phi(x) = \lambda\sin(\pi x),\quad 0.32≤\lambda.$$
 
 
-## 6.  Repeller of a Discrete Dynamical System
+## 7.  Repeller of a Discrete Dynamical System
 I.e. the inverse of the dynamical map makes the repeller become an attractor.
-Reveal the relation to the previous tasks 3 (IFS) and 5.
+Reveal the relation to the previous tasks 4 (IFS) and 6.
 
 
-## 7. Implement the Chaos Pendulum in a `QtWidget`/`SVG` (or equivalent).
+## 9. Implement the Chaos Pendulum in a `QtWidget`/`SVG` (or equivalent).
 The chaos pendulum is a system of two real pendula one at the bottom of the other. Write down $T$ (kinetic) and $U$ (potential) energy in terms of the two positions and determine the Euler-Lagrange equations of motion (see also [chaosPendulum](../Math/introduction/chaosPendulum.pdf) for details). Simulate the motion from a random initial position.
 
 
@@ -1734,6 +1760,7 @@ $$ \partial_x \varphi_{00}(x,y) = \begin{cases} 1+y &\text{for } -1< x,y<0, \\
 $$
 The matrix $A$ has only 8 non-zero diagonals, namely for the generic row $(i,j)$ the entries $(i-1,j-1)$, $(i-1,j)$, $(i-1,j+1)$, $(i,j-1)$, $(i,j+1)$, $(i+1,j-1)$, $(i+1,j)$, $(i+1,j+1)$.
 
+
 ## 3. Modeling Pandemics
 
 ### 3.1 SIR Model
@@ -1760,6 +1787,7 @@ Compare the behavior with that of the plain SIR model.
 ### 3.3 Scale-free random Graphs
 
 Instead of a Poisson distribution of completely random connections, assume that the number of contacts $k$ is $P(k)\sim k^{-3}$ distributed.  Introduce a overall factor $\kappa$ and simulate the spreading of a disease.  Compare to the simple SIR model as well as to the ERG Graph model.
+
 
 ## 6. Spectral Method for non-linear PDEs
 Read a book about the spectral transform for solving the KdV equation, e.g. [1], and implement it.
@@ -1815,6 +1843,7 @@ Simulate American Options Pricing and Pricing of Options of Stock with Dividend 
 ## 0. Algorithms for Topology
 
 Read the book *Computing for Topology* and implement some of its algorithms in Kotlin/Scala/Haskell/C++.
+
 
 ## 2. Counting (stable) Rational Curves
 
@@ -1878,6 +1907,7 @@ Given the above implementation of finite CW complexes try to transform an arbitr
 * p-forms
 * (co)-homology, e.g. de Rham cohomology or cell homology -- try to find a normal form for an associative graded commutative algebra and transform the projective variety in such a normal form
 
+
 ## 3 [Diffeologies](https://en.wikipedia.org/wiki/Diffeology)
 *Def.* If $X$ is a topological paracompact space, a diffeology on $X$ is a family of maps, called plots, each from an open subset of $\mathbb R^d$ ($d\ge0$) to $X$ such that the following hold:
 
@@ -1931,11 +1961,11 @@ Write a mobile app with which you can
 
 Please complete in Scrum style (not waterfall), i.e. finish each point as MVP (not too much future designed)
 
-recommended programming languages: Kotlin (for Android platform) or Swift (for iOS platform).
+recommended programming languages: Jetpack Compose / Kotlin (for Android and iOS platform).
 
 Pattern recommendation: MVC, MVVM or the platform's recommended structure
 
-_Implementation:_ Kotlin, TypeScript, Haskell, Python
+_Implementation:_ Kotlin, TypeScript, Swift, Haskell, Python
 
 
 ## 2. Timeline Info-graphic
@@ -1948,6 +1978,7 @@ Develop a web app which documents a series of historic events. Ideally dates are
 - Infinite scrolling
 - Animations
 - Interactivity
+
 
 ## 3. Five wins
 2 players put symbols (cross and circle) alternately on an infinite grid.
@@ -2029,6 +2060,7 @@ iv. shade: solid, striped, dotted, empty
 
 _Implementation:_ Kotlin, TypeScript, Haskell, Python
 
+
 ## 7. Ping pong
 Write a browser game that simulates tennis playing i.e. a ball (small circle) moves linear until it hits either a boundary or a racket where it is reflected accoding to physics laws for totally elastic reflection.  You control your own racket with the mouse (moving up and down).
 
@@ -2037,6 +2069,7 @@ Write a browser game that simulates tennis playing i.e. a ball (small circle) mo
 ### Introduce barriers
 
 ### vary racket size
+
 
 ## 8. Grazing maze
 
@@ -2077,7 +2110,7 @@ The app should thus have 4 components:
 
 You may consider the above "LineSketch" app as an idea.  The backend could host a collection of sample drawings.
 
-Possible implementation frameworks:  component/google+JetBrains, electron/js, unity/ms, ...
+Possible implementation frameworks:  Compose multiplatform/google+JetBrains, electron/js, unity/ms, ...
 
 Corresponding implementation languages:  Kotlin/multi-platform, ~~java~~TypeScript, ...
 
@@ -2164,6 +2197,7 @@ Once you have run (or ruined) your first larger project.  It is time to do proje
 Goal is to build a working compiler, iterpreter or transpiler.  You may want to read about more specific ideas in e.g.
 
 [1] D. Grune, K.v.Reeuwijk, H.E. Bal, C.J.H. Jacobs, K. Langendoen: *Modern Compiler Design*, **2012**.
+
 
 ## 0. Find an easy programming language
 0. Better than brainfuck or white code
