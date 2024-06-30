@@ -13,11 +13,11 @@ import kotlin.math.*
 
 val range = Rect.of(-1.6, -1.8, 7.4, 1.8)
 
-class LogFractal(val colorPattern :ColorPattern = ColorPattern.MONOCHROME) :MyComponent() {
+class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyComponent() {
     override val title = "Log Frractal"
 
     enum class ColorPattern {
-        MONOCHROME, BACKGROUND, INDEX
+        MONOCHROME, BACKGROUND, INDEX, PATCHED
     }
 
     companion object {
@@ -60,6 +60,8 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.MONOCHROME) :MyCo
         scale = computeScale(width, height, range)
         if (colorPattern==ColorPattern.BACKGROUND)
             g.colorize()
+        if (colorPattern==ColorPattern.PATCHED)
+            g.colPatches()
         g.paintFractal()
     }
 
@@ -76,6 +78,26 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.MONOCHROME) :MyCo
         }
     }
 
+    private fun Graphics.colPatches() {
+        var z = Complex(0.5, 0.5)
+        for (n in 0..10) {
+            z = log(z + Complex.I*(2*PI*random.nextIndex(z)))
+        }
+        val lastPoints = (0..30).map { Pair(0,0) }.toMutableList()
+        for (n in 1..(width*height / 9)) {
+            val index = random.nextIndex(z)
+            z = log(z + Complex.I * (2 * PI * index))
+            if (abs(index) in 1L..15L) {
+                color = getLightColor(index.toInt())
+                val lastP = lastPoints[15+index.toInt()]
+                val px = scale.px(z.re);  val py = scale.py(z.im)
+                if (lastP!=Pair(0,0))
+                    drawLine(lastP.first, lastP.second, px, py)
+                lastPoints[15+index.toInt()] = Pair(px, py)
+            }
+        }
+    }
+
     private fun Graphics.paintFractal() {
         var z = Complex(0.5, 0.5)
         for (n in 0..10) {
@@ -84,9 +106,9 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.MONOCHROME) :MyCo
         color = Color.black
         for (n in 1..(width*height / 9)) {
             val index = random.nextIndex(z)
+            z = log(z + Complex.I*(2*PI*index))
             if (colorPattern==ColorPattern.INDEX && index!=0L)
                 color = getDarkColor(index.toInt())
-            z = log(z + Complex.I*(2*PI*index))
             fillRect(scale.px(z.re), scale.py(z.im), 1, 1)
             fillRect(scale.px(z.re), scale.py(-z.im), 1, 1)
         }
