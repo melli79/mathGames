@@ -8,24 +8,30 @@ import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sqrt
 
 class Mandelbrot : MyComponent() {
     override val title = "Mandelbrot"
 
     companion object {
         const val WRAP = 256u
-        fun colorize(it :UInt) :Color = if (it==0u) Color.BLACK  else Color((it%WRAP).toInt(),0, 255-(it%WRAP).toInt())
+        val brown = Color(192, 128, 0)
+        val purple = Color(192, 0, 192)
+        val colors = arrayOf(Color.black, Color.blue, Color.green, Color.cyan, purple, brown, Color.gray)
+        val shades = arrayOf(Color.black, Color.red.darker(), Color.red)
+        fun colorize(it :Int) :Color = if (it==0) Color.BLACK  else if (it>0) colors[it%(colors.size-1)+1]
+          else shades[(-it)%shades.size]
 
-        fun iterate(cx :Double, cy :Double, x0 :Double, y0 :Double, maxIt :UInt) :UInt {
+        fun iterate(cx :Double, cy :Double, x0 :Double, y0 :Double, maxIt :UInt) :Int {
             var x=x0;  var y=y0
             for (it in 1u..maxIt) {
                 val x2=x*x;  val y2=y*y
                 if (x2+y2>=4.0)
-                    return it
+                    return it.toInt()
                 y = 2*x*y +cy
                 x = x2-y2 +cx
             }
-            return 0u
+            return -((sqrt(x*x+y*y)*6).toInt())
         }
 
         fun computeScale(width :Int, height :Int, range :Rect) :Rect {

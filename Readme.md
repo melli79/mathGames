@@ -393,7 +393,7 @@ You can start with an `enum` of atom(trunks), e.g. oxygen, hydrogen, carbon, nit
 
 4. complexes, i.e. consisting of a known core (e.g. ferrum-n-oxide, copper-oxide, zinc-oxide, ...) and counter-ions and determine their sum-formula, ...;
 
-### Chemistry in other OO Programming Lanuages
+### Chemistry in other OO Programming Languages
 
 While it is easy to translate the above Kotlin example into Java.  It is much harder to encode all the information in a convenient way in Rust or C++.  The main translation work will be to implement some substitute of rich enums.
 
@@ -754,7 +754,7 @@ In other words you are searching for a maximal coloring of the $K_{15}$ by $K_3$
 
 ## 13. String Matching Algorithms
 
-Suppose that you are given a (short) string $m\in\Sigma^*$ that you are supposed to find in a long string $s\in\Sigma^*$  How would you efficiently go over that?
+Suppose that you are given a (short) string $s\in\Sigma^*$ that you are supposed to find in a long string $l\in\Sigma^*$  How would you efficiently go over that?
 
 1.  Suppose $s=c\in\Sigma$ is just a single character, then all you need to do is iterate over $l$ and check every position whether it coincides with $c$.
 
@@ -800,7 +800,7 @@ Hint: You may have to use an enumeration that maps $E$ to integers.
 
 ### 1.0 Edge graph
 
-Given any graph $(V,E)$, then its dual graph is the graph $(E,V')$ such that $X\in V'\subset 2^E$ iff there is a $v\in V$ such that for all $e\in E$: $e\in X\Rightleftarrow v\in e$.
+Given any graph $(V,E)$, then its dual graph is the graph $(E,V')$ such that $X\in V'\subset 2^E$ iff there is a $v\in V$ such that for all $e\in E$: $e\in X\Leftrightarrow v\in e$.
 
 
 ## 2. Implement chain complexes on Hyper-graphs
@@ -1050,7 +1050,7 @@ If you implement in C++, write a wrapper class for `Term`s that handles the sub-
 ### Application: Draw implicit functions
 You could start with polynomial curves in 2 variables: $0 = F(x,y)$
 
-1. An elegant way is if you find a parametrization $I\to\mathbb{R}:t\mapsto (x,y)$.
+1. An elegant way is if you find a parametrization $I\to\mathbb{R}^2:t\mapsto (x,y)$.
 
 0. A brute-force solution is to iterate over *all* $x\in\mathbb{R}$ and for each to solve the equation for $y\in\mathbb{R}$.
 
@@ -1496,6 +1496,8 @@ $z_0\in\mathbb{C}$ for which the sequence remains bounded. The Julia set depends
 ### 2.1 Cantor's Mid-third Set
 This is the interval $[0,1]$ except for the middle third, and then repeat the same procedure for each of the remaining intervals.
 
+The self-similarity (and Hausdorff) dimension is $\ln 2/\ln 3 \approx 0.630930$.
+
 ### 2.S Devil's Staircase
 This is Cantor's set stretched in 2D, i.e. instead of drawing the set on a line, we use it as a description for a monotone function:  We start with the identity function on the unit interval $f_0\colon[0,1]\to[0,1]: x\mapsto x$.  Then we remove the middle third piece and replace it with a constant function
  $$ f_1(x) = \begin{cases} {}^3/_2x &\text{for }0\le x<{}^1/_3, \\
@@ -1511,10 +1513,16 @@ The triangle can be computed by the first $2^n$ rows of Pascal's triangle modulo
 
 You can display that in a Swing window or HTML5-Canvas by first estimating the window resolution and then taking the nearest power of 2 and computing Pascal's triangle modulo 2. (You only need to buffer 2 rows for that).
 
+In comparison to the Śierpinski Carpet, the self-similarity (and Hausdorff) dimension is $\ln 3/\ln 2 \approx 1.584963$.
+
 ### 2.2 Śierpinski Carpet
-Starting from a Square, remove the middle 1/3 square and repeat the procedure with all remaining 8, 1/3 squares.
+Starting from a Square, remove the middle 1/3 square and repeat the procedure with all remaining 8, 1/3 squares.  The self-similarity (and Hausdorff) dimension is $\ln 8/\ln 3 \approx 1.892789$.
 
 Again you can start by filling the window with a square and then iterating down to the pixel size.
+
+### 2.3 Menger Sponge
+Starting from a cube, remove the 7, 1/3 x 1/3 x 1/3 cubes in the middle of the faces and at the center, and repeat the procedude with all 20 remaining cubes.  The self-similarity (and Hausdorff) dimension is thus $\ln 20/\ln 3\approx 2.726833$
+
 
 ## 3. Brownian Tree / Diffusion-limited aggregation
 
@@ -1547,8 +1555,16 @@ You can use the following strategy to approximate the set:
 #. Not all IFS with weakly stretching maps are convergent, thus you should also check for the first points from $z_k$ whether they lie within *finite* volume.
 #. Do it in particular for affine transformations of $\mathbb{R}^d$ for $d=2,3$.
 
-99. $\mathbb C\supset X = \bigcup_{k\in\mathbb Z} \log_{(k)} X$ which you approximate by
-  $z_{n+1} = \log_{(0)} (z_n+2\pi k_n\mathsf{i})$, $k_n \sim p_{\mathbb Z}\approx N(0,\sigma^2)$ and $p_{\mathbb Z}$ means a random distribution on integers that has a (finite) second moment when read as a continuous real random variable. $p_{\mathbb Z}\approx N(0,\sigma^2)$ means that we compute the integral random variable as the integer approximation of a continuous normal distributed random variable with expectation value 0 and variance $\sigma^2>0$.  The higher $\sigma$, the better the approximation to a uniform distribution on $\mathbb Z$, but also the slower the convergence of the pointed approximation of the figure.
+### 3. The Log Fractal
+ $$\mathbb C/2\pi\mathsf{i}\mathbb Z\supset X = \bigcup_{k=-N}^N \log_{(k)} X$$
+
+which you approximate by $z_{n+1} = \log_{(0)} (z_n+2\pi k_n\mathsf{i})$, $k_n \sim 1/|z_n+2\pi k_n\mathsf{i}|^{1.2}$, a random distribution on integers that has an almost finite second moment when read as a continuous real random variable.  You can speed up the computations if you memoize the probabilities for an epsilon net of $z$s, i.e. a couple of points in the 0th strip $(-2,6)\times(-2.0,2.0)$ and then use the closest for the approximation.[^2]  Try to avoid the singularity $z_n=0$.  You can colorize the point $z_n$ with color $k_n$.  (You can even colorize the patches around the points with $k_n=k\ne0$ with color $k$.)
+
+Instead of drawing the invariant set $X$, you can draw a small open set $O$ in which it is contained.  You may start with the whole space $O_0 = \mathbb{R}\times(-\pi,\pi]\subset\mathbb C$ and remove forbidden patches $B_{\epsilon_k}(f_k)$ with $f_0=0$ and $f_{k+1}=\exp(f_k)$ and conversely starting from $0.5<\epsilon_n<1.25$ and $\epsilon_k = \epsilon_{k+1}/f_{k+1}$ for $0\le k<n$. Restrict to $z_n/2\pi\approx N\in\mathbb Z$. Once you have cut out a neighborhood of 0, you may then reduce the extend of $O_{\!n}$ to the left, ending up with $O_{\!n} = (\ln\epsilon_0,\ln(2\pi (N+1)))\times(-\pi,\pi]\setminus \bigcup_{k=0}^n B_{\epsilon_k}(f_k)$.  Instead of drawing $O_{\!n}$, you could also draw $L_{\!N\,}O_{\!n}:=\bigcup_{k=-N}^N\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ or both and convince youself that indeed $L_{\!N\,}O_{\!n}\subset O_{\!n}$ for $n=3$. (This implies $|k|<\mathrm{e}\uparrow3/2\pi\approx607'061.4$ which is way more than enough for numerical approximations.)
+
+Q: Are the $\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ disjoint for $k\ne k'$?
+
+[^2]: You may need an R-tree for that, i.e. an efficient search tree for spatial information.
 
 
 ## 5. Zeros of Littlewood polynomials.
@@ -1562,7 +1578,7 @@ A Littlewood polynomial is a polynomial $p(z) = 1 \pm z \pm z^2 \pm \dotsm \pm z
 
    Hint: Given a complex root (with non-zero imaginary part), then also its conjugate is a root (because all coefficients are real), thus you would divide by a quadratic polynomial.
 
-#. Write a `Qt::QWidget`/Swing `JComponent` that draws all zeros of all Littlewood polynomials up to degree $d$.
+#. Write a `Qt::QWidget` / Swing `JComponent` that draws all zeros of all Littlewood polynomials up to degree $d$.
 
 #. Make the `QWidget` interactive such that one can zoom into the set and increase/ decrease the maximum degree $d$.
 
@@ -1734,7 +1750,7 @@ Check what happens when you vary $\Delta t\approx (\Delta x)^2/(2\alpha^2)$.
 Consider a spatial only PDE, e.g. $$-\Delta u = f $$ for the steady-state solution of the 2D heat equation with Dirichlet boundary conditions.  The biggest possible solution space (for at least continuous solutions) is $W^1_{2,0}:=\{u\in C(\bar\Omega): u|\partial\Omega=0, \nabla u\in L_2(\Omega)\otimes\mathbb{C}^2\}\subset \mathbb{H}:=L_2(\Omega)$ with inner product
 $$\langle\phi,\psi\rangle :=\iint_\Omega \bar{\phi}(x,y)\,\psi(x,y)\, \mathrm{d}^2(x,y). $$
 Then a solution has to fulfill
- $$\forall\phi\in W^2_{2,0}(\Omega)\colon 0 = \langle\phi, \Delta u+f\rangle
+ $$\forall\phi\in W^2_{2,0}(\Omega)\colon\quad 0 = \langle\phi, \Delta u+f\rangle
     = -\langle\nabla\phi,\nabla u\rangle_{L_2(\Omega)\otimes\mathbb{C}^2} +\langle\phi,f\rangle $$
 
 If we use a fundamental system $\{\phi_{ij}\}$ in $W^1_{2,0}(\Omega)$, then we can write
@@ -1772,7 +1788,7 @@ In the beginning you have almost all people suseptible, except for a small perce
  $$\begin{align}
     \dot{S} &= -iSI, \\
     \dot{I} &= iSI -rI, \\
-    \dot(R) &= rI
+    \dot{R} &= rI
  \end{align}$$
 
 Describe the behavior of the three curves $S(t)$, $I(t)$, $R(t)$ in terms of characteristic quantities: What is the generic behavior, what are characteristic quantities?
@@ -1813,7 +1829,7 @@ A genetic algorithm is an optimization program that finds the optimal solution b
 ## 8. [Neural Networks on the Computer](https://en.wikipedia.org/wiki/Artificial_neural_network)
 Read a good book about Neuronal Networks and implement them on the computer.
 
-_Implementation languages:_ Python (tensorflow library, pytorch), Fortran, C++, Matlab
+_Implementation languages:_ Python (tensorflow/Keras library, pytorch), Fortran, C++, Matlab
 
 [Literature](https://en.wikipedia.org/wiki/Artificial_neural_network), e.g. K. Gurney:  An Introduction to Neural Networks. UCL Press **(1997)**. *ISBN* 978-1857286731. *OCLC* 37875698.
 
@@ -1855,7 +1871,7 @@ $$\begin{align}
   Z(t) &= c_dt^d+\dots+c_0.
 \end{align}$$
 
-But two such curves are equivalent if $(X(t)/Z(t),Y(t)/Z(t))=(X_1(t)/Z_1(t),Y_1(t)/Z_1(t))$, i.e. among the $3d+3$ parameters, we can eleminate at least 1 (e.g. $c_d$).  Moreover two curves are equivalent if we can transform one into the other by a fractional linear transformation $t\mapsto (At+B)/(Ct+D)$ with $\begin{pmatrix}A&B\\ C&D\end{pmatrix}\in\mathrm{Sl}_2(\mathbb k)$.  That eleminates another 4 parameters, such that we are left with $3d-1$ parameters.
+But two such curves are equivalent if $(X(t)/Z(t),Y(t)/Z(t))=(X_1(t)/Z_1(t),Y_1(t)/Z_1(t))$, i.e. among the $3d+3$ parameters, we can eleminate at least 1 (e.g. $c_d$).  Moreover two curves are equivalent if we can transform one into the other by a fractional linear transformation $t\mapsto (At+B)/(Ct+D)$ with $\begin{pmatrix}A&B\\ C&D\end{pmatrix}\in\mathrm{Sl}_2(\mathbb k)$.  That eleminates another 3 parameters, such that we are left with $3d-1$ parameters.
 
 In particular that means that a stable rational curve of degree $d$ is uniquely determined by $3d-1$ points in the projective plane in generic position (i.e. not coinciding).
 
@@ -1889,10 +1905,10 @@ While in mathematics, manifolds are typically paracompact (i.e. have a locally c
 
 _Medium sized sub-projects_
 
-## 0 [Simplicial complexes](https://en.wikipedia.org/wiki/Simplicial_complex)
+## 0. [Simplicial complexes](https://en.wikipedia.org/wiki/Simplicial_complex)
 Implement a simplex as a set/ vector of vertices, a simplicial complex as a set of simplices. Implement the properties `vertices` and `segments`, and operations `addSimplex`, `removeSimplex`, `union`, `disjointUnion`, ...
 
-## 1 finite [CW complexes](https://en.wikipedia.org/wiki/CW_complex)
+## 1. finite [CW complexes](https://en.wikipedia.org/wiki/CW_complex)
 Implement as `template <...> class CW`, parameter the dimension $d$.
 
 1. 1 dim'l CW cpx is an undirected graph
@@ -1900,7 +1916,7 @@ Implement as `template <...> class CW`, parameter the dimension $d$.
 3. Operations: Construction from a $d$-1 dim'l CW cpx, a number of disks, and a bunch of maps from the corresponding spheres to the $d-1$ dim'l subspace.
 
 
-## 2 [Projective varieties](https://en.wikipedia.org/wiki/Algebraic_variety#Projective_varieties_and_quasi-projective_varieties) over $\mathbb{R}$
+## 2. [Projective varieties](https://en.wikipedia.org/wiki/Algebraic_variety#Projective_varieties_and_quasi-projective_varieties) over $\mathbb{R}$
 Given the above implementation of finite CW complexes try to transform an arbitrary irreducible projective variety (connected algebraic set in a projective space) into its CW representation.  Try to implement the computation of common geometric properties:
 
 * tangent space (assuming the CW complex is smooth)
@@ -1949,6 +1965,9 @@ e.g. [Python](https://python.org/), [Kotlin](https://kotlinlang.org/), [TypeScri
 
 
 # 8. Mobile & Web Apps
+The goal is edutainment, i.e. intelligent games that help users learn something practical.
+
+
 ## 1. Drawing Lines
 Write a mobile app with which you can
 
@@ -2096,6 +2115,9 @@ The parameter is the game level, i.e. the complexity of the maze, e.g. the non-s
 
 The cell centers lie on a triangular grid and valid moves are l-r, u-d, ur-dl.
 
+## 10. Statistics App
+
+Write an app that simulates statistics or probability, especially the non-intuitive parts.  Make sure you get the statistics right and the app is easy to use.
 
 
 # 8B. MDA (Multiple Devices App)
@@ -2137,7 +2159,7 @@ Corresponding implementation languages:  Kotlin/multi-platform, ~~java~~TypeScri
 5. Let users fill your DB with standard activities
 
 
-## 4. Write a vocable Trainer
+## 4. Write a Vocable Trainer
 
 write a desktop / smartphone app that allows to 
 
@@ -2179,22 +2201,22 @@ Add a computer strategy (s.th. one player can also play).
 
 
 ## 9. Power Grid
-The board game consists of a map with a couple of cities and some of their
-connections.  The players are to start in one city and build power connections
+The board game consists of a map with a couple of cities (e.g. from a country or continent) and
+some of their connections.  The players are to start in one city and build power connections
 to some other cities while also buying power plants and fossils to fire those
-power plants.  New fossils are discovered at the end of every turn, but fossils
+power plants.  New fossils are discovered at the end of every round, but fossils
 are limited and become scarce over time.  The player with the most powered cities
 in the end wins.
 
 
 
 # 8C. Architecture Katas
-Once you have run (or ruined) your first larger project.  It is time to do project management in a more systematic way.  That is what [Architecture Katas](archKatas.html) are good for.
+Once you have run (or ruined) your first larger project, it is time to do project management in a more systematic way.  That is what [Architecture Katas](archKatas.html) are good for.
 
 
 
 # 9. Compiler
-Goal is to build a working compiler, iterpreter or transpiler.  You may want to read about more specific ideas in e.g.
+Goal is to build a working compiler, interpreter or transpiler.  You may want to read about more specific ideas in e.g.
 
 [1] D. Grune, K.v.Reeuwijk, H.E. Bal, C.J.H. Jacobs, K. Langendoen: *Modern Compiler Design*, **2012**.
 

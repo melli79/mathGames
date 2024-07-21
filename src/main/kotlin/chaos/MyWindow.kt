@@ -1,10 +1,12 @@
 package chaos
 
 import java.awt.BorderLayout
+import java.awt.event.ComponentListener
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
+import java.awt.event.MouseMotionListener
 import java.util.*
 import javax.swing.JComponent
 import javax.swing.JFrame
@@ -28,6 +30,8 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
         defaultCloseOperation = EXIT_ON_CLOSE
         addKeyListener(this)
         addMouseListener(this)
+        if (content is ComponentListener)
+            addComponentListener(content)
         setSize(800, 600)
         title = content.title
     }
@@ -63,6 +67,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 }
 
 fun main() {
-    val window = MyWindow(LogFractal()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
+    val window = MyWindow(LogFractal(LogFractal.ColorPattern.OSC))  // Mandelbrot()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
     window.isVisible = true
 }
