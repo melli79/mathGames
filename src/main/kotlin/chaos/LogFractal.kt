@@ -107,24 +107,23 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
         val fs = (0..n).map { val fn = f; f = exp(f); fn }
         val epsilon_n = 1.25
         val xm = ln(epsilon_n) - n*(n+1)/2
-        val py = scale.py(0.0)
-        var epsilon = exp(xm)
+        val epsilon_m = exp(xm)
         val px0 = scale.px(xm)
         drawLine(px0,0, px0,height)
         val y0 = -PI;  val x0 = xm+3
         val y1 = PI;  val x1 = range.x1()+6
-        for (k in 0..20) {
+        for (k in 0..30) {
             color = getLightColor(k)
             val dx = min(0.1, 0.003*exp(0.5*k))
             for (x in linspace(x0, x1, dx)) {
                 val po = Complex(x, y0)
-                val zi = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
                 val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
                 val zo = log(po + Complex.I*(2*PI*k))
                 val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
                 drawLine(xl,yl, xr,yr)
                 if (k>0) {
-                    val zi2 = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
                     val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
                     val zo2 = log(po + Complex.I*(-2*PI*k))
                     val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
@@ -133,13 +132,13 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
             }
             for (y in linspace(y0, y1, dx)) {
                 val po = Complex(x0, y)
-                val zi = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
                 val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
                 val zo = log(po + Complex.I*(2*PI*k))
                 val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
                 drawLine(xl,yl, xr,yr)
                 if (k>0) {
-                    val zi2 = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
                     val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
                     val zo2 = log(po + Complex.I*(-2*PI*k))
                     val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
@@ -148,13 +147,13 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
             }
             for (x in linspace(x0, x1, dx)) {
                 val po = Complex(x, y1)
-                val zi = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
                 val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
                 val zo = log(po + Complex.I*(2*PI*k))
                 val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
                 drawLine(xl,yl, xr,yr)
                 if (k>0) {
-                    val zi2 = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
                     val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
                     val zo2 = log(po + Complex.I*(-2*PI*k))
                     val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
@@ -163,13 +162,13 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
             }
             for (y in linspace(y0, y1, dx)) {
                 val po = Complex(x1, y)
-                val zi = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
                 val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
                 val zo = log(po + Complex.I*(2*PI*k))
                 val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
                 drawLine(xl,yl, xr,yr)
                 if (k>0) {
-                    val zi2 = log(po*(epsilon/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
                     val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
                     val zo2 = log(po + Complex.I*(-2*PI*k))
                     val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
@@ -178,11 +177,17 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
             }
         }
         color = Color.gray
-        epsilon = epsilon_n
-        for (fn in fs.reversed()) {
-            val px = scale.px(fn); val dx = (scale.dx*epsilon).roundToInt()
-            fillOval(px-dx, py-dx, 2*dx+1, 2*dx+1)
-            epsilon /= fn
+        for (k in 0..20) {
+            var epsilon = epsilon_n
+            for (fn in fs.drop(1).reversed()) {
+                val zn = log(Complex(fn, 2*PI*k))
+                val px = scale.px(zn.re);  val py = scale.py(zn.im)
+                val dx = (scale.dx*epsilon/sqrt(sqr(fn)+sqr(2*PI*k))).roundToInt()
+                fillOval(px - dx, py - dx, 2*dx + 1, 2*dx + 1)
+                val py1 = scale.py(-zn.im)
+                fillOval(px - dx, py1 - dx, 2*dx + 1, 2*dx + 1)
+                epsilon /= fn
+            }
         }
     }
 
