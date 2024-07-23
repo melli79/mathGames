@@ -20,7 +20,7 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
     override val title = "Log Frractal"
 
     enum class ColorPattern {
-        MONOCHROME, BACKGROUND, INDEX, PATCHED, OSC
+        MONOCHROME, BACKGROUND, INDEX, PATCHED, OSC, OSC2
     }
 
     companion object {
@@ -77,6 +77,8 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
             g.colorize()
         else if (colorPattern == ColorPattern.OSC)
             g.paintOsc()
+        else if (colorPattern == ColorPattern.OSC2)
+            g.paintOsc2()
         else {
             g.color = Color.white
             g.fillRect(0, 0, width, height)
@@ -173,6 +175,144 @@ class LogFractal(val colorPattern :ColorPattern = ColorPattern.PATCHED) :MyCompo
                     val zo2 = log(po + Complex.I*(-2*PI*k))
                     val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
                     drawLine(xl2, yl2, xr2, yr2)
+                }
+            }
+        }
+        color = Color.gray
+        for (k in 0..20) {
+            var epsilon = epsilon_n
+            for (fn in fs.drop(1).reversed()) {
+                val zn = log(Complex(fn, 2*PI*k))
+                val px = scale.px(zn.re);  val py = scale.py(zn.im)
+                val dx = (scale.dx*epsilon/sqrt(sqr(fn)+sqr(2*PI*k))).roundToInt()
+                fillOval(px - dx, py - dx, 2*dx + 1, 2*dx + 1)
+                val py1 = scale.py(-zn.im)
+                fillOval(px - dx, py1 - dx, 2*dx + 1, 2*dx + 1)
+                epsilon /= fn
+            }
+        }
+    }
+
+    private fun Graphics.paintOsc2() {
+        val n = 3
+        var f = 0.0
+        val fs = (0..n).map { val fn = f; f = exp(f); fn }
+        val epsilon_n = 1.25
+        val xm = ln(epsilon_n) - n*(n+1)/2
+        val epsilon_m = exp(xm)
+        val px0 = scale.px(xm)
+        drawLine(px0,0, px0,height)
+        val y0 = -PI;  val x0 = xm+3
+        val y1 = PI;  val x1 = range.x1()+6
+        for (k in 0..30) {
+            color = getLightColor(k)
+            val dx = min(0.1, 0.003*exp(0.5*k))
+            for (x in linspace(x0, x1, dx)) {
+                val po = Complex(x, y0)
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
+                val zo = log(po + Complex.I*(2*PI*k))
+                val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
+                drawLine(xl,yl, xr,yr)
+                if (k>0) {
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
+                    val zo2 = log(po + Complex.I*(-2*PI*k))
+                    val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
+                    drawLine(xl2, yl2, xr2, yr2)
+                    var zi1 = log(zi);  var zo1 = log(zo)
+                    var zi3 = log(zi2);  var zo3 = log(zo2)
+                    for (l in 1..10) {
+                        val xl1 = scale.px(zi1.re);  val yl1 = scale.py(zi1.im)
+                        val xr1 = scale.px(zo1.re);  val yr1 = scale.py(zo1.im)
+                        drawLine(xl1,yl1, xr1,yr1)
+                        val xl3 = scale.px(zi3.re);  val yl3 = scale.py(zi3.im)
+                        val xr3 = scale.px(zo3.re);  val yr3 = scale.py(zo3.im)
+                        drawLine(xl3, yl3, xr3, yr3)
+                        zi1 = log(zi1);  zo1 = log(zo1)
+                        zi3 = log(zi3);  zo3 = log(zo3)
+                    }
+                }
+            }
+            for (y in linspace(y0, y1, dx)) {
+                val po = Complex(x0, y)
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
+                val zo = log(po + Complex.I*(2*PI*k))
+                val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
+                drawLine(xl,yl, xr,yr)
+                if (k>0) {
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
+                    val zo2 = log(po + Complex.I*(-2*PI*k))
+                    val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
+                    drawLine(xl2, yl2, xr2, yr2)
+                    var zi1 = log(zi);  var zo1 = log(zo)
+                    var zi3 = log(zi2);  var zo3 = log(zo2)
+                    for (l in 1..10) {
+                        val xl1 = scale.px(zi1.re);  val yl1 = scale.py(zi1.im)
+                        val xr1 = scale.px(zo1.re);  val yr1 = scale.py(zo1.im)
+                        drawLine(xl1,yl1, xr1,yr1)
+                        val xl3 = scale.px(zi3.re);  val yl3 = scale.py(zi3.im)
+                        val xr3 = scale.px(zo3.re);  val yr3 = scale.py(zo3.im)
+                        drawLine(xl3, yl3, xr3, yr3)
+                        zi1 = log(zi1);  zo1 = log(zo1)
+                        zi3 = log(zi3);  zo3 = log(zo3)
+                    }
+                }
+            }
+            for (x in linspace(x0, x1, dx)) {
+                val po = Complex(x, y1)
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
+                val zo = log(po + Complex.I*(2*PI*k))
+                val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
+                drawLine(xl,yl, xr,yr)
+                if (k>0) {
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
+                    val zo2 = log(po + Complex.I*(-2*PI*k))
+                    val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
+                    drawLine(xl2, yl2, xr2, yr2)
+                    var zi1 = log(zi);  var zo1 = log(zo)
+                    var zi3 = log(zi2);  var zo3 = log(zo2)
+                    for (l in 1..10) {
+                        val xl1 = scale.px(zi1.re);  val yl1 = scale.py(zi1.im)
+                        val xr1 = scale.px(zo1.re);  val yr1 = scale.py(zo1.im)
+                        drawLine(xl1,yl1, xr1,yr1)
+                        val xl3 = scale.px(zi3.re);  val yl3 = scale.py(zi3.im)
+                        val xr3 = scale.px(zo3.re);  val yr3 = scale.py(zo3.im)
+                        drawLine(xl3, yl3, xr3, yr3)
+                        zi1 = log(zi1);  zo1 = log(zo1)
+                        zi3 = log(zi3);  zo3 = log(zo3)
+                    }
+                }
+            }
+            for (y in linspace(y0, y1, dx)) {
+                val po = Complex(x1, y)
+                val zi = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(2*PI*k))
+                val xl = scale.px(zi.re);  val yl = scale.py(zi.im)
+                val zo = log(po + Complex.I*(2*PI*k))
+                val xr = scale.px(zo.re);  val yr = scale.py(zo.im)
+                drawLine(xl,yl, xr,yr)
+                if (k>0) {
+                    val zi2 = log(po*(epsilon_m/sqrt(po.abs2())) + Complex.I*(-2*PI*k))
+                    val xl2 = scale.px(zi2.re);  val yl2 = scale.py(zi2.im)
+                    val zo2 = log(po + Complex.I*(-2*PI*k))
+                    val xr2 = scale.px(zo2.re);  val yr2 = scale.py(zo2.im)
+                    drawLine(xl2, yl2, xr2, yr2)
+                    var zi1 = log(zi);  var zo1 = log(zo)
+                    var zi3 = log(zi2);  var zo3 = log(zo2)
+                    for (l in 1..10) {
+                        val xl1 = scale.px(zi1.re);  val yl1 = scale.py(zi1.im)
+                        val xr1 = scale.px(zo1.re);  val yr1 = scale.py(zo1.im)
+                        drawLine(xl1,yl1, xr1,yr1)
+                        val xl3 = scale.px(zi3.re);  val yl3 = scale.py(zi3.im)
+                        val xr3 = scale.px(zo3.re);  val yr3 = scale.py(zo3.im)
+                        drawLine(xl3, yl3, xr3, yr3)
+                        zi1 = log(zi1);  zo1 = log(zo1)
+                        zi3 = log(zi3);  zo3 = log(zo3)
+                    }
                 }
             }
         }

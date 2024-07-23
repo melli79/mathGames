@@ -67,6 +67,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 }
 
 fun main() {
-    val window = MyWindow(LogFractal(LogFractal.ColorPattern.OSC))  // Mandelbrot()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
+    val window = MyWindow(LogFractal(LogFractal.ColorPattern.OSC2))  // Mandelbrot()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
     window.isVisible = true
 }
