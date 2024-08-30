@@ -829,7 +829,7 @@ Thm.:  Given a prime power $n=q=p^k$, then the isomorphisms are $\mathrm{Gl}_2(\
 
 ## 2P Projective Geometries
 
-Such as $\mathbb{P}^2\mathbb{R}$ or $\mathbb{S}^2\approx\mathbb{P}^1\mathbb{C}$, i.e. every 2 lines intersect in a point.
+Such as $\mathbb{P}^2\mathbb{R}$ or $\mathbb{S}^2\approx\mathbb{P}^1\mathbb{C}$, i.e. every 2 lines intersect in a point, through every 2 different points passes exactly 1 line, there are 4 points not on a common line.
 
 Find the analog of the characteristic theorem and implement it in a class with points and lines as satellite classes.
 
@@ -838,26 +838,27 @@ Thm.: Given an odd prime power $n=q=p^k$, then the isomorphisms are $\mathrm{PSl
 
 ## 2H Hyperbolic Geometries
 
-Such as $\mathbb{H}$ the upper half-plane or Poincaré Disk $\mathbb D^2$ where to every point and line not through the point, there are many parallel lines.
+Such as $\mathbb{H}^2$ the upper half-plane or Poincaré Disk $\mathbb D^2$ where to every point and line not through the point, there are many parallel lines.
 
 Find the analogon of the characteristic theorem for regular finite hyperbolic geometries and implement it in a class with satellite classes for points and lines.
 
-Given a power of an odd prime $n=q=p^k$, then the isometries of the hyperbolic plane are $\mathrm{O}_{\mathbb{F}_q}(1,2)$, the stabilizer is $\mathrm{O}_{\mathbb{F}_q}(1)\times\mathrm{O}_{\mathbb{F}_q}(2)$ and thus the space should be denoted as $\mathbb{H}_q^2$ and has dimension 2 (as an algebraïc variety over $\mathbb{F}_q$).
+Given a power of an odd prime $n=q=p^k>4$, then the isometries of the hyperbolic plane are $\mathrm{O}_{\mathbb{F}_q}(1,2)$, the stabilizer is $\mathrm{O}_{\mathbb{F}_q}(1)\times\mathrm{O}_{\mathbb{F}_q}(2)$ and thus the space should be denoted as $\mathbb{H}_q^2$ and has dimension 2 (as an algebraïc variety over $\mathbb{F}_q$).
 
-### Example $\mathbb{H}^2_3 := \mathrm{O}_{\mathbb{F}_3}(1,2)/\mathrm{O}_{\mathbb{F}_3}(1)\times\mathrm{O}_{\mathbb{F}_3}(2)$
+### Example $\mathbb{H}^2_5 := \mathrm{O}_{\mathbb{F}_5}(1,2)/\mathrm{O}_{\mathbb{F}_5}(1)\times\mathrm{O}_{\mathbb{F}_5}(2)$
 
-$\eta^{1,2} = \mathrm{diag}(1,-1,-1)$,
+$\eta:=\eta^{1,2} = \mathrm{diag}(1,-1,-1)$, $C(\eta):=\{ v\in\mathbb{F}_5^3 : v^T\eta v = 1\}$, $\bar{C}(\eta) := \{ v\in\mathbb{F}_5^3 : v^T\eta v = -1 \}$
 
-+----------------------------------+------+--------------------------------------------+
-| Group                            | Size | Elements                                   |
-+==================================+======+============================================+
-| $\mathrm{O}_{\mathbb{F}_3}(1)$   | $2$  | $\{\pm1\}\cong C_2$                        |
-+----------------------------------+------+----------------------------------------------------------------------------------------------------------------------------------------------------+
-| $\mathrm{O}_{\mathbb{F}_3}(2)$   | $8$  | $\left\{\begin{pmatrix}\pm1& \\ &\pm1\end{pmatrix}, \begin{pmatrix} 0&\pm1\\ \pm1&0\end{pmatrix} \right\} =: C_2^2\bowtie S_2 \cong C_4\times C_2$ |
-+----------------------------------+------+----------------------------------------------------------------------------------------------------------------------------------------------------+
-| $\mathrm{O}_{\mathbb{F}_3}(1,2)$ | $16$ | $\left\langle \begin{pmatrix} \pm1&&\\ &\pm1&\\ &&\pm1\end{pmatrix}, S_1\times S_2\right\rangle =: C_2^3\bowtie (S_1\times S_2)$                   |
-+----------------------------------+------+----------------------------------------------------------------------------------------------------------------------------------------------------+
++----------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+| Group                            | Size  | Elements                                                                                                                                           |
++==================================+=======+====================================================================================================================================================+
+| $\mathrm{O}_{\mathbb{F}_5}(1)$   | $2$   | $\{\pm1\}\cong C_2$                                                                                                                                |
++----------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+| $\mathrm{O}_{\mathbb{F}_5}(2)$   | $8$   | $\left\{\begin{pmatrix}\pm1& \\ &\pm1\end{pmatrix}, \begin{pmatrix} 0&\pm1\\ \pm1&0\end{pmatrix} \right\} =: C_2^2\bowtie S_2 \cong C_4\times C_2$ |
++----------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+| $\mathrm{O}_{\mathbb{F}_5}(1,2)$ | $240$ | $\left\{ (v_1,v_2,v_3)\in C\times\bar{C}\times\bar{C} : v_1^T\eta v_2 = 0 = v_1^T\eta v_3 = v_2^T\eta v_3 \right\}$                                           |
++----------------------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------+
 
+Therefore $\mathbb{H}^2_5$ should have 15 points.
 
 ## 3D
 
@@ -1558,11 +1559,11 @@ You can use the following strategy to approximate the set:
 ### 3. The Log Fractal
  $$\mathbb C/2\pi\mathsf{i}\mathbb Z\supset X = \bigcup_{k=-N}^N \log_{(k)} X$$
 
-which you approximate by $z_{n+1} = \log_{(0)} (z_n+2\pi k_n\mathsf{i})$, $k_n \sim 1/|z_n+2\pi k_n\mathsf{i}|^{1.2}$, a random distribution on integers that has an almost finite second moment when read as a continuous real random variable.  You can speed up the computations if you memoize the probabilities for an epsilon net of $z$s, i.e. a couple of points in the 0th strip $(-2,6)\times(-2.0,2.0)$ and then use the closest for the approximation.[^2]  Try to avoid the singularity $z_n=0$.  You can colorize the point $z_n$ with color $k_n$.  (You can even colorize the patches around the points with $k_n=k\ne0$ with color $k$.)
+which you approximate by $z_{n+1} = \log_{(0)} (z_n+2\pi k_n\mathsf{i})$, $k_n \sim 1/|z_n+2\pi k_n\mathsf{i}|^{1.2}$, a random distribution on integers that has an almost finite second moment when read as a continuous real random variable.  You can speed up the computations if you memoize the probabilities for an epsilon net of $z$s, i.e. a couple of points in the 0th strip $(-2,6)\times(-2.0,2.0)$ and then use the closest for the approximation.[^2]  Try to avoid the singularity $z_n=0$.  You can colorize the point $z_n$ with color $k_n$.
 
-Instead of drawing the invariant set $X$, you can draw a small open set $O$ in which it is contained.  You may start with the whole space $O_0 = \mathbb{R}\times(-\pi,\pi]\subset\mathbb C$ and remove forbidden patches $B_{\epsilon_k}(f_k)$ with $f_0=0$ and $f_{k+1}=\exp(f_k)$ and conversely starting from $0.5<\epsilon_n<1.25$ and $\epsilon_k = \epsilon_{k+1}/f_{k+1}$ for $0\le k<n$. Restrict to $z_n/2\pi\approx N\in\mathbb Z$. Once you have cut out a neighborhood of 0, you may then reduce the extend of $O_{\!n}$ to the left, ending up with $O_{\!n} = (\ln\epsilon_0,\ln(2\pi (N+1)))\times(-\pi,\pi]\setminus \bigcup_{k=0}^n B_{\epsilon_k}(f_k)$.  Instead of drawing $O_{\!n}$, you could also draw $L_{\!N\,}O_{\!n}:=\bigcup_{k=-N}^N\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ or both and convince youself that indeed $L_{\!N\,}O_{\!n}\subset O_{\!n}$ for $n=3$. (This implies $|k|<\mathrm{e}\uparrow3/2\pi\approx607'061.4$ which is way more than enough for numerical approximations.)
+Instead of drawing the invariant set $X$, you can draw a small open set $O$ in which it is contained.  You may start with the whole space $O_0 = \mathbb{R}\times(-\pi,\pi]\subset\mathbb C$ and remove forbidden patches $B_{\epsilon_k}(f_k)$ with $f_0=0$ and $f_{k+1}=\exp(f_k)$ and conversely starting from $0.5<\epsilon_n<1.25$ and $\epsilon_k = \epsilon_{k+1}/f_{k+1}$ for $0\le k<n$. Restrict to $z_n/2\pi\approx N\in\mathbb Z$. Once you have cut out a neighborhood of 0, you may then reduce the extend of $O_{\!n}$ to the left, ending up with $O_{\!n} = (\ln\epsilon_0,\ln(2\pi (N+1)))\times(-\pi,\pi)\setminus \mathbb{R}\cup\bigcup_{k=0}^n B_{\epsilon_k}(f_k)$.  Instead of drawing $O_{\!n}$, you could also draw $L_{\!N\,}O_{\!n}:=\bigcup_{k=-N}^N\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ or both and convince youself that indeed $L_{\!N\,}O_{\!n}\subset O_{\!n}$ for $n=3$. (This implies $|k|<\mathrm{e}\uparrow3/2\pi\approx607'061.4$ which is way more than enough for numerical approximations.  You can even colorize the components by mapping $k$ to varying colors.)
 
-Q: Are the $\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ disjoint for $k\ne k'$?
+Check that the $\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ are disjoint for $k\ne k'$.
 
 [^2]: You may need an R-tree for that, i.e. an efficient search tree for spatial information.
 
