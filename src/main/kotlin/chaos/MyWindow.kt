@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import java.awt.event.MouseMotionListener
 import java.util.*
 import javax.swing.JComponent
 import javax.swing.JFrame
@@ -67,6 +66,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 }
 
 fun main() {
-    val window = MyWindow(LogFractal(LogFractal.ColorPattern.OSC2))  // Mandelbrot()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
+    val window = MyWindow(RealLog()) // LogFractal(LogFractal.ColorPattern.OSC2))  // Mandelbrot()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
     window.isVisible = true
 }

@@ -14,3 +14,5 @@ data class Rect(val x0 :Double, val y0 :Double, val dx :Double, val dy :Double) 
     fun x(px :Int) = (px/dx)+x0
     fun y(py :Int) = (py/dy)+y0
 }
+
+fun Rect.x1() = x0+dx

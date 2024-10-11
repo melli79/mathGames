@@ -4,6 +4,8 @@ import kotlin.math.*
 
 data class Complex(var re :Double, var im :Double) {
     companion object {
+        fun ofPolar(r :Double, phi :Double) = exp(I*phi)*r
+
         val ZERO = Complex(0.0, 0.0)
         val ONE = Complex(1.0, 0.0)
         val I = Complex(0.0, 1.0)
