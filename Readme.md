@@ -877,7 +877,7 @@ Write a class that represents a finite spatial incidence geometry and satellite 
 
 ## 3P, 3H
 
-Define the analogs of projective and hyperbolic geometries.  How can they be characterized in the finite case?
+Define the analogs of projective and hyperbolic geometries, e.g. $\mathbb{P}^d\mathbb{F}_q$, $\mathrm{O}(1,d)/\mathrm{O}(1)\times\mathrm{O}(d)$, $q=p^k$, $p$ prime.  How can they be characterized in the finite case?
 
 
 # 2. Algebra
@@ -1493,7 +1493,7 @@ Optimization:
 $z_0\in\mathbb{C}$ for which the sequence remains bounded. The Julia set depends on the parameter $c\in\mathbb{C}$.
 
 
-## 2. Śierpinski Triangle and Carpet
+## 2. Sierpiński Triangle and Carpet
 ### 2.1 Cantor's Mid-third Set
 This is the interval $[0,1]$ except for the middle third, and then repeat the same procedure for each of the remaining intervals.
 
@@ -2241,7 +2241,11 @@ If you use a parser generator (yacc or similar) make sure that you understand
 what the generated code does and how to modify it if additional behavior is needed.
 
 
-## 2. Backend: Write a compiler/transpiler to LLVM, node.js or JVM
+## 2.I Write an Interpreter for it
+
+i.e. once the program is parsed and started by the user, perform its steps and display the result (e.g. the terminal output)
+
+## 2.C Backend: Write a compiler/transpiler to LLVM, node.js or JVM
 
 Compile the above written sample programs and check that they work correctly
 
