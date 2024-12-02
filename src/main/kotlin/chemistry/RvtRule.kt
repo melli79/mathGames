@@ -1,9 +1,11 @@
 package chemistry
 
-import chaos.linReg
-import chaos.random
+import common.math.linReg
+import java.util.Random
 import kotlin.math.ln
 import kotlin.math.sqrt
+
+val random = Random(System.currentTimeMillis())
 
 /*
  * given a normal distribution, what is the dependency of the TOP10 on the size of population?
@@ -15,7 +17,7 @@ fun estimateTop10(n :UInt) :Pair<Double, Double> {
     val top10s = mutableListOf<Double>()
     repeat(100+10_000/n.toInt()) {
         val samples = mutableListOf<Double>()
-        for (i in 1u..n) {
+        repeat (n.toInt()) {
             val p = random.nextGaussian()
             samples.insertSorted(p)
             while (samples.size>10)
@@ -23,7 +25,7 @@ fun estimateTop10(n :UInt) :Pair<Double, Double> {
         }
         top10s.add(samples.sum())
     }
-    return Pair(top10s.average(), top10s.stddevAM()*31)
+    return Pair(top10s.average(), top10s.stddevAM())
 }
 
 private fun List<Double>.stddevAM(): Double {
