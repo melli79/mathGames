@@ -3,27 +3,28 @@ package numberthy
 import java.lang.System.out
 
 fun main() {
-    val N = 100
-    val isPrime = (0..N).map { true }.toMutableList()
+    val N = 1000
+    val isPrime = (0..N/2).map { true }.toMutableList()
     isPrime[0] = false;  isPrime[1] = false
-    var p=2
+    print("2, ")
+    var p=3
     while (p*p<=N) {
         print("$p, ");  out.flush()
-        var m = 2*p
+        var m = p*p
         while (m<=N) {
-            isPrime[m] = false
-            m +=p
+            isPrime[m/2] = false
+            m += 2*p
         }
-        p++
-        while (p<=N&& !isPrime[p])
-            p++
+        p+=2
+        while (p<=N&& !isPrime[p/2])
+            p+=2
     }
     while (p<=N) {
-        while (p<=N && !isPrime[p])
-            p++
+        while (p<=N && !isPrime[p/2])
+            p+=2
         if (p<=N)
             print("$p, ")
-        p++
+        p+=2
     }
     println("...")
 }
