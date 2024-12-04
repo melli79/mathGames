@@ -2,7 +2,9 @@ package probability
 
 import common.math.geometry.Rect
 import common.Quadruple
+import common.math.cb
 import common.math.epsilon
+import common.math.geometry.x1
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Graphics
@@ -48,8 +50,6 @@ fun linReg(points: List<Quadruple<Double, Double, Double, Double>>) :Pair<Double
     println("ln t_05 = %.5f*ln N %+.5f".format(m3, b3))
     return Pair(m2, b2)
 }
-
-fun cb(x :Double) = x*x*x
 
 class Plotter(private val points: List<Quadruple<Double, Double, Double, Double>>, private val linReg: Pair<Double, Double>) :JComponent() {
     private val range = computeRange(points)
@@ -134,8 +134,6 @@ class Plotter(private val points: List<Quadruple<Double, Double, Double, Double>
         return Rect(range.x0 -(width/dx-range.dx)/2, range.y1 +(height/dx-range.dy), dx, -dx)
     }
 }
-
-fun Rect.x1() = x0+dx
 
 class MyWindow(rootPane :JComponent) : JFrame("Birthday Paradox") {
     init {
