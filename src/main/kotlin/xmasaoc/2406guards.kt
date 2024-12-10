@@ -17,7 +17,7 @@ enum class Direction(val symb :Char, val mask :Int) {
   }
 }
 
-data class Pos(val r :Int, val c :Int, val d :Direction) {
+private data class Pos(val r :Int, val c :Int, val d :Direction) {
 
   fun next() :Pos? = when (d) {
     Direction.Up -> if (r>0) Pos(r-1, c, d)  else null
@@ -29,7 +29,7 @@ data class Pos(val r :Int, val c :Int, val d :Direction) {
   fun turn() = copy(d= d.turn())
 }
 
-typealias Grid = List<String>
+private typealias Grid = List<String>
 typealias MGrid = MutableList<String>
 
 val Grid.numRows
@@ -39,7 +39,7 @@ val Grid.numCols
 
 fun print(g :Grid) = println(g.joinToString { "\n"+it })
 
-fun parseGrid(input :Stream<String>) :Pair<MGrid, Pos> {
+private fun parseGrid(input :Stream<String>) :Pair<MGrid, Pos> {
   var pos = Pos(0, 0, Direction.Right)
   var row = -1
   val grid = input.map { line ->
@@ -57,7 +57,7 @@ fun parseGrid(input :Stream<String>) :Pair<MGrid, Pos> {
   return Pair(grid, pos)
 }
 
-fun Grid.loop(pos0 :Pos, detect :Boolean =true) :Pair<Long, Array<ByteArray>> {
+private fun Grid.loop(pos0 :Pos, detect :Boolean =true) :Pair<Long, Array<ByteArray>> {
   var count = 0L
   val limit = numRows.toLong() * numCols * Direction.entries.size
   val map = Array(numRows) { ByteArray(numCols) {0} }
@@ -84,7 +84,7 @@ fun Grid.loop(pos0 :Pos, detect :Boolean =true) :Pair<Long, Array<ByteArray>> {
   return Pair(count, map)
 }
 
-fun MGrid.constructLoops(pos :Pos, used :Array<ByteArray>) :ULong {
+private fun MGrid.constructLoops(pos :Pos, used :Array<ByteArray>) :ULong {
   var count = 0uL
   used.forEachIndexed { r :Int, row :ByteArray ->
     row.forEachIndexed { c :Int, s :Byte -> if (c!=0 && (r!=pos.r||c!=pos.c)) {
