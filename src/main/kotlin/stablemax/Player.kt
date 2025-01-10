@@ -8,5 +8,5 @@ interface Player {
 }
 
 enum class Reward(val value :Short) {
-    Loss(-2), Overbid(-1), Win(10)
+    Loss(-10), Overbid(-1), Win(10)
 }

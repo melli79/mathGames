@@ -15,7 +15,8 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 class Lsystem(val rules :Map<Char, String> = mapOf(Pair('A', "A-B--B+A++AA+B-"), Pair('B', "+A-BB--B-A++A+B")),
-              val start :String ="A-|B--|B+|A++|A|A+|B-") : MyComponent() {
+      val start :String ="A-|B--|B+|A++|A|A+|B-", val dphi :Double = PI/3, val lambda :Double = 1/sqrt(7.0),
+      val dphi0 :Double = dphi/3) : MyComponent() {
     override val title = "L-system: Gosper curve"
 
     companion object {
@@ -23,11 +24,9 @@ class Lsystem(val rules :Map<Char, String> = mapOf(Pair('A', "A-B--B+A++AA+B-"),
     }
 
     val depth = 10
-    val lambda = 1/sqrt(7.0)
-    val unit0 = 0.7*lambda
+    val unit0 = 0.75*lambda
     private var unit = unit0
     val p = Point2D(0.25, 0.25)
-    val dphi = PI/3
     private lateinit var path :String
     private var phi0 = dphi/3
     private var currentDepth = 0
@@ -54,7 +53,8 @@ class Lsystem(val rules :Map<Char, String> = mapOf(Pair('A', "A-B--B+A++AA+B-"),
                 color = colors[index]
             }
             else -> {
-                p = p.translate(Vector2D(unit*cos(phi), -unit*sin(phi)))
+                val l = unit // if (s=='A') unit  else unit/2
+                p = p.translate(Vector2D(l*cos(phi), -l*sin(phi)))
                 val x = p.x.roundToInt();  val y = p.y.roundToInt()
                 drawLine(lastX,lastY, x,y)
                 lastX = x;  lastY = y
@@ -83,11 +83,11 @@ class Lsystem(val rules :Map<Char, String> = mapOf(Pair('A', "A-B--B+A++AA+B-"),
     }
 
     fun action() {
-        if (unit<1.5/width) reset()
+        if (unit<5*lambda/width) reset()
         if (currentDepth>=depth || unit<5.0/width) return
         path = path.subst()
         unit *= lambda
-        phi0 += dphi/3
+        phi0 += dphi0
         ++currentDepth
         repaint()
     }

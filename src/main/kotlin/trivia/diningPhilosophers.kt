@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalUnsignedTypes::class)
 package trivia
 
 /**
@@ -18,11 +19,10 @@ enum class State {
     WAIT, TAKE_LEFT, TAKE_RIGHT, EAT, RELEASE_RIGHT, RELEASE_LEFT;
 }
 
-@OptIn(ExperimentalUnsignedTypes::class)
 fun dine(n :UShort) :UIntArray {
-    val forks = (0 ..< n.toInt()).map { Handed.NOBODY }.toTypedArray()
-    val phil2food = (0..< n.toInt()).map { 0u }.toUIntArray()
-    val phil2state = (0..< n.toInt()).map { State.WAIT }.toTypedArray()
+    val forks = Array(n.toInt()) { Handed.NOBODY }
+    val phil2food = UIntArray(n.toInt()) { 0u }
+    val phil2state = Array(n.toInt()) { State.WAIT }
     repeat (1_048_576) {
         val hunger = phil2food.mapIndexed { p :Int, food :UInt -> Pair(p.toUShort(), food) }
             .groupBy { it.second }.map { Pair(it.key, it.value.map { it.first }) }
@@ -35,7 +35,6 @@ fun dine(n :UShort) :UIntArray {
     return phil2food
 }
 
-@OptIn(ExperimentalUnsignedTypes::class)
 private fun List<UShort>.prepareEating(
     phil2state :Array<State>,
     forks :Array<Handed>,
@@ -51,7 +50,6 @@ private fun List<UShort>.prepareEating(
     return result
 }
 
-@OptIn(ExperimentalUnsignedTypes::class)
 private fun preparePhilosopher(
     s :State,
     forks :Array<Handed>,
@@ -125,7 +123,6 @@ private fun List<UShort>.freeResources(
     return result
 }
 
-@OptIn(ExperimentalUnsignedTypes::class)
 private fun UIntArray.eat(p :UShort) {
     this[p.toInt()]++
     println("philosopher $p eats one portion: ${this[p.toInt()]}")
@@ -133,7 +130,7 @@ private fun UIntArray.eat(p :UShort) {
 
 fun Array<Handed>.reserve(p :UShort, side :Handed) = when (side) {
     Handed.LEFT -> {
-        val f = (p.toInt() + size - 1) % size
+        val f = (p.toInt() + size-1) % size
         check(this[f]==Handed.NOBODY) { "Resource busy" }
         this[f] = Handed.RIGHT
     }
@@ -147,7 +144,7 @@ fun Array<Handed>.reserve(p :UShort, side :Handed) = when (side) {
 
 private fun Array<Handed>.release(p :UShort, side :Handed) = when (side) {
     Handed.LEFT -> {
-        val f = (p.toInt() + size - 1) % size
+        val f = (p.toInt() + size-1) % size
         println("$p releases his left fork.")
         check(this[f]==Handed.RIGHT) { "Resource not owned" }
         this[f] = Handed.NOBODY
@@ -161,7 +158,6 @@ private fun Array<Handed>.release(p :UShort, side :Handed) = when (side) {
     else -> {/* nothing to do */}
 }
 
-@OptIn(ExperimentalUnsignedTypes::class)
 fun main() {
     val eaten = dine(5u)
     val m = eaten.min();  val M = eaten.max()

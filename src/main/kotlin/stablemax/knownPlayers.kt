@@ -8,7 +8,7 @@ import kotlin.random.nextUInt
 
 val random = Random(System.currentTimeMillis())
 
-class RandomPlayer(val name: String = "RandomPlayer") :Player {
+class RandomPlayer(val name: String = "UniformRandomPlayer") :Player {
     override fun choice(limit :UInt, numPlayers :UShort) = random.nextUInt(limit)
 
     override fun toString() = name
@@ -20,7 +20,7 @@ class HighPlayer(val name: String = "HighPlayer") :Player {
     override fun toString() = name
 }
 
-class PoissonPlayer(val name: String = "PoissonPlayer", val lambda :Double =0.09) : Player {
+class PoissonPlayer(val name: String = "Poisson'Player", val lambda :Double =0.95) : Player {
     private var thresholds = listOf<Double>()
     override fun choice(limit :UInt, numPlayers :UShort) :UInt {
         val r = random.nextDouble()
@@ -28,7 +28,7 @@ class PoissonPlayer(val name: String = "PoissonPlayer", val lambda :Double =0.09
     }
 
     override fun reset(limit :UInt, numPlayers :UShort) {
-        thresholds = ((0u..< limit).reversed()).map { k -> poisson(k,lambda) }
+        thresholds = listOf(0.0) + ((0u..< limit-1u).reversed()).map { k -> poisson(k,lambda) }
         thresholds = thresholds.cumsum()
         val f = 1/thresholds.last()
         thresholds = thresholds.map { it*f }
@@ -72,7 +72,7 @@ class DynamicPlayer(val name: String = "DynamicPlayer") : Player {
     override fun toString() = name
     override fun describe() :String {
         val f = 1/values.sum()
-        return toString() + ": " +
-                values.mapIndexed { i, value -> "$i: %.3f".format(value*f) }.joinToString(", ")
+        return toString() + ": " + values.mapIndexed { ch, value -> Pair(ch, value) }.reversed()
+                .joinToString(", ") { (ch, value) -> "$ch: %.3f".format(value*f) }
     }
 }

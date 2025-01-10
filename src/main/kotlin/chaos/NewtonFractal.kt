@@ -10,7 +10,7 @@ fun sqr(z :Complex) = z*z
 fun bsqr(z :Complex) = sqr(sqr(z))
 fun pent(z :Complex) = z*bsqr(z)
 
-class NewtonFractal :MyComponent() {
+class NewtonFractal(private val iter :NewtonFractal.(Complex)->UShort = NewtonFractal::iter5) :MyComponent() {
     companion object {
         val brown = Color(128, 64, 0)
         val colors = arrayOf(Color.RED, Color.GREEN, Color.BLUE, brown, Color.CYAN)
@@ -50,7 +50,7 @@ class NewtonFractal :MyComponent() {
         for (py in 0..<height) {
             var x = scale.x(0)
             for (px in 0..<width) {
-                val c = iter5(Complex(x, y))
+                val c = iter(Complex(x, y))
                 g.color = colors[c.toInt()]
                 g.fillRect(px, py, 1,1)
                 x += 1/scale.dx

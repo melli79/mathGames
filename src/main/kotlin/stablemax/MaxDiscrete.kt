@@ -5,14 +5,21 @@ fun main() {
     game.addPlayer(HighPlayer())
     game.addPlayer(HighPlayer())
     game.addPlayer(RandomPlayer())
-    game.addPlayer(RandomPlayer())
+    game.addPlayer(PoissonPlayer())
     val dynamicPlayer = DynamicPlayer()
     game.addPlayer(dynamicPlayer)
 
-    val statistics = game.runGame(10u, 10_000u).entries.sortedByDescending { it.value.score }
-    println(statistics.mapIndexed { rk, entry -> "${rk}th: ${entry.key.describe()} with ${entry.value.score} (${entry.value.numWins} wins, ${entry.value.numOverbids} overbids, and ${entry.value.numLosses} losses)" }.joinToString("\n")
-            +"\n\n")
-    game.removePlayer(dynamicPlayer)
+    val statistics = game.runGame(20u, 100_000u).entries.sortedByDescending { it.value.score }
+    println(statistics.mapIndexed { rk, entry -> """${th(rk+1)}: ${entry.key.describe()}
+      |   with ${entry.value.score} Pts (${entry.value.numWins} wins, ${entry.value.numOverbids} overbids, and ${entry.value.numLosses} losses)""".trimMargin("|")
+    }.joinToString("\n"))
+}
+
+fun th(rk :Int) = if (rk/10 %10 == 1) "${rk}th"  else when (rk%10) {
+    1 -> "${rk}st"
+    2 -> "${rk}nd"
+    3 -> "${rk}rd"
+    else -> "${rk}th"
 }
 
 object MaxDiscrete {
@@ -47,24 +54,24 @@ object MaxDiscrete {
             for (player in players) {
                 val choice = player.choice(limit, numPlayers)
                 if (choice>=limit)
-                    statistics[player]!!.loss()
+                    statistics[player]!!.lose()
                 else
                     choices.computeIfAbsent(choice) { mutableListOf() }.add(player)
             }
             var won = false
-            for (entry in choices.entries.sortedByDescending { it.key }) {
+            for ((_, pplayers) in choices.entries.sortedByDescending { it.key }) {
                 if (won)
-                    entry.value.forEach {
+                    pplayers.forEach {
                         it.reward(limit, numPlayers, Reward.Overbid)
                         statistics[it]!!.overbid()
                     }
-                else if (entry.value.size > 1)
-                    entry.value.forEach {
+                else if (pplayers.size > 1)
+                    pplayers.forEach {
                         it.reward(limit, numPlayers, Reward.Loss)
-                        statistics[it]!!.loss()
+                        statistics[it]!!.lose()
                     }
                 else {
-                    entry.value.forEach {
+                    pplayers.forEach {
                         it.reward(limit, numPlayers, Reward.Win)
                         statistics[it]!!.win()
                     }
@@ -85,6 +92,6 @@ object MaxDiscrete {
 
         fun win() = ++numWins
         fun overbid() = ++numOverbids
-        fun loss() = ++numLosses
+        fun lose() = ++numLosses
     }
 }

@@ -877,7 +877,7 @@ Write a class that represents a finite spatial incidence geometry and satellite 
 
 ## 3P, 3H
 
-Define the analogs of projective and hyperbolic geometries, e.g. $\mathbb{P}^d\mathbb{F}_q$, $\mathrm{O}(1,d)/\mathrm{O}(1)\times\mathrm{O}(d)$, $q=p^k$, $p$ prime.  How can they be characterized in the finite case?
+Define the analogs of projective and hyperbolic geometries, e.g. $\mathbb{P}^d\mathbb{F}_q$, $\mathrm{O}_q(1,d)/\mathrm{O}_q(1)\times\mathrm{O}_q(d)$, $q=p^k$, $p$ prime.  How can they be characterized in the finite case?
 
 
 # 2. Algebra
@@ -895,6 +895,8 @@ Define the analogs of projective and hyperbolic geometries, e.g. $\mathbb{P}^d\m
 * A `Morphism` has assigned `source` and `target`.
 * Implement the `operator *` according to the rules of composition of morphisms in `Cat`egories.
 * Extend `Term<...>` such that one can add expressions for source, target, and identity.
+
+implementation languages: Haskell, C++, Kotlin, ...
 
 ### Extension 2-Categories
 A `class Cat2` with
@@ -919,6 +921,10 @@ Remember the logic tables of Boolean logic:  $\mathbb{B}=\{F, T\}$
 +-----+-----+-----+-----+-----+-----+-----+
 |  T  |  T  |  F  |  T  |  T  |  T  |  F  |
 +-----+-----+-----+-----+-----+-----+-----+
+
+Q: $2^4 = 16$, so what are the other 9 operations? Can you give them meaningful mathematical names (e.g. implication, ...)?
+
+Q2: In terms of proving technics, what is the difference between a formal proof of implication and a complete empirical proof of implication? Why are they equivalent?
 
 ### 3. Ternary Logic
 
@@ -976,7 +982,7 @@ For example Lagrange's 4 Squares Theorem states that for $d=2$, $g(2)\le4$.  On 
 ### (3,3) Sum of Three Cubes ($n=a^3+b^3+c^3$)
 Write a program that finds a solution of the [equation](https://en.wikipedia.org/wiki/Sums_of_three_cubes)
   $$ n = a^3 + b^3 + c^3 $$
-in integers $\mathbb{Z}$ for given $n$.  The 3 is crucial here, i.e. starting from $a=(3a'+s)$ where $s\in\{-1,0,1\}$, we can show that $a^3\equiv s \pmod{9}$.  Therefore there is only a solution for $n\not\equiv \pm4 \pmod{9}$.
+in integers $\mathbb{Z}$ for given $n$.  The 3 is crucial here, i.e. starting from $a=(3a'+s)$ where $s\in\{-1,0,1\}$, we can show that $a^3\equiv s \pmod{9}$.  Therefore, there is only a solution for $n\not\equiv \pm4 \pmod{9}$.
 
 Starting from these observations, you may run through all suitable pairs $(a,b)$ and see if the real solution $c$ fits as an integer.  You may need a function `icbrt` that computes the approximate cube root of a (large) integer.
 
@@ -1071,7 +1077,7 @@ The implementations of groups should have:
 * neutral, inverse element,
 * Group operation, inverse element
 * simple group comparison, element comparison,
-* `String` (Input and) output,
+* `String` (input and) output,
 
 _Implementation:_ an abstract `class Group` and a `template <...> class Element` whose implementation depends on the group.
 
@@ -1123,7 +1129,7 @@ _Implementation languages_: Kotlin, Scala, C++, Haskell, Java, Ruby
 
 Def.:  Given an integer $n$, it is a prime iff it has exactly 4 factors, $\pm1$ and $\pm n$.  The element $0$ is a 0-divisor, the elements $\pm1$ are called the units.
 
-Example: The first positive primes are $2,3,5,7,11,13,17,19,\ldots$ which you can produce with Eratosthenes sieve algorithm.
+Example: The first positive primes are $2,3,5,7,11,13,17,19,\ldots$ which you can produce with Eratosthenes' sieve algorithm.
 
 For some applications, e.g. RSA you need however large primes, such that the factorization of a product $p=p_1p_2$ is virtually impossible.
 
