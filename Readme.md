@@ -465,6 +465,13 @@ Is it bounded? Verify by increasing the search range!
 Remember Alon's argument (irrational number)
 
 
+## Finding the Modulus
+
+Given a sequence of hashable elements, find the most frequent element.
+
+Hint: It is easy to do that in $\mathcal{O}(n)$ in space and time complexity.
+
+
 ## Color Reduction in Paintings
 
 Given a painting of size $n$, i.e. an $n\times n$ square of integers which we call colors, we wish to modify it in steps with as low as possible total weight such that the result has only $r$ remaining colors (i.e. different integers).  A step consists of choosing a sub-square $1\le x_1\le x_2\le n$ and $1\le y_1\le y_2\le n$ with $y_2-y_1=x_2-x_1$ and an integer $c$, replacing all cells of the sub-square by the new color $c$.  The weight of this step is $(x_2-x_1)(y_2-y_1)$.
@@ -939,9 +946,11 @@ Q3:  What are the tables for not, and, or, equality, neq?
 
 ### 4. Boolean algebra
 
-Instead of $\mathbb{B}=\{F,T\}$ we use $2^X$ for any (discrete) set $X$ and introduce the following 2 elementary operations:
+Instead of $\mathbb{B}=\{F,T\}$ we use $2^X$ for any (discrete) set $X$ and introduce the following 4 elementary operations:
 
- $A\cap B:= \{a\in A: a\in B\}$ intersection,
+ $A\cap B:= \{a\in A: a\in B\}$ -- intersection,
+ 
+ $A\cup B:= \{x\in X: x\in A \lor x\in B\}$ -- union,
 
  $A\,\Delta\,B := (A\cup B)\setminus (A\cap B)$ -- symmetric difference
 
