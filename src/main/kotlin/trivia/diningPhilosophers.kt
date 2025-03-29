@@ -23,7 +23,7 @@ fun dine(n :UShort) :UIntArray {
     val forks = Array(n.toInt()) { Handed.NOBODY }
     val phil2food = UIntArray(n.toInt()) { 0u }
     val phil2state = Array(n.toInt()) { State.WAIT }
-    repeat (1_048_576) {
+    repeat (131_072) {
         val hunger = phil2food.mapIndexed { p :Int, food :UInt -> Pair(p.toUShort(), food) }
             .groupBy { it.second }.map { Pair(it.key, it.value.map { it.first }) }
             .sortedBy { it.first }
@@ -159,8 +159,9 @@ private fun Array<Handed>.release(p :UShort, side :Handed) = when (side) {
 }
 
 fun main() {
-    val eaten = dine(5u)
+    val n :UShort = 5u
+    val eaten = dine(n)
     val m = eaten.min();  val M = eaten.max()
     check(M-m<=1u) { "Philosopher ${eaten.indexOf(m)} was overreached." }
-    println("All philosophers got their share.")
+    println("All $n philosophers got their share.")
 }

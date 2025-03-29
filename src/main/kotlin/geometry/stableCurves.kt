@@ -2,7 +2,7 @@ package geometry
 
 import common.Quadruple
 import common.math.statistics.choose
-import probability.cb
+import common.math.cb
 import kotlin.math.ln
 import kotlin.math.sqrt
 
