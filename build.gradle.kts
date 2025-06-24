@@ -1,7 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.1.20"
+    kotlin("jvm") version "2.2.0-RC2"
     application
 }
 
@@ -10,6 +11,12 @@ version = "0.2-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+sourceSets {
+    test {
+        kotlin.srcDir("src/test/kotlin")
+    }
 }
 
 dependencies {
@@ -27,8 +34,10 @@ tasks.withType<JavaCompile> {
     targetCompatibility = "21"
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "21"
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
 }
 
 application {

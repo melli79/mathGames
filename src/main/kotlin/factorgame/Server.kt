@@ -18,7 +18,7 @@ class Server(val limit :UShort) {
     }
 
     fun startGame() {
-        check (firstPlayer==null || otherPlayer==null) { "Missing a Player before we can start" }
+        check (firstPlayer!=null && otherPlayer!=null) { "Missing a Player before we can start" }
         board = (1u..limit.toUInt()).toMutableSet()
         lastMove = 0u
         firstPlayer!!.startGame(limit)

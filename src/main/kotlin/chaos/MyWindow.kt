@@ -66,6 +66,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 }
 
 fun main() {
-    val window = MyWindow(LogFractal(LogFractal.ColorPattern.OSC2)) // Mandelbrot()) // Lsystem()) // mapOf(Pair('A', "A+B-B--B--B-B--A+A"), Pair('B', "A")), "A--B-B--B--B-B--A", lambda= 1.0/3, dphi0= 0.0))  // NewtonFractal(NewtonFractal::iter3))  // RealLog()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
+    val window = MyWindow(LogFractal(LogFractal.ColorPattern.OSC2)) // MultiLog()) // Mandelbrot()) // Lsystem()) // mapOf(Pair('A', "A+B-B--B--B-B--A+A"), Pair('B', "A")), "A--B-B--B--B-B--A", lambda= 1.0/3, dphi0= 0.0))  // NewtonFractal(NewtonFractal::iter3))  // RealLog()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
     window.isVisible = true
 }

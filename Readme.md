@@ -1,6 +1,6 @@
 % Math Ideas for Programming
 % Collected by M. Gr.
-% 2010 –– 2024
+% 2010 –– 2025
 
 # 0. Smaller ideas
 
@@ -41,7 +41,7 @@ Compute the power set, i.e. the "set" (maybe `list`) of all subset of $S$.  Note
 
 ### Permutations
 
-Note that the number of permutations of $n$ elements is $n!\sim \sqrt{2\pi n}(n/\mathrm{e})^n+\mathcal{O}\left(\mathrm{e}^{1/n}\right)$.  You may also with to limit the size of the input set.
+Note that the number of permutations of $n$ elements is $n!\sim \sqrt{2\pi n}(n/\mathrm{e})^n+\mathcal{O}\left(\mathrm{e}^{1/n}\right)$.  You may also wish to limit the size of the input set.
 
 ### Permutations with repeating elements
 
@@ -49,9 +49,9 @@ Instead of a set, you are given a multiset, maybe represented as a map from some
 
 
 ## Ancestoral tree
-Write a `class Person` that contains data of a person (e.g. *familyName*, *givenNames*, *date of birth*, *deathDay*?, ...) and links to the nearest relatives (*spouse*, *parents*, *children*). Write a recursive xml/json parser that reads the data from a file with DTD `rels.dtd`.
+Write a `class Person` that contains data of a person (e.g. *familyName*, *givenNames*, *date of birth*, *deathDay*?, ...) and links to the nearest relatives (*spouse*, *parents*, *children*). Write a recursive xml/json parser that reads the data from a file with spec `rels.dtd`.
 
-_Implementation:_  Kotlin, Java, C++, Haskell, Python
+_Implementation:_  Kotlin, C++, Python, Java, Haskell
 
 
 ## Writing out numbers
@@ -188,11 +188,11 @@ $$ n = \sum_{d_{k_i}=1, i\ge0} (-1)^i(2^{k_i+1}-1), $$
 
 which starts the numbers with
 
-+---+---+----+----+-----+-----+-----+-----+------+---------+
-| 0 | 1 |  2 |  3 |  4  |  5  |  6  |  7  |   8  | $\dots$ |
-+===+===+====+====+=====+=====+=====+=====+======+=========+
-| 0 | 1 | 11 | 10 | 110 | 111 | 101 | 100 | 1100 | \dots   |
-+---+---+----+----+-----+-----+-----+-----+------+---------+
++----+----+----+----+-----+-----+-----+-----+------+---------+
+|  0 |  1 |  2 |  3 |  4  |  5  |  6  |  7  |   8  | $\dots$ |
++====+====+====+====+=====+=====+=====+=====+======+=========+
+|  0 |  1 | 11 | 10 | 110 | 111 | 101 | 100 | 1100 |  \dots  |
++----+----+----+----+-----+-----+-----+-----+------+---------+
 
 i.e. $6 = 7-1$.
 
@@ -282,7 +282,7 @@ Given a prime $p$, determine all monic irreducible polynomials of degree $d$ mod
 
 Hint: as a warm-up, you can determine all irreducible polynomials upto degree $d>0$ modulo $p$.
 
-Hint 2: What is the use of $d/2$ for factors?
+Hint 2: What does the limit degree $d/2$ mean for factors?
 
 
 ## Fibonacci Numbers
@@ -399,7 +399,7 @@ While it is easy to translate the above Kotlin example into Java.  It is much ha
 
 ### Chemistry in Haskell
 
-This is a bit harder than in C++.  But on the same side it is also more conventient, because in Haskell it is straight forward to write down compond constants.
+This is a bit harder than in C++.  But on the same side it is also more conventient, because in Haskell it is straight forward to write down compound constants.
 
 
 ## Linear Probing
@@ -671,25 +671,72 @@ One possibility is to
 2. add the remaining edges: non-intersecting edges can be drawn on the same side, crossing edges need opposing sides, until either the CC is complete or the graph is no longer plane.
 
 
-## 6. Toll system
+## 6. Knot Diagrams
+
+A [mathematical Knot](https://en.wikipedia.org/wiki/Knot_(mathematics)) is an embedding of the circle in the unit ball in $\mathbb R^3$.  Knots can be represented as 2D knot diagrams that arise as projections of the 3D knot embedding.  The conditions are that no more than 2 strands intersect in a point (called a crossing).  Beyond the strands it is also necessary to remember which strand is the upper strand in a crossing.  Strands do not start/end anywhere.
+
+The converse of a knot diagram is a link, i.e. either the embedding of one circle or multiple circles.  It is a knot only if all segments belong to the same circle.
+
+3D knots/links are considered equivalent if they are ambient isotopic, i.e. a deformation of the circle and a small neighborhood of it.  Physically this can be realized by a flexible rope whose ends are tied together.
+
+Thm. (Reidemeister):  Two knot diagrams represent the same knot/link iff there is a sequence of 2D ambient isotopies, and the [Reidemeister moves](https://en.wikipedia.org/wiki/Reidemeister_move) that transforms one into the other.
+
+
+R1: forming a loop from 1 strand.
+
+R2: Moving a segment of a strand over or under another strand.
+
+R3: Moving a segment of a strand over or under a crossing.
+
+### 6.1 Find a Representation of knots/links on the computer
+
+1. You may start with, e.g., Knot diagrams, i.e. parabola/spline segments meeting in crossings (position on board + which strand is the upper).
+
+2. Gauss code for a knot: starting at one strand in one direction, note whether the current segment continues above or below the crossing segment.
+
+Q1: Find sufficient conditions as to when such a crossing sequence represents a knot.
+
+Q2: What is needed to extract a Gauss code from a Knot diagram?
+  
+Q3: What is needed to lay out a Gauss code into a Knot diagram?
+
+
+3. [Dowker-Thistlethwaite notation](https://en.wikipedia.org/wiki/Dowker%E2%80%93Thistlethwaite_notation), traverse the knot using an arbitrary starting point and direction. Label each of the $n$ crossings with the numbers $1$, ..., $2n$ in order of traversal (each crossing is visited and labelled twice), with the following modification: if the label is an even number and the strand followed crosses over at the crossing, then change the sign on the label to be a negative.  When finished, each crossing will be given a pair of integers, one even and one odd. The notation is the sequence of even integer labels associated with the odd labels $1$, $3$, ..., $2n−1$ in turn.
+
+Q4: Find a sufficient condition as to when an even integer sequence is a DT notation.
+
+Q5: Find a way to reconstruct the Gauss code from the DT notation.  Warning: the [ménage problem](https://en.wikipedia.org/wiki/M%C3%A9nage_problem) implies that there are multiple DT notations for the same knot.  Moreover, even restricting to prime knots, it is not possible to distinguish the chiral versions of a knot.
+
+Q6: Is there an easier way to construct a nice Knot diagram from a given DT notation?
+
+### 6.2 Understand elementary Knot Invariants
+
+Start with the [Alexander polynomial](https://en.wikipedia.org/wiki/Alexander_polynomial), then proceed to the [Jones polynomial](https://en.wikipedia.org/wiki/Jones_polynomial) (which is one of the strongest invariants in polynomials in 1 variable). Finally understand the [HOMFLY-PT invariant](https://en.wikipedia.org/wiki/HOMFLY_polynomial) (a polynomial in 2 variables).
+
+Given a Knot diagram, can you compute the polynomial (with pencil and paper)?
+
+Can you do a simplified version of that with the compuer (e.g. a CAS)?
+
+
+## 7. Toll system
 Given an undirected graph $(V, E)$ of streets $e\in E$ that connect the residential area $v_0\in V$ with the working area $v_n\in V$ together with the time costs $w\colon E\to [0,\infty)$ of a street $e\in E$. Determine tolls $t\colon E\to [0,\infty)$ such that the cost for every (loop free) path from the residential area to the working area is the same.
 
 Advanced: assign at most one toll per route.
 
 
-## 7. Balanced Trees
+## 8. Balanced Trees
 
 * AVL,
 
 * (2,3)-trees, Red-black trees
 
 
-## 8. B+ Trees
+## 9. B+ Trees
 
 * heavy-light decomposition
 
 
-## 9. Min Cut Problem
+## 10. Min Cut Problem
 
 Given a connected graph.  Determine the minimum number (and a particular solution) of edges to be removed (called cuts) such that the graph is no longer connected.
 
@@ -698,7 +745,7 @@ Rem.:  A graph is called $k$-connected, if you need to remove at least $k$ edges
 Example:  The complete graph $K_k$ is $k$-connected.
 
 
-## 10. Max Flow Problems
+## 11. Max Flow Problems
 
 Given a network $(V,E,c)^\dagger$ where $c\colon E\to[0,\infty)$ are called capacities of the edges.  We wish to find a production configuration $p\colon E\to[0,\infty)$, $0\le p(e)\le c(e)$ such that for every vertex (except a source and a drain)
 
@@ -722,7 +769,7 @@ Note that the solution may not be unique.  One way to produce a solution is to s
 If in addition you want to minimize the transport in the network, you can reduce the flow through all cycles $C\subset E$ by $p(C):=\min_{e\in C} p(e)\ge0$ at each edge of the cycle.
 
 
-## 11. Maximum Matchings
+## 12. Maximum Matchings
 
 Given a bipartite graph $(M,E,F)$ where $V:=M\cup F$ and edges only connect $M$-vertices with $F$-vertices.  A matching $m\subset E$ is a set of edges such that every $v\in M$ and every $f\in F$ lies on at most one edge $e\in m$.  A maximal matching is one to which you cannot add edges such that it remains a matching.  The maximal matching is a matching with the maximum number of edges.
 
@@ -731,7 +778,7 @@ Hall's Marriage problem is a bi-partite network $(M,E,F,w)$ with $w\colon E\to[0
 [The Hungarian Algorithm](https://en.wikipedia.org/wiki/Hungarian_algorithm#The_algorithm_in_O(n3)_time) is able to find a maximal matching of minimum sum weight in a bipartite graph in $\mathcal{O}(|F|^2|M|)$ if there are at most as many females $|F|$ as there are males $|M|$.
 
 
-## 12. $k$-connected components
+## 13. $k$-connected components
 
 Given any undirected graph $(V,E)$, then the $k$-connected components $CC_k$ are a partition of $V$ such that for every $C\in CC_k$, the graph $(C,E|C)$ is $k$-connected.
 
@@ -751,6 +798,18 @@ Given $N$ players that play $k$-player games, what is a minimal plan such that e
 
 Hint:  Obviously, you need at least $r:=\lceil (N-1)/(k-1)\rceil$ rounds in order to reach that.  But can you actually find a partition with $r$-fold repetition of the $N$ players in $rN/k$ groups such that always $\lceil N/k\rceil$ groups can play simultaneously and nobody has to play more than $r$ games?
 
+### [Marjapussi](https://en.wikipedia.org/wiki/Marjapussi) Tournament plan
+
+In this case $k=4$ and obviously, you need $r\equiv1\pmod{3}$ in order to have nobody pause any games.  The simplest solution is for $r=1$ ($N=4$), i.e. you play 1 round with the 4 players.  The next possible case is $r=k=4$ ($N=16$) and we are looking for 5 rounds.
+
+Write a greedy algorithm that fills the rounds of each day one after the other, always checking that the added player will not repeat an already used edge.
+
+Given a shorter evening and only $N=8,12,20,\dots$ players, how many rounds can you arrange such that no two players have to play together more than once?
+
+How far can you make the algorithm progress for $r=10$?  What about $r=13$?
+
+If you are interested in the rules of Marjapussi have a look at [pagat.com:huutopussi](https://www.pagat.com/marriage/huutopussi.html#variations).
+
 ### Kirkman's Schoolgirl Problem
 
 Given 15 school girls, they walk out every day for 7 days, always 3 in a row.  Can you arrange the 7 days such that no 2 girls walk in the same row for more than a day?
@@ -759,7 +818,7 @@ In other words you are searching for a maximal coloring of the $K_{15}$ by $K_3$
 
 
 
-## 13. String Matching Algorithms
+## 14. String Matching Algorithms
 
 Suppose that you are given a (short) string $s\in\Sigma^*$ that you are supposed to find in a long string $l\in\Sigma^*$  How would you efficiently go over that?
 
@@ -773,7 +832,7 @@ An alternative (and better scaling) method would be to construct a matching grap
 
 1. a DFA that starts with a vertex $s_0$ and for every character in $s$ there is an edge from the previous vertex $s_n$ to a new vertex $s_{n+1}$ annotated with the character $s$.  The last vertex is the accepting vertex $z$.
 
-### 13.2 Simultaneous matching (Knuth-Morris-Pratt algorithm)
+### 14.2 Simultaneous matching (Knuth-Morris-Pratt algorithm)
 
 If instead of 1 sub-string $s$, we are given a set $S\subset\Sigma^*$ of strings or a regular expression, and we wish to figure out whether any one of them matches, then we can construct an NFA as follows:
 
@@ -1574,9 +1633,9 @@ You can use the following strategy to approximate the set:
 ### 3. The Log Fractal
  $$\mathbb C/2\pi\mathsf{i}\mathbb Z\supset X = \bigcup_{k=-N}^N \log_{(k)} X$$
 
-which you approximate by $z_{n+1} = \log_{(0)} (z_n+2\pi k_n\mathsf{i})$, $k_n \sim 1/|z_n+2\pi k_n\mathsf{i}|^{1.2}$, a random distribution on integers that has an almost finite second moment when read as a continuous real random variable.  You can speed up the computations if you memoize the probabilities for an epsilon net of $z$s, i.e. a couple of points in the 0th strip $(-2,6)\times(-2.0,2.0)$ and then use the closest for the approximation.[^2]  Try to avoid the singularity $z_n=0$.  You can colorize the point $z_n$ with color $k_n$.
+which you approximate by $z_{n+1} = \log_{(0)} (z_n+2\pi k_n\mathsf{i})$, $k_n \sim 1/|z_n+2\pi k_n\mathsf{i}|^{1.2}$, a random distribution on integers that has an almost finite second moment when read as a continuous real random variable.  You can speed up the computations if you memoize the probabilities for an epsilon net of $z$s, i.e. a couple of points in the 0th strip $(-2,6)\times(-2.0,2.0)$ and then use the closest for the approximation.[^2]  Try to avoid the singularity $z_n=0$.  You can colorize the point $z_{n+1}$ with color $k_n$.
 
-Instead of drawing the invariant set $X$, you can draw a small open set $O$ in which it is contained.  You may start with the whole space $O_0 = \mathbb{R}\times(-\pi,\pi]\subset\mathbb C$ and remove forbidden patches $B_{\epsilon_k}(f_k)$ with $f_0=0$ and $f_{k+1}=\exp(f_k)$ and conversely starting from $0.5<\epsilon_n<1.25$ and $\epsilon_k = \epsilon_{k+1}/f_{k+1}$ for $0\le k<n$. Restrict to $z_n/2\pi\approx N\in\mathbb Z$. Once you have cut out a neighborhood of 0, you may then reduce the extend of $O_{\!n}$ to the left, ending up with $O_{\!n} = (\ln\epsilon_0,\ln(2\pi (N+1)))\times(-\pi,\pi)\setminus \mathbb{R}\cup\bigcup_{k=0}^n B_{\epsilon_k}(f_k)$.  Instead of drawing $O_{\!n}$, you could also draw $L_{\!N\,}O_{\!n}:=\bigcup_{k=-N}^N\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ or both and convince youself that indeed $L_{\!N\,}O_{\!n}\subset O_{\!n}$ for $n=3$. (This implies $|k|<\mathrm{e}\uparrow3/2\pi\approx607'061.4$ which is way more than enough for numerical approximations.  You can even colorize the components by mapping $k$ to varying colors.)
+Instead of drawing the invariant set $X$, you can draw a small open set $O$ in which it is contained.  You may start with the whole space $O_0 = \mathbb{R}\times(-\pi,\pi]\subset\mathbb C$ and remove forbidden patches $B_{\epsilon_k}(f_k)$ with $f_0=0$ and $f_{k+1}=\exp(f_k)$ and conversely starting from $0.5<\epsilon_n<1.25$ and $\epsilon_k = \epsilon_{k+1}/f_{k+1}$ for $0\le k<n$. Restrict to $z_n/2\pi\approx N\in\mathbb Z$. Once you have cut out a neighborhood of 0, you may then reduce the extend of $O_{\!n}$ to the left, ending up with $O_{\!n} = (\ln\epsilon_0,\ln(2\pi (N+1)))\times(-\pi,\pi)\setminus \mathbb{R}\cup\bigcup_{k=0}^n B_{\epsilon_k}(f_k)$.  Instead of drawing $O_{\!n}$, you could also draw $L_{\!N\,}O_{\!n}:=\bigcup_{k=-N}^N\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ or both and convince youself that indeed $L_{\!N\,}O_{\!n}\subset O_{\!n}$ for $n=3$. (This implies $|k|<\mathrm{e}\uparrow3/2\pi\approx607'061.4$ which is way more than enough for numerical approximations.  You can even colorize the components $\log_{(0)}(O_n+2\pi k\mathsf{i})$ by color $k$.)
 
 Check that the $\log_{(0)} (O_{\!n}+2\pi k\mathsf{i})$ are disjoint for $k\ne k'$.
 
@@ -1600,7 +1659,7 @@ A Littlewood polynomial is a polynomial $p(z) = 1 \pm z \pm z^2 \pm \dotsm \pm z
 
 
 ## 6. Attractor of a discrete dynamical system.
-Such a system is given by a map $\phi\colon X\to X$ and may depend on additional parameters. Starting from an arbitrary point, the system converges to the nearest stable minimal fixed-set unless it is exactly on an unstable fixed-set. As a particular example draw the
+Such a system is given by a map $\phi\colon X\to X$ and may depend on additional parameters. Starting from an arbitrary point, the system converges to the nearest stable minimal non-empty invariant set unless it is exactly on an unstable invariant set (separatrix). As a particular example draw the
 
 ### A. Feigenbaum scenario
 which is an analysis of the logistic map
@@ -1628,26 +1687,26 @@ The chaos pendulum is a system of two real pendula one at the bottom of the othe
 # 5B Euclidean Geometry
 ## 0.  Closest Point pair
 
-Given $N$ different points in $\mathbb R^d$, determine the 2 points with the clostes distance.
+Given $N$ different points in $\mathbb R^d$, determine the 2 points with the closest mutual distance.
 
-Make sure your algorithms has time complexity $\mathcal{O}(N^2d)$.
+Make sure your algorithm has time complexity $\mathcal{O}(N^2d)$.
 
 
 ## 1. Brillouin Zones / Voronoi Diagram
 
-Given a $D$ dimensional space ($D=2,3$) with $k$ distinct points, partition the space into $k$ regions such that for each region $k$ and each point $P$ within the region distance to the center $k$ is the smallest among all distances of $P$ to any center.
+Given a $D$ dimensional space ($D=2,3$) with $K$ distinct points, partition the space into $K$ regions such that for each region $k$ and each point $P$ within the region distance to the center $k$ is the smallest among all distances of $P$ to any center.
 
-*Solution:*  The Euclidean space $\mathbb E(D)$ is partitioned by the perpendicular bisectors between all pairs of the centers into $k$ convex regions that each contain one center inside it which is the closest (i.e. dominating) center.
+*Solution:*  The Euclidean space $\mathbb E(D)$ is partitioned by the perpendicular bisectors between all pairs of the centers into $K$ convex regions that each contain one center inside it which is the closest (i.e. dominating) center.
 
-*Gamification:*  Draw $k=3,...$ centers in $\mathbb E(2)$ and let the user spray the outlines of the Brillouin zones (the above partitions).
+*Gamification:*  Draw $K=3,...$ centers in $\mathbb E(2)$ and let the user spray the outlines of the Brillouin zones (the above partitions).
 
 
 ## 2. Construction of semi-regular (Archimedean) Polyhedra
-A semi-regular polyhedron consists of only 2 or 3 types of regular $n$-gons and each vortex has the same structure i.e. the same number of each type of polygon meeting.  Input should be the vertex description.  Draw the polyhedron and transform it into a graph.
+A semi-regular polyhedron consists of only 2 or 3 types of regular $n$-gons and each vortex has the same structure i.e. the same number of each type of polygon meeting.  Input should be the vertex description.  Draw the polyhedron and transform it into a plane graph.
 
 
 ## 3. Convex hull in $\mathbb{R}^d$
-Given $N$ point in $\mathbb{R}^d$ find the set of subsets that form the hyperplanes of the convex full of them, i.e. for every such hyperplane all the points of the original set lie in or on one side of this hyperplane.
+Given $N$ point in $\mathbb{R}^d$ find the set of subsets that form the hyperplanes of the convex hull of them, i.e. for every such hyperplane all the points of the original set lie in or on one side of this hyperplane.
 
 ### 3.1 Min and Max in $\mathcal O(N)$
 This is the convex hull in 1D
@@ -1899,11 +1958,11 @@ Write a recursive method that computes the lowest $N_d$.  Estimate their asympto
 
 The lowest numbers are:
 
-+-------+---+---+----+---------+---+---+---+---------+
-| $d$   | 1 | 2 | 3  |      4  | 5 | 6 | 7 | $\dots$ |
-+=======+===+===+====+=========+===+===+===+=========+
-| $N_d$ | 1 | 1 | 12 | $\dots$ |   |   |   |         |
-+-------+---+---+----+---------+---+---+---+---------+
++-------+----+----+----+---------+----+----+----+---------+
+| $d$   |  1 |  2 |  3 |      4  |  5 |  6 |  7 | $\dots$ |
++=======+====+====+====+=========+====+====+====+=========+
+| $N_d$ |  1 |  1 | 12 | $\dots$ |    |    |    |         |
++-------+----+----+----+---------+----+----+----+---------+
 
 ### 2.2 Curve Fitting
 
@@ -1977,7 +2036,7 @@ Q: How can we capture finitely generated diffeologies, beyond finite spaces?
 
 # 7. Diverse Problems
 ## 1.  Learn another programming language
-e.g. [Python](https://python.org/), [Kotlin](https://kotlinlang.org/), [TypeScript](https://www.typeScriptLang.org/), [Scala](https://scala-lang.org/), [Rust](https://rust-lang.org/), [C++](https://www.cplusPlus.com/), [Haskell](https://haskell.org/), ... and implement some [elementary things](#smaller-ideas), e.g. polynomials.  Be sure to cover a common style guide as well as patterns and anti-patterns.  Note that the difference between programming languages is not the spelling of variables, functions, classes, ..., but the grammar, the (current) standard library as well as the (current) best practices.  Once you have learned 3 languages, start a comparison according to, e.g., speed, portability, availability of common libraries for common domains (e.g. web programming, algorithms, extreme testing, graphics, signal processing, numerical simulations, ...), ... .
+e.g. [Python](https://python.org/), [Kotlin](https://kotlinlang.org/), [TypeScript](https://www.typeScriptLang.org/), [Scala](https://scala-lang.org/), [Rust](https://rust-lang.org/), [C++](https://www.cplusPlus.com/), [OCaml](https://ocaml.org/manual/5.3/coreexamples.html), ... and implement some [elementary things](#smaller-ideas), e.g. polynomials.  Be sure to cover a common style guide as well as patterns and anti-patterns.  Note that the difference between programming languages is not the spelling of variables, functions, classes, ..., but the grammar, the (current) standard library as well as the (current) best practices.  Once you have learned 3 languages, start a comparison according to, e.g., speed, portability, availability of common libraries for common domains (e.g. web programming, algorithms, extreme testing, graphics, signal processing, numerical simulations, ...), ... .
 
 
 # 8. Mobile & Web Apps
@@ -2150,7 +2209,7 @@ You may consider the above "LineSketch" app as an idea.  The backend could host 
 
 Possible implementation frameworks:  Compose multiplatform/google+JetBrains, electron/js, unity/ms, ...
 
-Corresponding implementation languages:  Kotlin/multi-platform, ~~java~~TypeScript, ...
+Corresponding implementation languages:  Kotlin/multi-platform, ~~java~~TypeScript, Dart/Flutter, ...
 
 
 ## 2. Implement servers for multi-player modes of the previous games
@@ -2158,6 +2217,32 @@ Corresponding implementation languages:  Kotlin/multi-platform, ~~java~~TypeScri
 ### 1. Five wins
 ### 2. Crime Scene
 ### 3. Groups Game
+
+### 4. [Marjapussi](https://www.pagat.com/marriage/huutopussi.html#variations) Card Game
+
+The game is played by 4 players sitting in a circle and opposite players forming a pair.  In the beginning 36 cards (4 suites Ace--6) are dealt evenly.  Then the player left of the dealer starts bidding.  The minimum bid is 120 points and increment is in multiples of 5.  If you do not wish to go higher, you can pass, but then you cannot re-enter the bidding later on.  (Therefore its proper Finnish name is huutopussi = bidding bag.)
+
+The last bidder has the game and his partner gives him (unseen) 4 of his cards to which he then returns 4 cards also unseen.  He then declares the value of the game, at least as much as he bid.
+
+During the course of the game, the player that took the previous trick, can declare a marriage and then play a card.  The other players in turn have to play a suitable card, i.e. if they have a card of the same suite, they need to play that.  If they don't but have a card of the trump suite, they need to play that.  In any case if you are able to go higher than the previous player, you need to play higher.  The trick goes to the player with the highest card (Ace>10>K>Q>J>9>8>7>6, trump > matching suite > wrong suite).
+
+There are 3 ways to declare a marriage:
+
+1. If you have king and queen of one suite, you may declare that suite for marriage.
+2. If your partner has king and queen of one suite and you ask him for a couple, he declares that suite for marriage.
+3. You may ask for half a couple from a specific suite from your partner and if he has it and you have the other half of the couple, you may declare this suite's marriage.
+
+If you have asked for a couple, you may no longer declare your own couple.  If you have asked for half a couple, you may neither declare your own couple nor ask for a couple.
+
+When you declare a marriage, you get the corresponding points (hearts: 100P, diamonds: 80P, clubs: 60P, spades: 40P) and the correpsonding suite becomes trump.
+
+The first trick is played by the player right of the dealer and no marriage can be declared.
+
+Every trick is worth the points in it (Ace=11, Ten=10, king=4, queen=3, jack=2, rest=0).  The last trick gets an additional 20 points.
+
+The playing team gets the declared points if they reached them, otherwise they get double the amount in negatives.  The opposing team gets their reached points as long as they get a trick.  If they do not get any trick, they get the declared points in negative (assuming the playing team won).
+
+In a tournament, you get +50 points for every won game (both partners the same amount) and -30 points for every lost game.
 
 
 ## 3. Implement a Sustainability app

@@ -12,6 +12,7 @@ fun main() {
 //    }
     while (true) {
         server.runGame()
+        player.showWinningStrategy()
         println("Press <Ctrl>+<C> to abort.")
     }
 }
