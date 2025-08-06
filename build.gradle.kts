@@ -1,8 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.2.0-RC2"
+    kotlin("jvm") version "2.2.20-Beta2"
     application
 }
 
@@ -21,9 +20,9 @@ sourceSets {
 
 dependencies {
     testImplementation(kotlin("test"))
-    testImplementation("io.mockk:mockk:1.13.10")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.2")
-    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.11.2")
+    testImplementation("io.mockk:mockk:1.14.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.13.2")
 }
 
 tasks.test {
