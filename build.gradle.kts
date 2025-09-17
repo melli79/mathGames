@@ -20,6 +20,7 @@ sourceSets {
 
 dependencies {
     testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
     testImplementation("io.mockk:mockk:1.14.3")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.2")
     testRuntimeOnly("org.junit.platform:junit-platform-engine:1.13.2")
