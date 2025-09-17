@@ -597,6 +597,21 @@ Since the game is finite and there are no ties, one of the players must have a w
 Hint: Dynamic programming may be helpful
 
 
+## Greedy Scheduling
+
+The goal is to write a simple schedule generator for a school.  The domain consists of Lectures, subjects, levels, Slots, Days, a Schedule with a week from Mon--Fri, Resources whose capacity needs to be respected in every Slot, DaylyLimits that need to be respected in every day.
+
+As a beginning, try to automatically lay out the schedule for 4th grade primary school class: no more than 4 lectures/day, Math double lectures (but not triple), Deutsch, English, Ethics, Craftsmanship, Gardening, Music and Arts.
+
+### Introduce sections
+
+such that you are able to plan the compatible schedules for 2 sections, say in grade 5.  The subjects change accordingly and some subjects only have a SingleTeacher.
+
+### Handle the Course System
+
+There are basic subjects that every student (of a level) needs to take.  There are categories (sciences, languages, humanities) from which each student needs to pick at least 1, but can upto 2.  You may wish to group the students by common interests, e.g. all that attend the English lecture, all that attend Physics, and so on.  Put a threshold on course admission and try to schedule a whole level (like 11th grade).
+
+
 # 1A Graph Algorithms
 ## 0. Representation on the computer
 
@@ -1889,7 +1904,26 @@ Try to solve the Ernst equation
 [1] F. Calogero and S. Degasperis: *Spectral Transform and Solitons*, **1983**.
 
 
-## 7. Genetic Algorithms -- Large scale (discrete) optimization problems II
+## 7. Stochastic Algorithms
+
+Given a non-linear/discrete optimization problem with a loss function $L$, some variables $\mathbf x$ to optimize and a couple of constraints $C(\mathbf x)$, we wish to find a/the unique solution $\mathbf x^*$ that fulfills all constraints and among those minimizes the loss function.
+
+### Generating a good schedule
+
+Given, e.g., a conference you have a large number of participants, a mid-range number of talks, some of double duration, and you wish to schedule the talks such that most participants can attend many of their favored lectures sequentially.  Beyond every participant attending only 1 lecture at a time, there may also be capacities for the lecture rooms.
+
+So start by laying out a simple initial solution, e.g. with a greedy algorithm, compute its loss function, choose an initial temperature, and then diffuse stochastically to a (locally) minimal solution allowing higher loss as the current temperature allows and preferring (exponentially damped) better solutions.  Find a temperature decay rate such that the whole process converges in moderate time.
+
+Another application is scheduling for the course system at a German grammar school.
+
+### Finding a good packing
+
+If you prefer real-valued problems, consider a packing problem, i.e. given a container like a cuboid, and a couple of items, e.g. balls, we wish to put the items in the box (determine their centroid positions) such that no 2 items overlap, no item is (partially) outside the (upside open) box, and the maximum filling height is minimal.
+
+Intuitively, you would just pour all items into the box, and then start wiggling it, until a (local) minimum is reached.  The current Loss function is the total potential energy and moving the items (one at a time) happens according to Boltzmann statistics under the constraints of touching items.
+
+
+## 8. Genetic Algorithms -- Large scale (discrete) optimization problems II
 A genetic algorithm is an optimization program that finds the optimal solution by mutation, crossover, and multiplication of the fittest from a population of potential solutions (gene pool). A sample problem is:
 
 * Find the global minimum of the function $$f(x_1,x_2)=\sum_{i=1}^N \left[i+(x_1-a_{1i})^6+(x_2-a_{2i})^6\right]^{-1}$$
@@ -1901,7 +1935,7 @@ A genetic algorithm is an optimization program that finds the optimal solution b
 * Iteration until either a target value is *found* (approximated sufficiently close) or the population is almost homogeneous.
 
 
-## 8. [Neural Networks on the Computer](https://en.wikipedia.org/wiki/Artificial_neural_network)
+## 9. [Neural Networks on the Computer](https://en.wikipedia.org/wiki/Artificial_neural_network)
 Read a good book about Neuronal Networks and implement them on the computer.
 
 _Implementation languages:_ Python (tensorflow/Keras library, pytorch), Fortran, C++, Matlab
@@ -1920,7 +1954,7 @@ Starting from the [3 player chess server & client](#implement-a-server-and-clien
 As a hint for implementations as well as strategies consult [ThreeWayChess.org/Thinking strategies](http://www.threewaychess.org/Comparison of breadth, depth, and kinds of thinking required5.pdf).
 
 
-## 9. Hastings-Metropolis Algorithm
+## 10. Hastings-Metropolis Algorithm
 
 Implement the HM algorithm and statistical sampling as an approximation for computing path integrals.
 
