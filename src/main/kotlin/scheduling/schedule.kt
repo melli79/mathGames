@@ -1,5 +1,4 @@
 package scheduling
-
 /**
  * Finding a simple scheduling solution for some items with few constraints.
  **/
@@ -152,3 +151,24 @@ fun toWeekday(number :Short) :String = when (number%7) {
     else -> "Saturday"
 } + if (number>=7) (number/7 +1).toString()  else ""
 
+data class Section(val number :UShort, val level :Short, val numStudents :UInt, val courses :MutableMap<Item, UShort> =mutableMapOf()) {
+    override fun toString() = "$level${(number.toInt() + 'a'.code).toChar()}: "+ courses.entries.joinToString { "${it.key} (${it.value})" }
+}
+
+data class Level(val number :Short, val numSections :UShort, val courses :MutableMap<Item, UShort> =mutableMapOf()) {
+    override fun toString() = "grade $number: "+ courses.entries.joinToString { "${it.key} (${it.value})" }
+}
+
+fun Random.flipCoin(bias :Double =0.5) = nextDouble() < bias
+
+fun <T> List<T>.poisson(random :Random) :T {
+    val s = (2..size).sumOf { 1.0/it }
+    val v = random.nextDouble()
+    var cum = 0.0
+    for (i in 0..<size) {
+        cum += 1.0/(i+2)
+        if (v < cum/s)
+            return get(i)
+    }
+    return first()
+}
