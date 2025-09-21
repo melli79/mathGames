@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.2.20-Beta2"
+    kotlin("jvm") version "2.2.20"
     application
 }
 
