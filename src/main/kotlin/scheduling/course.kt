@@ -1,5 +1,59 @@
 package scheduling
 
+/**
+ * methods and actions for grouping students into courses
+ */
+
+enum class Importance(val number :UShort) {
+    Minor(3u), Major(5u)
+}
+
+data class Subject(val name :String, val importance :Importance) {
+    override fun toString() = if (importance==Importance.Major) "HF $name"
+    else "NF $name"
+
+    override fun hashCode() = 2453453+ importance.hashCode() +3* name.hashCode()
+
+    override fun equals(other :Any?) :Boolean {
+        if (this===other) return true
+        if (other !is Subject) return false
+        return importance==other.importance && name==other.name
+    }
+}
+
+data class Student(val name :String, val level :Short =11, val preferences :MutableList<Subject> =mutableListOf()) {
+    override fun toString() = "${level}. $name: "+ preferences.joinToString { it.name }
+}
+
+fun Collection<Student>.groupBySubject() :Map<Subject, UInt> {
+    val result = mutableMapOf<Subject, UInt>()
+    for (student in this) {
+        for (subject in student.preferences.sortedByDescending { it.importance }) {
+            val count :UInt = result[subject] ?: 0u
+            result[subject] = count+1u
+        }
+    }
+    return result
+}
+
+fun Collection<Student>.correlations() :Map<Subject, Map<Subject, UInt>> {
+    val subjects = groupBySubject().entries
+    val result = subjects.associate { (s, _) ->
+        Pair(s, subjects.associate { (s2, c) ->
+            Pair(s2, if (s==s2) c  else 0u)
+        }.toMutableMap())
+    }.toMutableMap()
+
+    for (student in this)
+        for (s in student.preferences) for (s2 in student.preferences)
+            if (s!=s2) {
+                val row = result[s]!!
+                row[s2] = row[s2]!! + 1u
+            }
+
+    return result
+}
+
 fun Collection<Student>.collectDistributionNormalizePreferences(
     subjects :List<Subject>,
     dm :List<Subject>,
@@ -15,11 +69,11 @@ fun Collection<Student>.collectDistributionNormalizePreferences(
             val s1s = distribution[s]
             if (s1s != null) s1s.add(student)
             else when (s.name) {
-                in sciences -> student.replaceSubject(distribution, sciences, dm, s, subjects, i)
+                in sciences -> student.replaceSubject(distribution, sciences, dm, s, i)
 
-                in humanities -> student.replaceSubject(distribution, humanities, dm, s, subjects, i)
+                in humanities -> student.replaceSubject(distribution, humanities, dm, s, i)
 
-                in languages -> student.replaceSubject(distribution, languages, dm, s, subjects, i)
+                in languages -> student.replaceSubject(distribution, languages, dm, s, i)
 
                 else -> {
                     if (s.importance == Importance.Major) {
@@ -50,66 +104,21 @@ private fun Student.replaceSubject(
     equals :List<String>,
     excluded :List<Subject>,
     s :Subject,
-    subjects :List<Subject>,
-    i :Int
+    i :Int,
 ) {
-    val alternative = distribution.entries.firstOrNull { it.key.name in equals && it.key.importance == s.importance }
-    if (alternative != null) {
-        alternative.value.add(this)
-        preferences[preferences.indexOf(s)] = alternative.key
-    } else {
-        val altS = subjects.filter { it.importance == s.importance && it !in excluded }.random(random)
-        distribution[altS]!!.add(this)
-        preferences[i] = altS
-    }
-}
-
-enum class Importance(val number :UShort) {
-    Minor(3u), Major(5u)
-}
-
-data class Subject(val name :String, val importance :Importance) {
-    override fun toString() = if (importance==Importance.Major) "HF $name"
-        else "NF $name"
-
-    override fun hashCode() = 2453453+ importance.hashCode() +3* name.hashCode()
-
-    override fun equals(other :Any?) :Boolean {
-        if (this===other) return true
-        if (other !is Subject) return false
-        return importance==other.importance && name==other.name
-    }
-}
-
-data class Student(val name :String, val level :Short =11, val preferences :MutableList<Subject> =mutableListOf()) {
-    override fun toString() = "${level}. $name: "+ preferences.joinToString { it.name }
-}
-
-fun Collection<Student>.groupBySubject() :Map<Subject, UInt> {
-    val result = mutableMapOf<Subject, UInt>()
-    for (student in this) {
-        for (subject in student.preferences.sortedByDescending { it.importance }) {
-            val count :UInt = result[subject] ?: 0u
-            result[subject] = count+1u
+    val alternatives = distribution.entries.filter { it.key.name in equals && it.key.importance == s.importance }
+    distribution[s]?.remove(this)
+    for (alternative in alternatives) {
+        val more = preferences.indexOfFirst { it.name == alternative.key.name }
+        if (more !in 0..i) {
+            alternative.value.add(this)
+            preferences[i] = alternative.key
+            if (more>=0) replaceSubject(distribution, equals, excluded, preferences[more], more)
+            return
         }
     }
-    return result
-}
-
-fun Collection<Student>.correlations() :Map<Subject, Map<Subject, UInt>> {
-    val subjects = groupBySubject().entries
-    val result = subjects.associate { (s, _) ->
-       Pair(s, subjects.associate { (s2, c) ->
-           Pair(s2, if (s==s2) c  else 0u)
-       }.toMutableMap())
-    }.toMutableMap()
-
-    for (student in this)
-        for (s in student.preferences) for (s2 in student.preferences)
-            if (s!=s2) {
-                val row = result[s]!!
-                row[s2] = row[s2]!! + 1u
-            }
-
-    return result
+    val alt = distribution.entries.filter { that -> that.key.importance == s.importance && that.key !in excluded &&
+            preferences.none { it.name == that.key.name  } }.random(random)
+    alt.value.add(this)
+    preferences[i] = alt.key
 }

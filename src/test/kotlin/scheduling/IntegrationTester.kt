@@ -15,7 +15,7 @@ class IntegrationTester {
         val math = Item("Mathe", grade = 4u, duration = 2u)
         val english = Item("English", grade = 4u)
         val sports = Item("Sport", grade = 4u)
-        val ethics = Item("Etik", grade = 4u)
+        val ethics = Item("Ethik", grade = 4u)
         val music = Item("Musik", grade = 4u)
         val art = Item("Kunst", grade = 4u)
         val heimatkunde = Item("Heimatkunde", grade = 4u)
@@ -110,7 +110,8 @@ class IntegrationTester {
         val languages = listOf("English", "Espanol", "Francais", "Turkiye", "Chinesisch")
         val am = listOf("Kunsterziehung", "Musik")
         val size = 60
-        val students = createStudentsWithPreferences(size, dm, 0.3, sciences, 0.3, humanities, 0.25, languages, am)
+        val students =
+            createStudentsWithPreferences(size, dm, 0.3, sciences, 0.3, humanities, 0.25, languages, am)
 
         var subjects = students.groupBySubject().entries.toList()
         subjects = (subjects.filter { it.key.importance==Importance.Major }.sortedByDescending { it.value }.take(2+4)
@@ -124,14 +125,35 @@ class IntegrationTester {
 
         val corr :Map<Subject, Map<Subject, UInt>> = students.correlations()
         println("\nCorrelation matrix:")
-        val rows = subjects.map { (s :Subject, _ :UInt) -> Pair(s, corr[s]) }
-        println("\t\t\t"+ (1u..subjects.size.toUInt()).joinToString { pad(it) })
-        println((-1..subjects.size).joinToString("") { "-----" })
-        for (row in rows) {
-            val r :Map<Subject, UInt> = row.second!!
-            val sorted = subjects.map { r[it.key] }
-            println(row.first.toString().slice(0..7) +"\t"+ sorted.joinToString { pad(it ?: 0u) })
+        val corr2 :Map<Subject, Map<Subject, Double>> = corr.entries.associate { entry :Map.Entry<Subject, Map<Subject, UInt>> ->
+            val m :UInt = entry.value.values.max()
+            if (m>0u) {
+                val f = 1.0/m.toLong()
+                Pair(entry.key, entry.value.entries.associate { e2 :Map.Entry<Subject, UInt> ->
+                    Pair(e2.key, e2.value.toLong()*f)
+                })
+            } else
+                Pair(entry.key, entry.value.entries.associate { e2 :Map.Entry<Subject, UInt> ->
+                    Pair(e2.key, e2.value.toDouble())
+                })
         }
+        val rows = subjects.map { (s :Subject, _ :UInt) -> Pair(s, corr2[s]) }
+        println("\t\t\t"+ (1u..subjects.size.toUInt()).joinToString { pad(it, 3) })
+        println((-1..subjects.size).joinToString("") { "------" })
+        for (row in rows) {
+            val r :Map<Subject, Double> = row.second!!
+            val sorted = subjects.map { r[it.key] }
+            println(row.first.toString().slice(0..7) +"\t"+ sorted.joinToString { "%.2f".format(it ?: 0.0) })
+        }
+
+//        println("Students:")
+//        println(students.joinToString("\n") { it.name+": "+ it.preferences.joinToString() })
+        val critical = distribution.entries.filter { it.value.size > 23 }
+        println("The following classes are too big: "+ critical.joinToString { it.key.toString()+" "+it.value.size.toString() })
+        val critCorr = critical.flatMap { (s, c) -> corr2[s]!!.entries.filter {
+            it.value in 0.2..0.9 && s!=it.key
+        }.map { Pair("$s<>${it.key}", it.value) } }.sortedByDescending { it.second }
+        println("Problematic correlations: "+ critCorr.joinToString{ it.first.toString()+ " %.2f".format(it.second) })
     }
 
     private fun createStudentsWithPreferences(
@@ -171,12 +193,13 @@ class IntegrationTester {
             preferences.add(dm.last())
             preferences.add(dm.first().copy(importance= Importance.Minor))
         }
+        if (type != 2 || preferences.first().name!="English") preferences.add(Subject("English", Importance.Minor))
         preferences.addType(type==0, sciences)
         preferences.addType(type==1, humanities)
-        preferences.addType(type==2, languages)
+        if (random.flipCoin(0.5)) preferences.addType(type==2, languages)
         if (type != 3) preferences.add(
             Subject(
-                if (random.flipCoin(2.0/3)) am.first() else am.last(),
+                if (random.flipCoin(3.0/5)) am.first() else am.last(),
                 Importance.Minor
             )
         ) else preferences.add(Subject((humanities + languages).random(random), Importance.Minor))
