@@ -3,6 +3,7 @@ package reedsolomon
 import numberthy.euclid
 import kotlin.math.max
 
+@ConsistentCopyVisibility
 data class Fp internal constructor(val p :ULong, val a :ULong) :Comparable<Fp> {
     companion object {
         fun of(p :ULong, a :Long) :Fp {
@@ -76,6 +77,7 @@ data class Fp internal constructor(val p :ULong, val a :ULong) :Comparable<Fp> {
     }
 }
 
+@ConsistentCopyVisibility
 @OptIn(ExperimentalUnsignedTypes::class)
 data class FpPolynomial internal constructor(val p :ULong, val cs :ULongArray) :Comparable<FpPolynomial> {
     companion object {

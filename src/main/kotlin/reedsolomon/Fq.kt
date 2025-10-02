@@ -2,6 +2,7 @@ package reedsolomon
 
 import common.math.ipow
 
+@ConsistentCopyVisibility
 @OptIn(ExperimentalUnsignedTypes::class)
 data class Fq private constructor(val p :FpPolynomial, val xs :ULongArray) :Comparable<Fq> {
     companion object {

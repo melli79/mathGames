@@ -1,5 +1,6 @@
 package reedsolomon
 
+@ConsistentCopyVisibility
 @OptIn(ExperimentalUnsignedTypes::class)
 data class FpMartrix internal constructor(val p :ULong, val n :UInt, val entries :ULongArray) {
     companion object {

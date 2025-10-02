@@ -25,6 +25,7 @@ interface Graph {
 
     fun getEdges() :Collection<Edge>
 
+    @ConsistentCopyVisibility
     data class Edge private constructor(val v0 :Int, val v1 :Int) :Cloneable {
         companion object {
             fun of(v1: Int, v2: Int) = Edge(min(v1, v2), max(v1, v2))

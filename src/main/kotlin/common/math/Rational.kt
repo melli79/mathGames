@@ -4,6 +4,7 @@ import kotlin.math.abs
 
 class DivisionByZeroException :Throwable("Division by Zero") {}
 
+@ConsistentCopyVisibility
 data class Rational private constructor(val num :Long, val denom :ULong) :Comparable<Rational> {
     companion object {
         fun of(num :Long, denom :Long =1L) :Rational {

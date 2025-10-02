@@ -13,6 +13,7 @@ fun sqr(x :Rational) = x*x
 
 operator fun Rational.div(d :Long) = this * Rational.of(1, d)
 
+@ConsistentCopyVisibility
 data class Radical private constructor(val m :Rational, val n :Long, val b :Rational) {
     companion object {
         val ZERO = Radical(Rational.ZERO, 1L, Rational.ZERO)

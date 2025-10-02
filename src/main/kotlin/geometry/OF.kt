@@ -1,5 +1,8 @@
 package geometry
 
+import common.math.factor
+import common.math.findPrimes
+
 data class F2(val p :UInt, val v0 :UInt, val v1 :UInt) {
     companion object {
         fun zero(p :UInt) = F2(p, 0u,0u)
@@ -129,5 +132,43 @@ data class EndF3(val v0 :F3, val v1 :F3, val v2 :F3) {
             F3(v0.p, v0.dot(t.v0), v0.dot(t.v1), v0.dot(t.v2)),
             F3(v0.p,v1.dot(t.v0),v1.dot(t.v1),v1.dot(t.v2)),
             F3(v0.p,v2.dot(t.v0),v2.dot(t.v1),v2.dot(t.v2)))
+    }
+}
+
+fun main() {
+    for (p in findPrimes(1000u)) {
+        print("$p:  ");  System.out.flush()
+        val s1 = (0u..<p).flatMap { v0 -> (0u..<p).map { v1 -> F2(p, v0, v1) } }.filter { v -> v.dot(v) == 1u }
+//    println("S^1_{\\F_$p} = $s1")
+//    println("|S^1| = ${s1.size}")
+        val eta = EndF3.eta12(p)
+        val c12 = (0u..<p).flatMap { v0 -> (0u..<p).flatMap { v1 -> (0u..<p).map { v2 -> F3(p, v0, v1, v2) } } }
+            .filter { v -> (eta*v).dot(v) == 1u }
+//    println("C_{F_$p}(\\eta) = $c12")
+//    println("|C| = ${c12.size}")
+        val c21 = (0u..<p).flatMap { v0 -> (0u..<p).flatMap { v1 -> (0u..<p).map { v2 -> F3(p, v0, v1, v2) } } }
+            .filter { v -> (eta*v).dot(v) == p - 1u }
+//    println("\\bar{C}_{F_$p}(\\eta) = $c21")
+//    println("|\\bar{C}| = ${c21.size}")
+//    println("O_{\\F_$p}(1) = { ±1 }")
+        val o2 =
+            s1.flatMap { v0 -> s1.filter { v1 -> v0.dot(v1) == 0u }.map { v1 -> EndF2(p, v0.v0, v0.v1, v1.v0, v1.v1) } }
+//    println("|O_{\\F_$p}| = ${o2.size}")
+        val o12 = c12.flatMap { v0 ->
+            val v0t = eta*v0
+            c21.filter { v1 -> v0t.dot(v1) == 0u }.flatMap { v1 ->
+                val v1t = eta*v1
+                c21.filter { v2 ->
+                    v0t.dot(v2) == 0u && v1t.dot(v2) == 0u
+                }.map { v2 -> EndF3(v0, v1, v2) }
+            }
+        }
+        print("|O_{\\F_$p}(1,2)| = ${o12.size},  ")
+        val n2 = o12.size/(2*o2.size)
+        if (n2 < 3)
+            println(" -- That does not give a plane.")
+        else
+            println("|H_{\\F_$p}^2| = |O(1,2)/O(1)x O(2)| = $n2 = ${factor(n2.toULong())}, ${if (o12.size == n2*2*o2.size)
+                "Ok" else "fail"}")
     }
 }
