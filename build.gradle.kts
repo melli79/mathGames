@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.2.20"
+    kotlin("jvm") version "2.3.0-RC"
     application
 }
 
@@ -19,11 +19,12 @@ sourceSets {
 }
 
 dependencies {
+    implementation("com.google.guava:guava:33.5.0-jre")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit5"))
-    testImplementation("io.mockk:mockk:1.14.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.2")
-    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.13.2")
+    testImplementation("io.mockk:mockk:1.14.6")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:6.0.1")
 }
 
 tasks.test {
@@ -31,12 +32,12 @@ tasks.test {
 }
 
 tasks.withType<JavaCompile> {
-    targetCompatibility = "21"
+    targetCompatibility = "25"
 }
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_21)
+        jvmTarget.set(JvmTarget.JVM_25)
     }
 }
 
