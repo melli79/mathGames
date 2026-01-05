@@ -48,21 +48,13 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 
     override fun mouseClicked(event :MouseEvent) = content.mouseClicked(event)
 
-    override fun mousePressed(event :MouseEvent) {
-        // ignore
-    }
+    override fun mousePressed(event :MouseEvent) {/* not needed */}
 
-    override fun mouseReleased(event :MouseEvent) {
-        // ignore
-    }
+    override fun mouseReleased(event :MouseEvent) {/* not needed */}
 
-    override fun mouseEntered(event :MouseEvent) {
-        // ignore
-    }
+    override fun mouseEntered(event :MouseEvent) {/* not needed */}
 
-    override fun mouseExited(event :MouseEvent) {
-        // ignore
-    }
+    override fun mouseExited(event :MouseEvent) {/* not needed */}
 }
 
 fun main() {

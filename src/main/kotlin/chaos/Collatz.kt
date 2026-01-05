@@ -83,7 +83,7 @@ class Collatz(val limit :UInt =1000u) :MyComponent() {
         val px0 = scale.px(0.0)
         drawLine(px0, 0, px0, height-1)
         drawString("l", px0-25,30)
-        val dy = 10.0.pow(log10(max(abs(range.y0), abs(range.y1))).toInt()-1)
+        val dy = 10.0.pow(log10(max(abs(range.y0), abs(range.y1))).toInt())
         for (y1 in (range.y0/dy).roundToInt()..(range.y1/dy).roundToInt()) if (y1!=0) {
             val y = y1*dy
             val py = scale.py(y)
@@ -98,7 +98,7 @@ class Collatz(val limit :UInt =1000u) :MyComponent() {
             val x = x1*dx
             val px = scale.px(x)
             drawLine(px, py0-5, px, py0+5)
-            drawString(x.roundToInt().toString(), px-16,py0+20)
+            drawString("${x/1000}k", px-16,py0+20)
         }
     }
 
@@ -115,6 +115,6 @@ fun <T> List<T>.cumulate(init :T, cumulator:(T,T)->T) :List<T> {
 }
 
 fun main() {
-    val myWindow = MyWindow(Collatz(100_000u))
+    val myWindow = MyWindow(Collatz(1000_000u))
     myWindow.isVisible = true
 }
