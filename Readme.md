@@ -1592,20 +1592,21 @@ The self-similarity (and Hausdorff) dimension is $\ln 2/\ln 3 \approx 0.630930$.
 This is Cantor's set stretched in 2D, i.e. instead of drawing the set on a line, we use it as a description for a monotone function:  We start with the identity function on the unit interval $f_0\colon[0,1]\to[0,1]: x\mapsto x$.  Then we remove the middle third piece and replace it with a constant function
  $$ f_1(x) = \begin{cases} {}^3/_2x &\text{for }0\le x<{}^1/_3, \\
    {}^1/_2 &\text{for }{}^1/_3\le x\le{}^2/_3, \\
-   {}^3/_2x-{}^1/_2 &\text{for } {}^2/_3<x\le1.  \end{cases}
+   {}^3/_2x-{}^1/_2 &\text{for } {}^2/_3<x\le1.
+   \end{cases}
  $$
 Then we repeat the procedure on every interval where the function is not yet constant.
 
 The result is a function that is almost everywhere constant but has a net increment of 1 on the unit interval.  Its Radon-Nikodym derivation is an exceptional measure, i.e. one that is not continuous w.r.t. the Lebesgue measure and nowhere atomic either.
 
-### 2.T Śierpinski Triangle
+### 2.T Sierpiński Triangle
 The triangle can be computed by the first $2^n$ rows of Pascal's triangle modulo 2, i.e. start from a single $1$ on top and in every following row place numbers between the columns from the previous row as the sum of the 2 neighboring values, padding with 0s on the boundaries.
 
 You can display that in a Swing window or HTML5-Canvas by first estimating the window resolution and then taking the nearest power of 2 and computing Pascal's triangle modulo 2. (You only need to buffer 2 rows for that).
 
 In comparison to the Śierpinski Carpet, the self-similarity (and Hausdorff) dimension is $\ln 3/\ln 2 \approx 1.584963$.
 
-### 2.2 Śierpinski Carpet
+### 2.2 Sierpiński Carpet
 Starting from a Square, remove the middle 1/3 square and repeat the procedure with all remaining 8, 1/3 squares.  The self-similarity (and Hausdorff) dimension is $\ln 8/\ln 3 \approx 1.892789$.
 
 Again you can start by filling the window with a square and then iterating down to the pixel size.

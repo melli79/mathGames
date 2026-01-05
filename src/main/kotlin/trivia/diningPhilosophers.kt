@@ -8,7 +8,7 @@ package trivia
  *
  * You are to find an algorithm that each philosopher can follow such that
  * 1. No philosopher starves,
- * 2. every philosopher has the almost same eating time.
+ * 2. Every philosopher has the almost same eating time.
  */
 
 enum class Handed {
@@ -60,12 +60,12 @@ private fun preparePhilosopher(
     var changed = false
     val state = when (s) {
         State.WAIT -> {
-            if (forks[((p + (n-1u)) % n).toInt()] != Handed.LEFT && forks[((p + 1u) % n).toInt()] != Handed.RIGHT) {
+            if (forks[((p + (n-1u)) % n).toInt()] != Handed.LEFT && forks[p.toInt()] != Handed.RIGHT) {
                 if (forks[((p + (n-1u)) % n).toInt()] != Handed.RIGHT) {
                     forks.reserve(p, Handed.LEFT)
                     changed = true
                 }
-                if (forks[((p + 1u) % n).toInt()] != Handed.LEFT) {
+                if (forks[p.toInt()] != Handed.LEFT) {
                     forks.reserve(p, Handed.RIGHT)
                     changed = true
                 }
@@ -135,7 +135,7 @@ fun Array<Handed>.reserve(p :UShort, side :Handed) = when (side) {
         this[f] = Handed.RIGHT
     }
     Handed.RIGHT -> {
-        val f = (p.toInt() + 1) % size
+        val f = p.toInt()
         check(this[f]==Handed.NOBODY) { "Resource busy" }
         this[f] = Handed.LEFT
     }
@@ -151,15 +151,15 @@ private fun Array<Handed>.release(p :UShort, side :Handed) = when (side) {
     }
     Handed.RIGHT -> {
         println("$p releases his right fork.")
-        val f = (p.toInt() + 1) % size
+        val f = p.toInt()
         check(this[f]==Handed.LEFT) { "Resource not owned" }
         this[f] = Handed.NOBODY
     }
     else -> {/* nothing to do */}
 }
 
-fun main() {
-    val n :UShort = 5u
+fun main(args :Array<String>) {
+    val n :UShort = args.firstOrNull()?.toUShortOrNull() ?: 5u
     val eaten = dine(n)
     val m = eaten.min();  val M = eaten.max()
     check(M-m<=1u) { "Philosopher ${eaten.indexOf(m)} was overreached." }
