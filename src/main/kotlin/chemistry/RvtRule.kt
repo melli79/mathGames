@@ -1,6 +1,8 @@
 package chemistry
 
+import chaos.MyWindow
 import common.math.linReg
+import chaos.Plotter
 import java.util.Random
 import kotlin.math.ln
 import kotlin.math.sqrt
@@ -10,7 +12,7 @@ val random = Random(System.currentTimeMillis())
 /*
  * given a normal distribution, what is the dependency of the TOP10 on the size of population?
  *
- * Claim[Arrhenius, RVT rule] rising the population 2folds the power of the TOP10
+ * Claim[Arrhenius, RVT rule] doubling the population increases the power of the TOP10 by 3.3
  */
 
 fun estimateTop10(n :UInt) :Pair<Double, Double> {
@@ -59,9 +61,12 @@ fun main() {
     while (n<500_000) {
         val (p, dp) = estimateTop10(n.toUInt())
         println("$n: %.1f±%.1f".format(p, dp))
-        xys.add(Pair(ln(n.toDouble()), p))
+        xys.add(Pair(sqrt(ln(n.toDouble())), p))
         n *= 2
     }
     val (kappa, b, dk, db) = linReg(xys) { i -> xys[i].first/3 }
-    println("p = \\kappa\\ln N +b,  \\kappa = %.1f±%.1f, b = %.1f±%.1f".format(kappa, dk, b, db))
+    println("p = \\kappa\\sqrt(\\ln N) +b,  \\kappa = %.0f±%.0f, b = %.0f±%.0f".format(kappa, dk, b, db))
+
+    val w = MyWindow(Plotter(xys, Pair(kappa, b), "p = kappa \\sqrt(ln N) +b,  kappa = %.0f±%.0f, b = %.0f±%.0f".format(kappa, dk, b, db)))
+    w.isVisible = true
 }

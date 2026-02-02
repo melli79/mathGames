@@ -80,3 +80,7 @@ class SumTanN :MyComponent() {
     }
 }
 
+fun main() {
+    val w = MyWindow(SumTanN())
+    w.isVisible = true
+}
