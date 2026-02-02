@@ -1,6 +1,6 @@
 % Math Ideas for Programming
 % Collected by M. Gr.
-% 2010 –– 2025
+% 2010 –– 2026
 
 # 0. Smaller ideas
 
