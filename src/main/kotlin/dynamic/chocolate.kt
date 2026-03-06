@@ -1,6 +1,7 @@
 package dynamic
 
 import common.removeFrom
+import diophantine.copy
 import dynamic.Partition.Companion.canContain
 
 /**
@@ -61,8 +62,8 @@ class Partition(val remainingBars :MutableList<Bar>, val remainingPieces :Mutabl
                 for (c in 1u..<bar.first) {
                     val b1 = Bar(c, bar.second)
                     val p1s = pieces.gather(b1)
-                    val p2s = pieces.toMutableList()
-                    p2s.removeAll(p1s)
+                    val p2s = pieces.copy().toMutableList()
+                    p1s.forEach { p2s.remove(it) }
                     if (p1s.isEmpty() || p2s.isEmpty()) continue
                     val b2 = Bar(bar.first - c, bar.second)
                     if (b2.canContain(p2s)) {
@@ -78,8 +79,8 @@ class Partition(val remainingBars :MutableList<Bar>, val remainingPieces :Mutabl
                 if (bar.first != bar.second) for (r in 1u..<bar.second) {
                     val b1 = Bar(bar.first, r)
                     val p1s = pieces.gather(b1)
-                    val p2s = pieces.toMutableList()
-                    p2s.removeAll(p1s)
+                    val p2s = pieces.copy().toMutableList()
+                    p1s.forEach { p2s.remove(it) }
                     if (p1s.isEmpty() || p2s.isEmpty()) continue
                     val b2 = Bar(bar.first, bar.second - r)
                     if (b2.canContain(p2s)) {

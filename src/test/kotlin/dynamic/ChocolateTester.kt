@@ -62,4 +62,25 @@ class ChocolateTester {
         assertEquals(Piece(3u,3u), result.getOrNull(1))
         assertEquals(2, result.size)
     }
+
+    @Test fun threePiecesFit() {
+        val pieces = listOf(Piece(2u,3u), Piece(3u,2u), Piece(3u,3u))
+        val bar = Bar(7u,3u)
+        val result = bar.partition(pieces)
+        assertNotNull(result)
+        assertTrue(Piece(2u,3u) in result)
+        assertTrue(Piece(3u,2u) in result)
+        assertTrue(Piece(3u,3u) in result)
+        assertEquals(3, result.size)
+    }
+
+    @Test fun threePiecesTiled() {
+        val pieces = listOf(Piece(2u,2u), Piece(2u,2u), Piece(3u,4u))
+        val bar = Bar(5u,4u)
+        val result = bar.partition(pieces)
+        assertNotNull(result)
+        assertEquals(2, result.count { it==Piece(2u,2u) })
+        assertTrue(Piece(3u,4u) in result)
+        assertEquals(3, result.size)
+    }
 }
