@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.4.0-Beta2"
+    kotlin("jvm") version "2.4.0"
     application
 }
 
@@ -19,8 +19,8 @@ sourceSets {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:33.5.0-jre")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("com.google.guava:guava:33.6.0-jre")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit5"))
     testImplementation("io.mockk:mockk:1.14.6")

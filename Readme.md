@@ -421,6 +421,11 @@ The real trouble starts when you wish to erase `x` from the place $t+k:= h(x)\%p
 An alternative is to keep lists in each place $t:=h(x)\%p$ and if there is more than one element to be kept at $t$, then you chain them up in this list.  This way you just have to operate with inserting into / removing from / searching in lists (once you have narrowed to position $t$).  This performs better even when the table is considerably full.  But that too depends on the quality of the hashing function.
 
 
+## Local sort
+
+Given a list (of length $n$) of nearly sorted items (given a total comparison function), find out if/how it can be sorted by 2 flips (if that is possible).  What is the (time) complexity of your algorithm?  Can you do it in less than $\mathcal{O}(n^2)$?
+
+
 ## Tracking Loyal Customers
 
 Let us say [we](https://carloarg02.medium.com/my-favorite-coding-question-to-give-candidates-17ea4758880c) have a website and we keep track of what pages customers are viewing, for things like business metrics.
