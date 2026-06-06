@@ -9,3 +9,5 @@ fun fizzBuzz(limit :Short) = (1..limit).map { when {
     it % buzz == 0 -> "buzz"
     else -> it.toString()
 } }
+
+fun main() = fizzBuzz(100).forEach { println(it) }

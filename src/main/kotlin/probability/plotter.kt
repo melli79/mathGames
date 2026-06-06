@@ -23,7 +23,7 @@ fun main() {
     }
     val points = thresholds.entries.map { Quadruple(ln(it.key.toDouble()), ln(it.value.first), ln(it.value.second), ln(it.value.third)) }
     val mb = linReg(points)
-    val window = MyWindow(Plotter(points, mb))
+    val window = MyWindow(Plotter3(points, mb))
     window.isVisible = true
 }
 
@@ -51,7 +51,7 @@ fun linReg(points: List<Quadruple<Double, Double, Double, Double>>) :Pair<Double
     return Pair(m2, b2)
 }
 
-class Plotter(private val points: List<Quadruple<Double, Double, Double, Double>>, private val linReg: Pair<Double, Double>) :JComponent() {
+class Plotter3(private val points: List<Quadruple<Double, Double, Double, Double>>, private val linReg: Pair<Double, Double>) :JComponent() {
     private val range = computeRange(points)
 
     private fun computeRange(points: List<Quadruple<Double, Double, Double, Double>>) :Rect {

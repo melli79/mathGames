@@ -58,15 +58,15 @@ fun List<Double>.average() = sum()/size
 fun main() {
     val xys = mutableListOf<Pair<Double, Double>>()
     var n = 10
-    while (n<500_000) {
+    while (n<1_048_576) {
         val (p, dp) = estimateTop10(n.toUInt())
         println("$n: %.1f±%.1f".format(p, dp))
         xys.add(Pair(sqrt(ln(n.toDouble())), p))
-        n *= 2
+        n += n/2
     }
     val (kappa, b, dk, db) = linReg(xys) { i -> xys[i].first/3 }
-    println("p = \\kappa\\sqrt(\\ln N) +b,  \\kappa = %.0f±%.0f, b = %.0f±%.0f".format(kappa, dk, b, db))
+    println("p = \\kappa\\sqrt(\\ln N) +b,  \\kappa = %.1f±%.1f, b = %.1f±%.1f".format(kappa, dk, b, db))
 
-    val w = MyWindow(Plotter(xys, Pair(kappa, b), "p = kappa \\sqrt(ln N) +b,  kappa = %.0f±%.0f, b = %.0f±%.0f".format(kappa, dk, b, db)))
+    val w = MyWindow(Plotter(xys, Pair(kappa, b), "p = kappa \\sqrt(ln N) +b,  kappa = %.1f±%.1f, b = %.1f±%.1f".format(kappa, dk, b, db)))
     w.isVisible = true
 }

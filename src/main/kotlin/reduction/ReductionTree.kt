@@ -16,10 +16,10 @@ class ReductionTree() :JComponent() {
 
     override fun paint(g :Graphics) {
         var row = 1
-        drawEntry(g, row, width/2, Triple(2u,1u,0))
+        g.drawEntry(row, width/2, Triple(2u,1u,0))
         row++
         var entries = mutableListOf<Triple<UInt, UInt, Int>>()
-        drawEntry(g, row, width/2, Triple(4u, 2u, 0))
+        g.drawEntry(row, width/2, Triple(4u, 2u, 0))
         entries.add(Triple(4u, 2u, width/2))
         val maxCols = width/32
         while (true) {
@@ -43,7 +43,7 @@ class ReductionTree() :JComponent() {
                 val f = width /cols;  val offset = width/(2*cols)
                 entries = entries.map { entry ->
                     val col = offset+ f* entry.third
-                    drawEntry(g, row, col, entry)
+                    g.drawEntry(row, col, entry)
                     Triple(entry.first, entry.second, col)
                 }.toMutableList()
             }
@@ -66,13 +66,13 @@ class ReductionTree() :JComponent() {
         col = -1
         for (e in entries) {
             if (e.third<1) col++
-            drawEntry(g, row0 +e.third, f*col +offset, e)
+            g.drawEntry(row0 +e.third, f*col +offset, e)
         }
-        return entries.map { e -> e.third }.max() +1
+        return entries.maxOf { e -> e.third } +1
     }
 
-    private fun drawEntry(g :Graphics, row :Int, column :Int, e :Triple<UInt, UInt, Int>) {
-        g.drawString("${e.first} (${e.second})", column, 16*row)
+    private fun Graphics.drawEntry(row :Int, column :Int, e :Triple<UInt, UInt, Int>) {
+        drawString("${e.first} (${e.second})", column, 16*row)
     }
 }
 

@@ -53,13 +53,13 @@ class PrimeViewer(private var limit :UInt) :MyComponent() {
 
     override fun scaleUp() {
         limit += limit/2u
-        if (limit>100u) limit = 100u
+        if (limit>200u) limit = 200u
         generatePrimes()
         repaint()
     }
 
     override fun scaleDown() {
-        limit -= limit/4u
+        limit -= limit/3u
         if (limit<5u) limit = 5u
         generatePrimes()
         repaint()

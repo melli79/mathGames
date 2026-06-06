@@ -124,10 +124,10 @@ class DiagramComponent<T>(val data :CometDiagram<T>) : MyComponent() {
 fun of(points :Collection<CometDiagram.MPoint>, adapter :CometDiagram.Id) = CometDiagram(points, adapter)
 
 fun main() {
-    val cometDiagram = of(listOf(CometDiagram.MPoint(2000.0, 100.0, 1800.0, 102.0, "A"),
+    val comets = of(listOf(CometDiagram.MPoint(2000.0, 100.0, 1800.0, 102.0, "A"),
             CometDiagram.MPoint(1000.0,50.0,1200.0,51.0, "B"))) {
         if (it.newY>=it.oldY) Color.blue  else Color.orange
     }
-    val window = MyWindow(DiagramComponent(cometDiagram))
+    val window = MyWindow(DiagramComponent(comets))
     window.isVisible = true
 }

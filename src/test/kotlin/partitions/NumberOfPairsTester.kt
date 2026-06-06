@@ -24,8 +24,11 @@ class NumberOfPairsTester {
     }
 
     @Test fun threeCombinations() {
-        val result = designCards(3u)
+        val result = designCards(3u).map { it.toMutableList() }
         println("triples: $result")
+        val last = result.last();  val preLast = result[result.size-2]
+        val card = last.removeLast(); val card2 = preLast.removeLast()
+        last.add(card2);  preLast.add(card)
         for (first in result)  for (second in result)  if (first != second) {
             assertEquals(1, (first intersect second).size, "$first and $second have wrong intersection")
         }
@@ -34,8 +37,11 @@ class NumberOfPairsTester {
     @Test fun fourCombinations() {
         val result = designCards(4u)
         println("quadruples: $result")
-        for (first in result)  for (second in result)  if (first != second) {
-            assertEquals(1, (first intersect second).size, "$first and $second have wrong intersection")
+        for (first in result) {
+            assertEquals(4, first.size)
+            for (second in result)  if (first != second) {
+                assertEquals(1, (first intersect second).size, "$first and $second have wrong intersection")
+            }
         }
     }
 

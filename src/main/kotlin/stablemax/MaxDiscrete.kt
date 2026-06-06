@@ -9,7 +9,7 @@ fun main() {
     val dynamicPlayer = DynamicPlayer()
     game.addPlayer(dynamicPlayer)
 
-    val statistics = game.runGame(20u, 100_000u).entries.sortedByDescending { it.value.score }
+    val statistics = game.runGame(20u, 1000_000u).entries.sortedByDescending { it.value.score }
     println(statistics.mapIndexed { rk, entry -> """${th(rk+1)}: ${entry.key.describe()}
       |   with ${entry.value.score} Pts (${entry.value.numWins} wins, ${entry.value.numOverbids} overbids, and ${entry.value.numLosses} losses)""".trimMargin("|")
     }.joinToString("\n"))
@@ -29,17 +29,17 @@ object MaxDiscrete {
     private var limit = 0u
     private var playersChanged = false
 
-    fun addPlayer(player: Player) {
+    fun addPlayer(player :Player) {
         players.add(player)
         playersChanged = true
     }
 
-    fun removePlayer(player: Player) {
+    fun removePlayer(player :Player) {
         players.remove(player)
         playersChanged = true
     }
 
-    fun runGame(limit: UInt = this.limit, numRounds :UInt =1000u) :Map<Player, Statistics> {
+    fun runGame(limit :UInt = this.limit, numRounds :UInt =1000u) :Map<Player, Statistics> {
         val numPlayers = players.size.toUShort()
         if (playersChanged || limit!=this.limit) {
             this.limit = limit

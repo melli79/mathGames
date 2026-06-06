@@ -14,7 +14,7 @@ fun linReg(xy :List<Pair<Double, Double>>, ws :(Int)->Double = {1.0}) : Quadrupl
     val dx = x2*w - x*x;  assert(dx > 0.0)
     val m = (yx*w-x*y) / dx
     val b = (y-m*x)/w
-    val dy = y2*w + sqr(b * w) + m*m*x2*w -2*y*m*x -2*y*b*w +2*m*x*b
-    val sigma = sqrt(dy / (w * w * (w - 2)))
+    val dy = y2 + b*b*w + m*m*x2 -2*(yx*m +y*b -m*x*b)
+    val sigma = sqrt(dy / (w * (w - 2)))
     return Quadruple(m, b, sigma * w * x / (dx * sqrt(2.0)), sigma)
 }
