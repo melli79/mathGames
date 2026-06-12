@@ -3,7 +3,7 @@ package graph
 import algebra.ZPoly
 
 object cpoly {
-    private val cache = mutableMapOf<ALGraph, ZPoly>()
+    internal val cache = mutableMapOf<ALGraph, ZPoly>()
     operator fun invoke(g :Graph) :ZPoly {
         val graph = graphOf(g.numVertices, g.getEdges())
         return lookup(graph)

@@ -25,6 +25,7 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation("io.mockk:mockk:1.14.6")
     testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.1")
+    // testImplementation("org.openjdk.jol:jol-core:0.17")
     testRuntimeOnly("org.junit.platform:junit-platform-engine:6.0.1")
 }
 
@@ -45,3 +46,12 @@ kotlin {
 application {
     mainClass.set("trivia.DiningPhilosophersKt")
 }
+
+//tasks.jar {
+//    manifest {
+//        attributes(
+//            "Premain-Class" to "org.openjdk.jol.vm.InstrumentationSupport",
+//            "Launcher-Agent-Class" to "org.openjdk.jol.vm.InstrumentationSupport"
+//        )
+//    }
+//}

@@ -2,8 +2,14 @@ package graph
 
 import algebra.ZPoly
 import algebra.sqr
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.TestMethodOrder
+import kotlin.math.pow
+import kotlin.math.round
 import kotlin.test.*
 
+@TestMethodOrder(MethodOrderer.MethodName::class)
 class ColorizationTester {
 
     @Test fun trivial() {
@@ -67,6 +73,16 @@ class ColorizationTester {
         assertEquals(3*2*(2+1), result(3))
         assertEquals(1, result.lc)
     }
+
+    @Test fun hashing() {
+        val g = graphOf(3u, listOf(Graph.Edge.of(0,1), Graph.Edge.of(1,2),))
+        val h = g.hashCode()
+        val g2 = graphOf(3u, listOf(Graph.Edge.of(0,1), Graph.Edge.of(1,2),))
+        val h2 = g2.hashCode()
+        assertEquals(h, h2)
+        assertEquals(g, g2)
+    }
+
     enum class Province {
         BY, BW, BB, BE, HB, HH, HE, MV, NI, NW, RP, SL, SN, ST, SH, TH;
     }
@@ -113,9 +129,14 @@ class ColorizationTester {
         println(cMap.entries.joinToString { (k :Int, v :Int) -> "${Province.entries[k]} -> $v" })
     }
 
-    @Test fun testCpolyGermany() {
+    @Tag("slow")
+    @Test fun xxCpolyGermany() {
+        val size0 = cpoly.cache.size
         val chi :ZPoly = cpoly(germany)
         println(chi)
         println("3 colors: ${chi(3.0)};  4 colors: ${chi(4.0)}")
+        println("memory size: before= ${size0} entries,  after= ${cpoly.cache.size} entries")
     }
 }
+
+fun Double.roundTo(digits :Int) :Double = round(this*10.0.pow(digits))*10.0.pow(-digits)
