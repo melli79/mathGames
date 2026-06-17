@@ -19,6 +19,7 @@ interface Graph {
         }
     }
 
+    val name :String
     val numVertices :UInt
 
     fun getVertices() = (0 until numVertices.toInt()).toList()
@@ -26,18 +27,21 @@ interface Graph {
     fun getEdges() :Collection<Edge>
 
     @ConsistentCopyVisibility
-    data class Edge private constructor(val v0 :Int, val v1 :Int) :Cloneable {
+    data class Edge private constructor(val v0 :Int, val v1 :Int) {
         companion object {
             fun of(v1: Int, v2: Int) = Edge(min(v1, v2), max(v1, v2))
         }
-
-        override fun clone() = Edge(v0, v1)
     }
 
     fun describe() :String
 
-    fun countEdges() = getEdges().size
+    val numEdges :UInt
+        get() = getEdges().size.toUInt()
+
     fun findNeighbors(v :Int) :Collection<Int>
+
+    fun minV() = 0
+    fun maxV() = numVertices.toInt()-1
 }
 
 fun graphOf(numVertices :UInt, edges :Collection<Graph.Edge> =emptyList(), name :String="G$numVertices")

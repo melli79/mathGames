@@ -1,9 +1,14 @@
 package graph
 
-class ALGraph(override val numVertices :UInt, edges :Collection<Graph.Edge>, val name :String) :Graph {
-    private val edges :List<Set<Int>> = (0 until numVertices.toInt()).map { v ->
-        edges.filter { it.v0==v }.map { it.v1 }.toSet()
-    }
+import kotlin.math.max
+import kotlin.math.min
+
+class ALGraph private constructor(override val numVertices :UInt, protected val edges :Map<Int, Set<Int>>, override val name :String) :Graph {
+    constructor(numVertices :UInt, edges :Collection<Graph.Edge> =emptyList(), name :String? =null) :this(numVertices,
+        edges.groupBy { it.v0 }.entries.map { Pair(it.key, it.value.map{ it.v1 }.toSet()) }.toMap(),
+        name?: "G$numVertices")
+
+    fun copy() = ALGraph(numVertices, edges, name)
 
     override fun equals(other :Any?) :Boolean {
         if (other !is Graph) return false
@@ -14,15 +19,18 @@ class ALGraph(override val numVertices :UInt, edges :Collection<Graph.Edge>, val
 
     override fun hashCode() = 11+ numVertices.hashCode() +31* edges.hashCode()
 
-    override fun getEdges() = edges.flatMapIndexed { v, ws -> ws.map { w -> Graph.Edge.of(v, w) } }
+    override fun getEdges() = edges.entries.flatMap { (v, ws) -> ws.map { w -> Graph.Edge.of(v, w) } }
+    override val numEdges = edges.values.sumOf { it.size.toUInt() }
 
-    override fun countEdges() = edges.sumOf { it.size }
-    override fun findNeighbors(v :Int) :List<Int> = edges.getOrElse(v) {emptySet()}.sorted() +
-        edges.mapIndexed { w, neighbors ->
+    override fun findNeighbors(v :Int) :Set<Int> = (edges.getOrElse(v) {emptySet()}.sorted() +
+        edges.entries.mapNotNull { (w, neighbors) ->
             if (v in neighbors) w  else null
-        }.filterNotNull()
+        }).toSet()
 
     override fun toString() = name
 
-    override fun describe() = toString()+"\n  "+ edges.mapIndexed { v, ws -> "$v: "+ws.joinToString() }.joinToString("\n  ")
+    override fun describe() = toString()+"\n  "+ edges.entries.map { (v, ws) -> "$v: "+ws.joinToString() }.joinToString("\n  ")
+
+    override fun minV() = min( edges.keys.min(), edges.values.minOf { it.min() })
+    override fun maxV() = max( edges.keys.max(), edges.values.maxOf { it.max() })
 }

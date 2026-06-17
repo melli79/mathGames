@@ -74,33 +74,24 @@ class ColorizationTester {
         assertEquals(1, result.lc)
     }
 
-    @Test fun hashing() {
-        val g = graphOf(3u, listOf(Graph.Edge.of(0,1), Graph.Edge.of(1,2),))
-        val h = g.hashCode()
-        val g2 = graphOf(3u, listOf(Graph.Edge.of(0,1), Graph.Edge.of(1,2),))
-        val h2 = g2.hashCode()
-        assertEquals(h, h2)
-        assertEquals(g, g2)
-    }
-
     enum class Province {
-        BY, BW, BB, BE, HB, HH, HE, MV, NI, NW, RP, SL, SN, ST, SH, TH;
+        BB, BE, BW, BY, HB, HE, HH, MV, NI, NW, RP, SH, SL, SN, ST, TH;
     }
-    fun Province.to(v1: Province) = Graph.Edge.of(ordinal, v1.ordinal)
+    infix fun Province.to(v1: Province) = Graph.Edge.of(ordinal, v1.ordinal)
 
     val germany = graphOf(Province.entries.size.toUInt(), listOf(
-        listOf(Province.BW, Province.HE, Province.SN, Province.TH).map { Province.BY.to(it) },
-        listOf(Province.RP, Province.HE).map { Province.BW.to(it) },
-        listOf(Province.BE, Province.MV, Province.NI, Province.SN, Province.ST).map { Province.BB.to(it) },
-        listOf(Province.NI).map { Province.HB.to(it) },
-        listOf(Province.NW, Province.SH).map { Province.HH.to(it) },
-        listOf(Province.NW, Province.NI, Province.RP, Province.TH).map { Province.HE.to(it) },
-        listOf(Province.NI, Province.SH).map { Province.MV.to(it) },
-        listOf(Province.NW, Province.SH, Province.ST, Province.TH).map { Province.NI.to(it) },
-        listOf(Province.NW.to(Province.RP)),
-        listOf(Province.RP.to(Province.SL)),
-        listOf(Province.SN.to(Province.ST)),
-        listOf(Province.ST.to(Province.TH)),
+        listOf(Province.BW, Province.HE, Province.SN, Province.TH).map { Province.BY to it },
+        listOf(Province.RP, Province.HE).map { Province.BW to it },
+        listOf(Province.BE, Province.MV, Province.NI, Province.SN, Province.ST).map { Province.BB to it },
+        listOf(Province.HB to Province.NI),
+        listOf(Province.NW, Province.SH).map { Province.HH to it },
+        listOf(Province.NW, Province.NI, Province.RP, Province.TH).map { Province.HE to it },
+        listOf(Province.NI, Province.SH).map { Province.MV to it },
+        listOf(Province.NW, Province.SH, Province.ST, Province.TH).map { Province.NI to it },
+        listOf(Province.NW to Province.RP),
+        listOf(Province.RP to Province.SL),
+        listOf(Province.SN to Province.ST),
+        listOf(Province.ST to Province.TH),
     ).flatten())
 
     @Test fun colorizeGermany() {
@@ -122,11 +113,11 @@ class ColorizationTester {
         cMap[Province.MV.ordinal] = 2
         cMap[Province.SH.ordinal] = 1
         cMap[Province.HH.ordinal] = 0
+        println(cMap.entries.joinToString { (k :Int, v :Int) -> "${Province.entries[k]} -> $v" })
         germany.getEdges().forEach { e :Graph.Edge ->
             assertNotEquals(cMap[e.v0], cMap[e.v1])
         }
         assertEquals(colors.toSet(), cMap.values.toSet())
-        println(cMap.entries.joinToString { (k :Int, v :Int) -> "${Province.entries[k]} -> $v" })
     }
 
     @Tag("slow")

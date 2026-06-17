@@ -1,6 +1,6 @@
 package graph
 
-class Network(override val numVertices :UInt, w0s :Collection<Pair<Graph.Edge, Double>>, val name :String ="N$numVertices") :
+class Network(override val numVertices :UInt, w0s :Collection<Pair<Graph.Edge, Double>>, override val name :String ="N$numVertices") :
         Graph {
     private val weights = (0..< numVertices.toInt()).map { mutableMapOf<Int, Double>() }
 
@@ -13,6 +13,8 @@ class Network(override val numVertices :UInt, w0s :Collection<Pair<Graph.Edge, D
     override fun getEdges() = weights.flatMapIndexed { v :Int, ws :MutableMap<Int, Double> ->
         ws.keys.map { Graph.Edge.of(v, it) }
     }
+
+    override val numEdges = weights.sumOf { it.size.toUInt() }
 
     override fun toString() = name
 

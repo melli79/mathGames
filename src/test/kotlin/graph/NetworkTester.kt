@@ -12,15 +12,18 @@ class NetworkTester {
         assertTrue(n.isMetric())
     }
 
+    infix fun Int.to(w :Int) = Graph.Edge.of(this, w)
+    infix fun Graph.Edge.to(w :Double) = Pair(this, w)
+
     @Test
     fun k7() {
-        val n = Network(7u, listOf(
-            Pair(edge(0, 1), 19.0), Pair(edge(0, 2), 18.0),
-            Pair(edge(0, 3), 15.0), Pair(edge(0, 4), 17.0), Pair(edge(0, 5), 18.0), Pair(edge(0, 6), 16.0),
-            Pair(edge(1, 2), 17.0), Pair(edge(1, 3), 13.0), Pair(edge(1, 4), 16.0), Pair(edge(1, 5), 18.0),
-            Pair(edge(1, 6), 15.0), Pair(edge(2, 3), 12.0), Pair(edge(2, 4), 13.0), Pair(edge(2, 5), 16.0),
-            Pair(edge(2, 6), 12.0), Pair(edge(3, 4), 11.0), Pair(edge(3, 5), 12.0), Pair(edge(3, 6), 9.0),
-            Pair(edge(4, 5), 14.0), Pair(edge(4, 6), 12.0), Pair(edge(5, 6), 13.0)
+        val n = Network(7u, listOf<Pair<Graph.Edge, Double>>(
+            (0 to 1) to 19.0, (0 to 2) to 18.0,
+            (0 to 3) to 15.0, (0 to 4) to 17.0, (0 to 5) to 18.0, (0 to 6) to 16.0,
+            (1 to 2) to 17.0, (1 to 3) to 13.0, (1 to 4) to 16.0, (1 to 5) to 18.0,
+            (1 to 6) to 15.0, (2 to 3) to 12.0, (2 to 4) to 13.0, (2 to 5) to 16.0,
+            (2 to 6) to 12.0, (3 to 4) to 11.0, (3 to 5) to 12.0, (3 to 6) to 9.0,
+            (4 to 5) to 14.0, (4 to 6) to 12.0, (5 to 6) to 13.0
         ))
         println("$n is ${if (n.isMetric()) "" else "not "}metric.")
         var m = Double.POSITIVE_INFINITY;  var sPath = listOf<Int>()
