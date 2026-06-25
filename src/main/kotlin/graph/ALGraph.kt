@@ -33,4 +33,5 @@ class ALGraph private constructor(override val numVertices :UInt, protected val 
 
     override fun minV() = min( edges.keys.min(), edges.values.minOf { it.min() })
     override fun maxV() = max( edges.keys.max(), edges.values.maxOf { it.max() })
+    override fun hasEdge(e :Graph.Edge) = edges[e.v0]?.contains(e.v1) ?: false
 }

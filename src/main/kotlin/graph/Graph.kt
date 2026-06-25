@@ -42,6 +42,7 @@ interface Graph {
 
     fun minV() = 0
     fun maxV() = numVertices.toInt()-1
+    fun hasEdge(e :Edge) :Boolean
 }
 
 fun graphOf(numVertices :UInt, edges :Collection<Graph.Edge> =emptyList(), name :String="G$numVertices")

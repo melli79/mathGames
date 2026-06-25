@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import sun.jvmstat.monitor.MonitoredVmUtil.jvmArgs
 
 plugins {
     kotlin("jvm") version "2.4.0"
@@ -31,6 +32,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
+    // jvmArgs("-Xmx16g")
 }
 
 tasks.withType<JavaCompile> {
