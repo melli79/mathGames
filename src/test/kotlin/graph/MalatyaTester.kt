@@ -139,5 +139,73 @@ class MalatyaTester {
 //        println("number of colorizations of USA: 2: ${p(2)},  3: ${p(3)},  4: ${p(4)},  5: ${p(5)}, ...")
     }
 
+    enum class China {
+        AH, BJ, CQ,
+        FJ,
+        GD, GS, GX, GZ,
+        HA, HB, HE, HI, HK, HL, HN,
+        JL, JS, JX,
+        LN, IM, MC, NX,
+        QH,
+        SC, SD, SH, SN, SX, TI, TJ,
+        YN, XJ, ZJ,
+        ;
+
+        infix fun to(pr :China) = Graph.Edge.of(this.ordinal, pr.ordinal)
+    }
+    val china = graphOf(China.entries.size.toUInt(), listOf<List<Graph.Edge>>(
+        listOf(China.GS, China.QH, China.TI).map { China.XJ to it },
+        listOf(China.QH, China.SC, China.YN).map { China.TI to it },
+        listOf(China.GS, China.SC).map { China.QH to it },
+        listOf(China.GS, China.SN, China.CQ, China.GZ, China.YN).map { China.SC to it },
+        listOf(China.GX, China.GZ).map { China.YN to it },
+        listOf(China.GZ, China.HI, China.GD, China.HN).map { China.GX to it },
+        listOf(China.HN, China.CQ).map { China.GZ to it },
+        listOf(China.HN, China.HB, China.SN).map { China.CQ to it },
+        listOf(China.HB, China.HA, China.SX, China.IM, China.NX).map { China.SN to it },
+        listOf(China.SX, China.IM).map { China.NX to it },
+        listOf(China.SX, China.HE, China.LN, China.JL, China.HL).map { China.IM to it },
+        listOf(China.HE, China.HA).map { China.SX to it },
+        listOf(China.HE, China.SD, China.AH, China.HB).map { China.HA to it },
+        listOf(China.AH, China.JX, China.HN).map { China.HB to it },
+        listOf(China.JX, China.GD).map { China.HN to it },
+        listOf(China.HI, China.HK, China.MC, China.FJ, China.JX).map { China.GD to it },
+        listOf(China.HK, China.MC).map { China.HI to it },
+        listOf(China.MC).map { China.HK to it },
+        listOf(China.JX, China.ZJ).map { China.FJ to it },
+        listOf(China.ZJ, China.AH).map { China.JX to it },
+        listOf(China.SH, China.AH, China.JS).map { China.ZJ to it },
+        listOf(China.JS).map { China.SH to it },
+        listOf(China.AH, China.SD).map { China.JS to it },
+        listOf(China.SD).map { China.AH to it },
+        listOf(China.HE, China.TJ).map { China.SD to it },
+        listOf(China.TJ, China.BJ, China.LN).map { China.HE to it },
+        listOf(China.LN).map { China.TJ to it },
+        listOf(China.JL).map { China.LN to it },
+        listOf(China.HL).map { China.JL to it },
+    ).flatten(), "P.R.C.${China.entries.size}")
+
+    @Test fun colorizeChina() {
+        val polit = china.colorize()
+        println("political map of China: "+ polit.mapIndexed { pr, c -> Pair(China.entries[pr], c) }
+            .groupBy{ it.second }.entries.joinToString("\n") { (c, prs) -> "$c "+ prs.joinToString() { it.first.name } })
+        china.getEdges().forEach { e ->
+            assertNotEquals(polit[e.v0], polit[e.v1])
+        }
+        for (pr in China.entries)
+            if (polit[pr.ordinal] !in 0..3)
+                println("Greedy colorization failed at $pr: assigned color ${polit[pr.ordinal]} out of range (0..3).")
+        val polit2 = china.colorizeBt()
+        assertNotNull(polit2)
+        println("\n\nTight colorization of China: "+ polit2.mapIndexed { pr, c -> Pair(China.entries[pr], c) }
+            .groupBy{ it.second }.entries.joinToString("\n") { (c, prs) -> "$c "+ prs.joinToString() { it.first.name } })
+        china.getEdges().forEach { e ->
+            assertNotEquals(polit2[e.v0], polit2[e.v1])
+        }
+        for (pr in China.entries)
+            assertTrue(polit2[pr.ordinal] in 0..3,
+                "Tight colorization failed at $pr: assigned color ${polit2[pr.ordinal]} out of range (0..3).")
+    }
+
     infix fun Int.to(v1 :Int) = Graph.Edge.of(this, v1)
 }
