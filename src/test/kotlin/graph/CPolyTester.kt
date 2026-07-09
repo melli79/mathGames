@@ -10,7 +10,7 @@ import kotlin.math.round
 import kotlin.test.*
 
 @TestMethodOrder(MethodOrderer.MethodName::class)
-class ColorizationTester {
+class CPolyTester {
 
     @Test fun trivial() {
         val g = graphOf(0u)
@@ -73,47 +73,27 @@ class ColorizationTester {
         assertEquals(3*2*(2+1), result(3))
         assertEquals(1, result.lc)
     }
-
-    enum class Province {
-        BB, BE, BW, BY, HB, HE, HH, MV, NI, NW, RP, SH, SL, SN, ST, TH;
-    }
-    infix fun Province.to(v1: Province) = Graph.Edge.of(ordinal, v1.ordinal)
-
-    val germany = graphOf(Province.entries.size.toUInt(), listOf(
-        listOf(Province.BW, Province.HE, Province.SN, Province.TH).map { Province.BY to it },
-        listOf(Province.RP, Province.HE).map { Province.BW to it },
-        listOf(Province.BE, Province.MV, Province.NI, Province.SN, Province.ST).map { Province.BB to it },
-        listOf(Province.HB to Province.NI),
-        listOf(Province.NW, Province.SH).map { Province.HH to it },
-        listOf(Province.NW, Province.NI, Province.RP, Province.TH).map { Province.HE to it },
-        listOf(Province.NI, Province.SH).map { Province.MV to it },
-        listOf(Province.NW, Province.SH, Province.ST, Province.TH).map { Province.NI to it },
-        listOf(Province.NW to Province.RP),
-        listOf(Province.RP to Province.SL),
-        listOf(Province.SN to Province.ST),
-        listOf(Province.ST to Province.TH),
-    ).flatten())
-
+    
     @Test fun colorizeGermany() {
         val colors = 0..<4
         val cMap =mutableMapOf<Int, Int>()
-        cMap[Province.BY.ordinal] = 0
-        cMap[Province.BW.ordinal] = 1
-        cMap[Province.HE.ordinal] = 2
-        cMap[Province.TH.ordinal] = 1
-        cMap[Province.RP.ordinal] = 0
-        cMap[Province.SL.ordinal] = 1
-        cMap[Province.NW.ordinal] = 1
-        cMap[Province.NI.ordinal] = 0
-        cMap[Province.HB.ordinal] = 1
-        cMap[Province.ST.ordinal] = 2
-        cMap[Province.SN.ordinal] = 3
-        cMap[Province.BB.ordinal] = 1
-        cMap[Province.BE.ordinal] = 0
-        cMap[Province.MV.ordinal] = 2
-        cMap[Province.SH.ordinal] = 1
-        cMap[Province.HH.ordinal] = 0
-        println(cMap.entries.joinToString { (k :Int, v :Int) -> "${Province.entries[k]} -> $v" })
+        cMap[Germany.BY.ordinal] = 0
+        cMap[Germany.BW.ordinal] = 1
+        cMap[Germany.HE.ordinal] = 2
+        cMap[Germany.TH.ordinal] = 1
+        cMap[Germany.RP.ordinal] = 0
+        cMap[Germany.SL.ordinal] = 1
+        cMap[Germany.NW.ordinal] = 1
+        cMap[Germany.NI.ordinal] = 0
+        cMap[Germany.HB.ordinal] = 1
+        cMap[Germany.ST.ordinal] = 2
+        cMap[Germany.SN.ordinal] = 3
+        cMap[Germany.BB.ordinal] = 1
+        cMap[Germany.BE.ordinal] = 0
+        cMap[Germany.MV.ordinal] = 2
+        cMap[Germany.SH.ordinal] = 1
+        cMap[Germany.HH.ordinal] = 0
+        println(cMap.entries.joinToString { (k :Int, v :Int) -> "${Germany.entries[k]} -> $v" })
         germany.getEdges().forEach { e :Graph.Edge ->
             assertNotEquals(cMap[e.v0], cMap[e.v1])
         }
@@ -126,6 +106,15 @@ class ColorizationTester {
         val chi :ZPoly = cpoly(germany)
         println(chi)
         println("3 colors: ${chi(3.0)};  4 colors: ${chi(4.0)}")
+        println("memory size: before= ${size0} entries,  after= ${cpoly.cache.size} entries")
+    }
+
+    @Tag("slow")
+    @Test fun xxCpolyChina() {
+        val size0 = cpoly.cache.size
+        val poly :ZPoly = cpoly(china)
+        println(poly)
+        println("3 colors: ${poly(3.0)};  4 colors: ${poly(4.0)};  5 colors: ${poly(5.0)}")
         println("memory size: before= ${size0} entries,  after= ${cpoly.cache.size} entries")
     }
 }

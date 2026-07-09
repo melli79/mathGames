@@ -39,6 +39,7 @@ interface Graph {
         get() = getEdges().size.toUInt()
 
     fun findNeighbors(v :Int) :Collection<Int>
+    fun deg(v :Int) :Int
 
     fun minV() = 0
     fun maxV() = numVertices.toInt()-1

@@ -690,8 +690,24 @@ One possibility is to
 1. find a maximal non-touching tree (a Trémaux tree): e.g. via a depth-first search, arrange them equidistant (on a geometrical line segment/circle)
 2. add the remaining edges: non-intersecting edges can be drawn on the same side, crossing edges need opposing sides, until either the CC is complete or the graph is no longer plane.
 
+## 6. Colorization
 
-## 6. Knot Diagrams
+Given a political map of some country/region/continent.  Try to colorize the territories with as few colors as possible such that neighboring countries (that have move than a few points of joint border) have different colors.
+
+Hint 0:  Few maps may work with 3 colors.  But you can always get away with 4 colors.
+
+Hint 1: Try with Bundesländer of Germany, Provinces of China, States in the USA, or similar.
+
+Hint 2: Translate the geographic relations into a graph vertices = the countries, edges = the joint borders
+
+Hint 3: Greedy algorithms order the countries, e.g. by valency and the greedily assign to the current vertex the first still available color.
+
+Hint 4: Beside static MVC ordering (where you sum over the neighboring vertices the number of neighbors divided by the number of neighbors of the neighboring vertex), you can also do dynamic saturation degree i.e. the number of already used-up colors among the colorized neighbors (and order by dergee in case of a tie).
+
+Hint 5: You may need backtracking over the remaining color options if the greedy algorithm does not succeed.
+
+
+## 7. Knot Diagrams
 
 A [mathematical Knot](https://en.wikipedia.org/wiki/Knot_(mathematics)) is an embedding of the circle in the unit ball in $\mathbb R^3$.  Knots can be represented as 2D knot diagrams that arise as projections of the 3D knot embedding.  The conditions are that no more than 2 strands intersect in a point (called a crossing).  Beyond the strands it is also necessary to remember which strand is the upper strand in a crossing.  Strands do not start/end anywhere.
 
@@ -708,7 +724,7 @@ R2: Moving a segment of a strand over or under another strand.
 
 R3: Moving a segment of a strand over or under a crossing.
 
-### 6.1 Find a Representation of knots/links on the computer
+### 7.1 Find a Representation of knots/links on the computer
 
 1. You may start with, e.g., Knot diagrams, i.e. parabola/spline segments meeting in crossings (position on board + which strand is the upper).
 
@@ -729,7 +745,7 @@ Q5: Find a way to reconstruct the Gauss code from the DT notation.  Warning: the
 
 Q6: Is there an easier way to construct a nice Knot diagram from a given DT notation?
 
-### 6.2 Understand elementary Knot Invariants
+### 7.2 Understand elementary Knot Invariants
 
 Start with the [Alexander polynomial](https://en.wikipedia.org/wiki/Alexander_polynomial), then proceed to the [Jones polynomial](https://en.wikipedia.org/wiki/Jones_polynomial) (which is one of the strongest invariants in polynomials in 1 variable). Finally understand the [HOMFLY-PT invariant](https://en.wikipedia.org/wiki/HOMFLY_polynomial) (a polynomial in 2 variables).
 
@@ -738,25 +754,25 @@ Given a Knot diagram, can you compute the polynomial (with pencil and paper)?
 Can you do a simplified version of that with the compuer (e.g. a CAS)?
 
 
-## 7. Toll system
+## 8. Toll system
 Given an undirected graph $(V, E)$ of streets $e\in E$ that connect the residential area $v_0\in V$ with the working area $v_n\in V$ together with the time costs $w\colon E\to [0,\infty)$ of a street $e\in E$. Determine tolls $t\colon E\to [0,\infty)$ such that the cost for every (loop free) path from the residential area to the working area is the same.
 
 Advanced: assign at most one toll per route.
 
 
-## 8. Balanced Trees
+## 9. Balanced Trees
 
 * AVL,
 
 * (2,3)-trees, Red-black trees
 
 
-## 9. B+ Trees
+## 10. B+ Trees
 
 * heavy-light decomposition
 
 
-## 10. Min Cut Problem
+## 11. Min Cut Problem
 
 Given a connected graph.  Determine the minimum number (and a particular solution) of edges to be removed (called cuts) such that the graph is no longer connected.
 
@@ -765,7 +781,7 @@ Rem.:  A graph is called $k$-connected, if you need to remove at least $k$ edges
 Example:  The complete graph $K_k$ is $k$-connected.
 
 
-## 11. Max Flow Problems
+## 12. Max Flow Problems
 
 Given a network $(V,E,c)^\dagger$ where $c\colon E\to[0,\infty)$ are called capacities of the edges.  We wish to find a production configuration $p\colon E\to[0,\infty)$, $0\le p(e)\le c(e)$ such that for every vertex (except a source and a drain)
 
@@ -789,7 +805,7 @@ Note that the solution may not be unique.  One way to produce a solution is to s
 If in addition you want to minimize the transport in the network, you can reduce the flow through all cycles $C\subset E$ by $p(C):=\min_{e\in C} p(e)\ge0$ at each edge of the cycle.
 
 
-## 12. Maximum Matchings
+## 13. Maximum Matchings
 
 Given a bipartite graph $(M,E,F)$ where $V:=M\cup F$ and edges only connect $M$-vertices with $F$-vertices.  A matching $m\subset E$ is a set of edges such that every $v\in M$ and every $f\in F$ lies on at most one edge $e\in m$.  A maximal matching is one to which you cannot add edges such that it remains a matching.  The maximal matching is a matching with the maximum number of edges.
 
@@ -798,7 +814,7 @@ Hall's Marriage problem is a bi-partite network $(M,E,F,w)$ with $w\colon E\to[0
 [The Hungarian Algorithm](https://en.wikipedia.org/wiki/Hungarian_algorithm#The_algorithm_in_O(n3)_time) is able to find a maximal matching of minimum sum weight in a bipartite graph in $\mathcal{O}(|F|^2|M|)$ if there are at most as many females $|F|$ as there are males $|M|$.
 
 
-## 13. $k$-connected components
+## 14. $k$-connected components
 
 Given any undirected graph $(V,E)$, then the $k$-connected components $CC_k$ are a partition of $V$ such that for every $C\in CC_k$, the graph $(C,E|C)$ is $k$-connected.
 
@@ -838,7 +854,7 @@ In other words you are searching for a maximal coloring of the $K_{15}$ by $K_3$
 
 
 
-## 14. String Matching Algorithms
+## 15. String Matching Algorithms
 
 Suppose that you are given a (short) string $s\in\Sigma^*$ that you are supposed to find in a long string $l\in\Sigma^*$  How would you efficiently go over that?
 
@@ -852,7 +868,7 @@ An alternative (and better scaling) method would be to construct a matching grap
 
 1. a DFA that starts with a vertex $s_0$ and for every character in $s$ there is an edge from the previous vertex $s_n$ to a new vertex $s_{n+1}$ annotated with the character $s$.  The last vertex is the accepting vertex $z$.
 
-### 14.2 Simultaneous matching (Knuth-Morris-Pratt algorithm)
+### 15.2 Simultaneous matching (Knuth-Morris-Pratt algorithm)
 
 If instead of 1 sub-string $s$, we are given a set $S\subset\Sigma^*$ of strings or a regular expression, and we wish to figure out whether any one of them matches, then we can construct an NFA as follows:
 

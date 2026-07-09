@@ -27,6 +27,8 @@ class ALGraph private constructor(override val numVertices :UInt, protected val 
             if (v in neighbors) w  else null
         }).toSet()
 
+    override fun deg(v :Int) = (edges[v]?.size ?: 0) +edges.values.count { v in it }
+
     override fun toString() = name
 
     override fun describe() = toString()+"\n  "+ edges.entries.map { (v, ws) -> "$v: "+ws.joinToString() }.joinToString("\n  ")

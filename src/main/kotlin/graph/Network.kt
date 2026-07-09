@@ -26,6 +26,8 @@ class Network(override val numVertices :UInt, w0s :Collection<Pair<Graph.Edge, D
         if (v in ws.keys) v1  else null
     }.filterNotNull()
 
+    override fun deg(v :Int) = weights[v].size +weights.count { v in it }
+
     override fun hasEdge(e :Graph.Edge) = weights[e.v0].containsKey(e.v1)
 
     operator fun get(e :Graph.Edge) :Double? = weights[e.v0][e.v1]
