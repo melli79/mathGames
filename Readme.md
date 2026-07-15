@@ -247,6 +247,13 @@ Given a collection, find a specific element knowing:
  e) What if we need the element closest to an ordered value from 2 collections?
 
 
+## Interlocked linear sequence
+
+Given 2 linear recursion expressions, e.g. $a_{n+1}=3a_n+1$ and $a'_{n+1}=4a_n$, estimate the growth rate of the ordered joint sequence.  I.e. starting from 1 element $\{1\}$ determine the next elements by each recursion expression and sort the elements by size.  The next element in the joint sequence is the smallest non equal element.
+
+Growth order means to approximate $\ln a_n = m\ln n +b$ where you probably want to weigh the elements with $\ln n$.
+
+
 ## Countable Tournament
 
 Given a list of $n$ players/teams of which each 2 have a different strength and according to strength they win against each other (no ties).  In the beginning they are arranged in random order.  A tournament is as follows:
@@ -698,11 +705,11 @@ Hint 0:  Few maps may work with 3 colors.  But you can always get away with 4 co
 
 Hint 1: Try with Bundesländer of Germany, Provinces of China, States in the USA, or similar.
 
-Hint 2: Translate the geographic relations into a graph vertices = the countries, edges = the joint borders
+Hint 2: Translate the geographic relations into a graph: vertices = the countries, edges = the joint borders
 
 Hint 3: Greedy algorithms order the countries, e.g. by valency and the greedily assign to the current vertex the first still available color.
 
-Hint 4: Beside static MVC ordering (where you sum over the neighboring vertices the number of neighbors divided by the number of neighbors of the neighboring vertex), you can also do dynamic saturation degree i.e. the number of already used-up colors among the colorized neighbors (and order by dergee in case of a tie).
+Hint 4: Beside static MVC ordering (where you sum over the neighboring vertices the number of neighbors divided by the number of neighbors of the neighboring vertex), you can also do dynamic saturation degree i.e. the number of already used-up colors among the colorized neighbors (and order by degree in case of a tie).
 
 Hint 5: You may need backtracking over the remaining color options if the greedy algorithm does not succeed.
 
@@ -739,7 +746,7 @@ Q3: What is needed to lay out a Gauss code into a Knot diagram?
 
 3. [Dowker-Thistlethwaite notation](https://en.wikipedia.org/wiki/Dowker%E2%80%93Thistlethwaite_notation), traverse the knot using an arbitrary starting point and direction. Label each of the $n$ crossings with the numbers $1$, ..., $2n$ in order of traversal (each crossing is visited and labelled twice), with the following modification: if the label is an even number and the strand followed crosses over at the crossing, then change the sign on the label to be a negative.  When finished, each crossing will be given a pair of integers, one even and one odd. The notation is the sequence of even integer labels associated with the odd labels $1$, $3$, ..., $2n−1$ in turn.
 
-Q4: Find a sufficient condition as to when an even integer sequence is a DT notation.
+Q4: Find a sufficient condition as to when an odd integer sequence is a DT notation.
 
 Q5: Find a way to reconstruct the Gauss code from the DT notation.  Warning: the [ménage problem](https://en.wikipedia.org/wiki/M%C3%A9nage_problem) implies that there are multiple DT notations for the same knot.  Moreover, even restricting to prime knots, it is not possible to distinguish the chiral versions of a knot.
 

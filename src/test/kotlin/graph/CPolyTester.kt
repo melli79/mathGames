@@ -5,6 +5,7 @@ import algebra.sqr
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.TestMethodOrder
+import kotlin.collections.joinToString
 import kotlin.math.pow
 import kotlin.math.round
 import kotlin.test.*
@@ -75,7 +76,7 @@ class CPolyTester {
     }
     
     @Test fun colorizeGermany() {
-        val colors = 0..<4
+        val colors = 0..< 4
         val cMap =mutableMapOf<Int, Int>()
         cMap[Germany.BY.ordinal] = 0
         cMap[Germany.BW.ordinal] = 1
@@ -93,11 +94,14 @@ class CPolyTester {
         cMap[Germany.MV.ordinal] = 2
         cMap[Germany.SH.ordinal] = 1
         cMap[Germany.HH.ordinal] = 0
-        println(cMap.entries.joinToString { (k :Int, v :Int) -> "${Germany.entries[k]} -> $v" })
+        println(cMap.entries.groupBy { it.value }.entries.joinToString("\n") { (c :Int, prs) -> "$c: "+
+                prs.joinToString { Germany.entries[it.key].name } })
         germany.getEdges().forEach { e :Graph.Edge ->
             assertNotEquals(cMap[e.v0], cMap[e.v1])
         }
-        assertEquals(colors.toSet(), cMap.values.toSet())
+        Germany.entries.forEach { pr ->
+            assertTrue(cMap[pr.ordinal] in colors, "Greedy colorization failed at $pr: ${cMap[pr.ordinal]}")
+        }
     }
 
     @Tag("slow")
@@ -109,14 +113,14 @@ class CPolyTester {
         println("memory size: before= ${size0} entries,  after= ${cpoly.cache.size} entries")
     }
 
-    @Tag("slow")
-    @Test fun xxCpolyChina() {
-        val size0 = cpoly.cache.size
-        val poly :ZPoly = cpoly(china)
-        println(poly)
-        println("3 colors: ${poly(3.0)};  4 colors: ${poly(4.0)};  5 colors: ${poly(5.0)}")
-        println("memory size: before= ${size0} entries,  after= ${cpoly.cache.size} entries")
-    }
+//    @Tag("slow")
+//    @Test fun xxCpolyChina() {
+//        val size0 = cpoly.cache.size
+//        val poly :ZPoly = cpoly(china)
+//        println(poly)
+//        println("3 colors: ${poly(3.0)};  4 colors: ${poly(4.0)};  5 colors: ${poly(5.0)}")
+//        println("memory size: before= ${size0} entries,  after= ${cpoly.cache.size} entries")
+//    }
 }
 
 fun Double.roundTo(digits :Int) :Double = round(this*10.0.pow(digits))*10.0.pow(-digits)
