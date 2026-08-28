@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.4.0"
+    kotlin("jvm") version "2.4.10"
     application
 }
 
@@ -23,10 +23,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit5"))
-    testImplementation("io.mockk:mockk:1.14.6")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.1")
+    testImplementation("io.mockk:mockk:1.14.11")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:6.1.1")
     // testImplementation("org.openjdk.jol:jol-core:0.17")
-    testRuntimeOnly("org.junit.platform:junit-platform-engine:6.0.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:6.1.1")
 }
 
 tasks.test {

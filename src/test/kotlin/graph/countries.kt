@@ -65,6 +65,38 @@ val germany = graphOf(Germany.entries.size.toUInt(), listOf(
     listOf(Germany.ST to Germany.TH),
 ).flatten(), "G16")
 
+enum class India {
+    AP, AR, AS, BR, CG,  GA, GJ, HR, HP, JH,
+    KA, KL, MP, MH, MN,  ML, MZ, NL, OD, PB,
+    RJ, SK, TN, TG, TR,  UP, UK, WB,
+    ;
+    infix fun to(pr :India) = Graph.Edge.of (this.ordinal, pr.ordinal)
+}
+
+val india = graphOf(India.entries.size.toUInt(), listOf(
+    listOf(India.TN, India.KA).map { India.KL to it },
+    listOf(India.KA, India.AP).map { India.TN to it },
+    listOf(India.AP, India.GA, India.TG).map { India.KA to it },
+    listOf(India.TG, India.OD).map { India.AP to it },
+    listOf(India.GA to India.MH),
+    listOf(India.GA, India.MP, India.CG).map { India.MH to it },
+    listOf(India.MP, India.UP, India.JH, India.OD).map { India.CG to it },
+    listOf(India.JH, India.WB).map { India.OD to it },
+    listOf(India.RJ, India.MP).map { India.GJ to it },
+    listOf(India.RJ, India.UP).map { India.MP to it },
+    listOf(India.UP, India.BR, India.WB).map { India.JH to it },
+    listOf(India.BR, India.SK, India.AS).map { India.WB to it },
+    listOf(India.ML, India.TR, India.MZ, India.MN, India.NL, India.AR).map { India.AS to it },
+    listOf(India.MP).map { India.MZ to it },
+    listOf(India.NL).map { India.MN to it },
+    listOf(India.AR).map { India.NL to it },
+    listOf(India.PB, India.HR, India.UP).map { India.RJ to it },
+    listOf(India.PB, India.HP, India.UP).map { India.HR to it },
+    listOf(India.UK, India.BR).map { India.UP to it },
+    listOf(India.HP).map { India.PB to it },
+    listOf(India.UK).map { India.HP to it },
+).flatten(), "India")
+
 enum class US {
    AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA,
    KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM,

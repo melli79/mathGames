@@ -43,10 +43,23 @@ class MalatyaTester {
         val polit = germany.colorize()
         println("Political map of Germany: "+ polit.mapIndexed{ pr, c -> Germany.entries[pr].name+": $c" }.joinToString(",  "))
         germany.getEdges().forEach { e ->
-            assertNotEquals(polit[e.v0], polit[e.v1])
+            assertNotEquals(polit[e.v0], polit[e.v1], "Edge ${Germany.entries[e.v0]}-${Germany.entries[e.v1]} has same color.")
         }
         Germany.entries.forEach { pr ->
-            assertTrue( polit[pr.ordinal] in 0..3 )
+            assertTrue( polit[pr.ordinal] in 0..3, "Greedy colorization failed at $pr: assigned color ${polit[pr.ordinal]} out of range (0..3).")
+        }
+    }
+
+    @Test fun colorizeIndia() {
+        println(india.describe()+"${india.numEdges} pieces of inner border.")
+        val polit = india.colorize()
+        println("Political map of India: "+ polit.mapIndexed{ pr, c -> Pair(India.entries[pr], c) }.groupBy { it.second }
+            .entries.joinToString("\n"){ (c, prs) -> "$c: "+prs.joinToString { it.first.name} })
+        india.getEdges().forEach { e ->
+            assertNotEquals(polit[e.v0], polit[e.v1], "Edge ${India.entries[e.v0]}-${India.entries[e.v1]} has same color.")
+        }
+        India.entries.forEach { pr ->
+            assertTrue( polit[pr.ordinal] in 0..3, "Greedy colorization failed at $pr: assigned color ${polit[pr.ordinal]} out of range (0..3).")
         }
     }
 
@@ -57,9 +70,9 @@ class MalatyaTester {
             .entries.joinToString("\n") { (c, ps) -> "$c: "+ps.joinToString { it.first } })
         assertEquals(US.entries.size, cs.size)
         for (p in US.entries)
-            assertTrue(cs[p.ordinal] in 0..< 4)
+            assertTrue(cs[p.ordinal] in 0..< 4, "Greedy colorization failed at $p: assigned color ${cs[p.ordinal]} out of range (0..3).")
         usa.getEdges().forEach { e ->
-            assertNotEquals(cs[e.v0], cs[e.v1])
+            assertNotEquals(cs[e.v0], cs[e.v1], "Edge ${US.entries[e.v0]}-${US.entries[e.v1]} has same color.")
         }
 //        val p :ZPoly = cpoly(usa)
 //        println("number of colorizations of USA: 2: ${p(2)},  3: ${p(3)},  4: ${p(4)},  5: ${p(5)}, ...")
@@ -80,7 +93,7 @@ class MalatyaTester {
         println("\n\nTight colorization of China: "+ polit2.mapIndexed { pr, c -> Pair(China.entries[pr], c) }
             .groupBy{ it.second }.entries.joinToString("\n") { (c, prs) -> "$c "+ prs.joinToString() { it.first.name } })
         china.getEdges().forEach { e ->
-            assertNotEquals(polit2[e.v0], polit2[e.v1])
+            assertNotEquals(polit2[e.v0], polit2[e.v1], "Edge ${China.entries[e.v0]}-${China.entries[e.v1]} has same color.")
         }
         for (pr in China.entries)
             assertTrue(polit2[pr.ordinal] in 0..3,

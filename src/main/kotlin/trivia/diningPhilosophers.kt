@@ -2,7 +2,7 @@
 package trivia
 
 /**
- * There are n philosophers sitting in a circle and n forks, one between each 2 philosophers.
+ * There are n philosophers sitting in a circle and n forks, one between each 2 neighboring philosophers.
  * A philosopher can: pick up the left fork (if it is still there), pick up the right fork (-"-),
  * eat for one cycle if he has both forks.  When he is finished, he will return both forks.
  *
