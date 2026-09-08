@@ -15,6 +15,7 @@ val random = Random(System.currentTimeMillis())
 
 abstract class MyComponent :JComponent() {
     abstract val title :String
+    lateinit var window :MyWindow
 
     open fun scaleUp() {}
     open fun scaleDown() {}
@@ -32,7 +33,13 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
         if (content is ComponentListener)
             addComponentListener(content)
         setSize(800, 600)
-        title = content.title
+        val title = content.title
+        content.window = this
+        updateTitle(title)
+    }
+
+    fun updateTitle(title :String) {
+        this.title = title
     }
 
     override fun keyTyped(event :KeyEvent) {/* not needed */}
@@ -58,6 +65,6 @@ class MyWindow(val content :MyComponent) : JFrame(), KeyListener, MouseListener 
 }
 
 fun main() {
-    val window = MyWindow(NewtonFractal(NewtonFractal::iter5))  // LogFractal(LogFractal.ColorPattern.OSC2)) // TanMandel()) // MultiLog()) // Mandelbrot()) // Lsystem()) // mapOf(Pair('A', "A+B-B--B--B-B--A+A"), Pair('B', "A")), "A--B-B--B--B-B--A", lambda= 1.0/3, dphi0= 0.0))  // RealLog()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
+    val window = MyWindow(NewtonFractal(NewtonFractal::iter5))  // LogFractal(LogFractal.ColorPattern.OSC2)) // TanMandel()) // MultiLog()) // Lsystem()) // mapOf(Pair('A', "A+B-B--B--B-B--A+A"), Pair('B', "A")), "A--B-B--B--B-B--A", lambda= 1.0/3, dphi0= 0.0))  // RealLog()) // BrownianTree(BrownianTree.Orientation.Circular, BrownianTree.Height.Width))
     window.isVisible = true
 }
