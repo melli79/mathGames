@@ -553,8 +553,8 @@ The possibilities of 2 pairs has the following 3 cases:
 Obviously you need to iterate over increasing number of pairs and within that over decreasing number of revealed cards.
 
 
-## Hamming distance
-The Hamming or editing distance between 2 character sequences is the number of characters we have to change in one sequence to transform it into the other sequence.
+## Levenshtein Distance
+The Levenshtein or editing distance between 2 character sequences is the number of characters we have to change in one sequence to transform it into the other sequence.
 
 Example 1: Between "abcdefg" and "abbdeeg" it is 2: 'c'->'b' and 'f'->'e' (replace)
 
@@ -564,9 +564,9 @@ Example 3: Between "aloa" and "Hallo" it is 3: (0)''->'H', (2)''->'l', (4)'a'->'
 
 Given two strings, determine their Hamming distance!
 
-Hint:  This is a classical problem of dynamic programming, i.e. start filling a list of changes, in every step in the list, you go from the intermediate form towards the target string.  The `changes` is a set of all possible new versions, possibly pruned by what approaches the target string.
+Hint:  This is a classical problem of dynamic programming, i.e. start with a rectangle $l_2\times l_1$ and fill it row by row from left to right. For every target cell, you have at most 3 options.  If you add the optimal choice together with the current distance, you will find the solution in the bottom-right cell (the edit trail by following the choices from bottom-left backwards).
 
-You should aim for a time complexity of $\mathcal{O}((l_1+l_2)^2)$
+You should aim for a time complexity of $\mathcal{O}(l_1*l_2)$
 
 ### Twist
 Given two integers, determine the Hamming distance of their binary representations.
